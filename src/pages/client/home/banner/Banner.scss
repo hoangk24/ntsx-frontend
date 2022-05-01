@@ -1,0 +1,26 @@
+.banner {
+ .group-array-image {
+  display: grid !important;
+  grid-template-columns: 25% 25% 25% 25%;
+  padding: 10px;
+  background: #fdf9ff;
+  position: relative;
+  border-radius: 8px;
+  img {
+   display: block;
+   width: 100%;
+  }
+
+  li {
+   transition: 0.3s;
+   border: 2px white solid;
+   margin: 0.3rem;
+   border-radius: 1rem;
+   overflow: hidden;
+  }
+
+  .slick-active {
+   border: 2px blue solid;
+  }
+ }
+}

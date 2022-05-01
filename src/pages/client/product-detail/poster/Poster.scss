@@ -1,0 +1,30 @@
+.poster {
+ .slick-list {
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+ }
+ .dot-group {
+  display: grid !important;
+  grid-template-columns: 25% 25% 25% 25%;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  .slick-active {
+   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px,
+    rgb(51, 51, 51) 0px 0px 0px 3px;
+  }
+  li {
+   margin: 0 0.3rem;
+   border-radius: 1rem;
+   box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+   //  padding: 0.3rem;
+   list-style: none;
+   overflow: hidden;
+  }
+  img {
+   display: block;
+   width: 100%;
+  }
+ }
+}

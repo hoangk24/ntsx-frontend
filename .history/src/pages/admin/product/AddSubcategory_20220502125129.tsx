@@ -43,7 +43,7 @@ export default function AddSubcategory({
     labelCol={{ span: 8 }}
     wrapperCol={{ span: 16 }}>
     <Form.Item label="Tên nhà sản xuất">
-     <Typography>{category?.name}</Typography>
+     <Typography>{category.name}</Typography>
     </Form.Item>
     <Form.Item label="Tên nhà sản xuất" name="name">
      <Input

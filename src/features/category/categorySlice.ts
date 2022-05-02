@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ICategory } from "constants/models/category.model";
 
 interface State {
+ [x: string]: any;
  categories: ICategory[] | [];
 }
 

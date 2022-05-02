@@ -101,11 +101,11 @@ export default function AddProduct(props: Props) {
      </Form.Item>
      <Form.Item label="Danh mục" name="category">
       <Select onChange={changeCate}>
-       {categories?.map((item: ICategory, idx: number) => (
+       {/* {categories?.map((item: ICategory, idx: number) => (
         <Option key={Math.random()} value={item._id}>
          {item.name}
         </Option>
-       ))}
+       ))} */}
       </Select>
      </Form.Item>
      <Form.Item label="Nhà sản xuất" name="nsx">

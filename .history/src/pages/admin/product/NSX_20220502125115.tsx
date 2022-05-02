@@ -5,7 +5,7 @@ import { RootState } from "app/store";
 import { ISubCategory } from "constants/models/category.model";
 import { IImage } from "constants/models/common.model";
 import { useResetFormOnCloseModal } from "hook/useResetFormModal";
-import AddSubcategory from "pages/admin/product/category/AddSubcategory";
+import AddSubcategory from "pages/admin/product/AddSubcategory";
 import useNSX from "pages/admin/product/useNSX";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";

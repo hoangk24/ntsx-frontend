@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo } from "react";
 import { IProduct } from "constants/models/product.model";
 import { Col, Result, Row } from "antd";
+import HomeCategory from "pages/home/category/HomeCategory";
 import useCategory from "pages/client/nsx/useNsx";
-import ProductCard from "pages/components/product-card/ProductCard";
-import HomeCategory from "pages/client/home/category/HomeCategory";
 
 function Category() {
  const { getProduct, product, path } = useCategory();

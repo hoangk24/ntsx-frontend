@@ -1,5 +1,4 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { message } from "antd";
 import { RootState, useAppDispatch } from "app/store";
 import { AddSubCategoryPayload } from "constants/payload/category.payload";
 import {
@@ -37,7 +36,7 @@ export default function useNSX() {
   dispatch(createSubCategoryAction(data))
    .then(unwrapResult)
    .then((res: any) => {
-    message.success(res.message);
+    console.log(res);
    })
    .finally(() => loading?.hide());
  };

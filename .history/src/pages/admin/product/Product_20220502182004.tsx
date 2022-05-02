@@ -133,11 +133,12 @@ export default function Product() {
     </Tabs>
    </div>
    <div className="product__footer"></div>
-   <AddProduct
+   {/* {/* <AddProduct
     onAddProduct={addProduct}
     hide={setOpenAddModal}
     show={openAddModal}
-   />
+   /> */}
+   <NSX visible={openNSXModal} setVisible={setOpenNSXModal} /> */}
   </div>
  );
 }

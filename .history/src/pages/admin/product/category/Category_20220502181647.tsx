@@ -17,7 +17,7 @@ import { ISubCategory } from "constants/models/category.model";
 import { IImage } from "constants/models/common.model";
 import { setCategory } from "features/category/categorySlice";
 import useUpload from "hook/useUpload";
-import AddSubcategory from "pages/admin/product/category/AddSubcategory";
+import AddSubcategory from "pages/admin/product/AddSubcategory";
 import useNSX from "pages/admin/product/useNSX";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";

@@ -10,6 +10,8 @@ export const getCategory: GetCategoryRequest = () =>
  axiosClient.get(API_ENDPOINT.CATEGORY.GET);
 
 export const addSubcategory: AddSubcategory = (body) => {
+ console.log(body);
+
  return axiosClient.post(API_ENDPOINT.SUB_CATEGORY.CREATE, body);
 };
 export const addCategory: AddCategory = (body) =>

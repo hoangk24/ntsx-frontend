@@ -43,3 +43,9 @@ axiosClient.interceptors.response.use(
   return Promise.reject(error);
  }
 );
+
+export const configUpload = {
+ headers: {
+  "content-type": "multipart/form-data",
+ },
+};

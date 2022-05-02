@@ -17,7 +17,6 @@ export default function NSX({ visible, setVisible }: Props) {
  const { categories, deleteNSX, addSubcategory } = useNSX();
  const [openAddSubCatge, setOpenAddSubCatge] = useState(false);
  const [category, setCategory] = useState<ISubCategory | null>(null);
- //  const [form] = useForm();
  const column = [
   {
    title: "Tên danh mục",
@@ -80,14 +79,6 @@ export default function NSX({ visible, setVisible }: Props) {
     columns={column}
     rowKey={(record) => Math.random()}
    />
-   {category && (
-    <AddSubcategory
-     category={category}
-     visible={openAddSubCatge}
-     onHide={setOpenAddSubCatge}
-     onAddSubCate={addSubcategory}
-    />
-   )}
   </Modal>
  );
 }

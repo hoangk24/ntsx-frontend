@@ -8,13 +8,11 @@ import { removeAccents } from "utils/common";
 type Props = {
  visible: boolean;
  onHide: any;
- onAddSubCate: any;
  category: ISubCategory;
 };
 export default function AddSubcategory({
  onHide,
  visible,
- onAddSubCate,
  category,
 }: Props) {
  const [form] = Form.useForm();
@@ -22,13 +20,13 @@ export default function AddSubcategory({
  const [name, setName] = useState("");
  const onSubmit = useCallback(
   (value: any) => {
-   onAddSubCate({
-    category: category._id,
-    name: value.name,
-    path: removeAccents(value.name),
-   });
-   form.resetFields();
-   setName("");
+   //  onAddSubCate({
+   //   category: category._id,
+   //   name: value.name,
+   //   path: removeAccents(value.name),
+   //  });
+   //  form.resetFields();
+   //  setName("");
   },
   [form]
  );

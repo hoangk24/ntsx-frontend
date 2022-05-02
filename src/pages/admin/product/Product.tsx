@@ -5,10 +5,11 @@ import {
  EditOutlined,
  PlusOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Space, Table } from "antd";
+import { Avatar, Button, Space, Table, Tabs } from "antd";
 import { IImage } from "constants/models/common.model";
 import useDefineSearch from "hook/useDefineSearch";
 import AddProduct from "pages/admin/product/AddProduct";
+import Category from "pages/admin/product/category/Category";
 import NSX from "pages/admin/product/NSX";
 import useLogicProduct from "pages/admin/product/useLogicProduct";
 import React, { useEffect, useState } from "react";
@@ -117,21 +118,27 @@ export default function Product() {
     </Button>
    </Space>
    <div className="product__content">
-    <Table
-     bordered
-     dataSource={products}
-     columns={columns}
-     rowKey={(record) => Math.random()}
-    />
-    ;
+    <Tabs defaultActiveKey="1">
+     <Tabs.TabPane tab="Sản phẩm" key={1}>
+      <Table
+       bordered
+       dataSource={products}
+       columns={columns}
+       rowKey={(record) => Math.random()}
+      />
+     </Tabs.TabPane>
+     <Tabs.TabPane tab="Danh mục" key={2}>
+      <Category />
+     </Tabs.TabPane>
+    </Tabs>
    </div>
    <div className="product__footer"></div>
-   <AddProduct
+   {/* <AddProduct
     onAddProduct={addProduct}
     hide={setOpenAddModal}
     show={openAddModal}
    />
-   <NSX visible={openNSXModal} setVisible={setOpenNSXModal} />
+   <NSX visible={openNSXModal} setVisible={setOpenNSXModal} /> */}
   </div>
  );
 }

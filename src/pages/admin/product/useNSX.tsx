@@ -1,5 +1,10 @@
-import { RootState } from "app/store";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { RootState, useAppDispatch } from "app/store";
 import { AddSubCategoryPayload } from "constants/payload/category.payload";
+import {
+ createCategoryAction,
+ createSubCategoryAction,
+} from "features/category/category.action";
 import { useLoading } from "hook/useLoading";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -8,6 +13,7 @@ export default function useNSX() {
  const categories = useSelector(
   (state: RootState) => state.category.categories
  );
+ const dispatch = useAppDispatch();
  const loading = useLoading();
  const deleteNSX = (id: string) => {
   loading?.show();
@@ -16,16 +22,23 @@ export default function useNSX() {
    loading?.hide();
   }, 1000);
  };
- const addSubcategory = ({
-  category,
-  name,
-  path,
- }: AddSubCategoryPayload) => {
+ const addCategory = (data: any) => {
   loading?.show();
-  setTimeout(() => {
-   console.log(category);
-   loading?.hide();
-  }, 1000);
+  dispatch(createCategoryAction(data))
+   .then(unwrapResult)
+   .then((res: any) => {
+    console.log(res);
+   })
+   .finally(() => loading?.hide());
  };
- return { categories, deleteNSX, addSubcategory };
+ const addSubcategory = (data: AddSubCategoryPayload) => {
+  loading?.show();
+  dispatch(createSubCategoryAction(data))
+   .then(unwrapResult)
+   .then((res: any) => {
+    console.log(res);
+   })
+   .finally(() => loading?.hide());
+ };
+ return { categories, deleteNSX, addSubcategory, addCategory };
 }

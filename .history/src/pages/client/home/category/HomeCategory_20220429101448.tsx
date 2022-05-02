@@ -30,7 +30,7 @@ export default function HomeCategory() {
      key={Math.random()}
      onClick={() => navigate(`/product/category/${it.path}`)}>
      <div className="content">
-      <img src={it.logos.url} alt="" />
+      <img src={logoExample} alt="" />
       <div className="">
        <h3>{it.name}</h3>
        <span>Best choice</span>

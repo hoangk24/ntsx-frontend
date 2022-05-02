@@ -28,9 +28,7 @@ type Props = {
 export default function AddProduct(props: Props) {
  const { hide, show, onAddProduct } = props;
  const [onOpenSizeModal, setOnOpenSizeModal] = useState(false);
- const { categories } = useSelector(
-  (state: RootState) => state.category
- );
+ const categories = useSelector((state: RootState) => state.category);
 
  const { Option } = Select;
  const { fileList, onChangeFileList, beforeUpload, onRemove } =
@@ -106,7 +104,7 @@ export default function AddProduct(props: Props) {
      </Form.Item>
      <Form.Item label="Danh mục" name="category">
       <Select onChange={changeCate}>
-       {categories?.map((item: ICategory, idx: number) => (
+       {categories?.categories.map((item: ICategory, idx: number) => (
         <Option key={Math.random()} value={item._id}>
          {item.name}
         </Option>

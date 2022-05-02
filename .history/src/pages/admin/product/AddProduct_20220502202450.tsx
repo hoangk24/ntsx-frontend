@@ -28,10 +28,7 @@ type Props = {
 export default function AddProduct(props: Props) {
  const { hide, show, onAddProduct } = props;
  const [onOpenSizeModal, setOnOpenSizeModal] = useState(false);
- const { categories } = useSelector(
-  (state: RootState) => state.category
- );
-
+ const categories = useSelector((state: RootState) => state.category);
  const { Option } = Select;
  const { fileList, onChangeFileList, beforeUpload, onRemove } =
   useUpload();
@@ -39,8 +36,6 @@ export default function AddProduct(props: Props) {
  const [form] = Form.useForm();
 
  const changeCate = (value: string) => {
-  console.log(value);
-
   const selected = categories.findIndex(
    (item: ICategory) => item._id === value
   );

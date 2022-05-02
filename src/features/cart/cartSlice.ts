@@ -1,19 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICartItemPreview } from "constants/models/cart.model";
+import {
+ ICartItemPreview,
+ ICartItem,
+} from "constants/models/cart.model";
 
 interface State {
- carts: ICartItemPreview[] | [];
+ carts: ICartItem[];
  totalQuantity: number;
  voucher: string;
  discount: number;
  totalCost: number;
  finalCost: number;
  isDisabled: boolean;
+ preview: ICartItemPreview[] | [];
 }
 
 const cartSlice = createSlice({
  name: "cart",
  initialState: {
+  preview: [],
   carts: [],
   totalQuantity: 0,
   voucher: "",
@@ -23,7 +28,7 @@ const cartSlice = createSlice({
   isDisabled: false,
  } as State,
  reducers: {
-  setCart(state, action: PayloadAction<ICartItemPreview[]>) {
+  setCart(state, action: PayloadAction<ICartItem[]>) {
    state.carts = action.payload;
   },
   setTotalQuantity(state, action: PayloadAction<number>) {
@@ -44,10 +49,14 @@ const cartSlice = createSlice({
   setDisabled(state, action: PayloadAction<boolean>) {
    state.isDisabled = action.payload;
   },
+  setPreview(state, action: PayloadAction<ICartItemPreview[]>) {
+   state.preview = action.payload;
+  },
   setSuccessPayment(state) {
    state.finalCost = 0;
    state.discount = 0;
    state.totalCost = 0;
+   state.preview = [];
    state.totalQuantity = 0;
    state.carts = [];
    state.isDisabled = false;
@@ -59,6 +68,7 @@ const cartSlice = createSlice({
 export default cartSlice.reducer;
 export const {
  setCart,
+ setPreview,
  setTotalQuantity,
  setVoucher,
  setDiscount,

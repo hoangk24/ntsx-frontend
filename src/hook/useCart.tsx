@@ -1,9 +1,6 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "app/store";
-import {
- ICartItem,
- ICartItemPreview,
-} from "constants/models/cart.model";
+import { ICartItem } from "constants/models/cart.model";
 import {
  getCartUserAction,
  getPreviewAction,
@@ -13,6 +10,7 @@ import {
  setDisabled,
  setDiscount,
  setFinalCost,
+ setPreview,
  setTotalCost,
  setTotalQuantity,
  setTotalQuantity as setTotalQuantityState,
@@ -26,17 +24,16 @@ import { useState } from "react";
 
 export default function useCart() {
  const { carts } = useAppSelector().cart;
- const [cartPreview, setCartPreview] = useState([]);
  const [myCart, setMyCart] = useState<ICartItem[] | []>([]);
  const { user } = useAppSelector().auth;
  const dispatch = useAppDispatch();
  const loading = useLoading();
  const { voucher } = useAppSelector().cart;
 
- const addCart = (cart: ICartItemPreview) => {
+ const addCart = (cart: ICartItem) => {
   const idx = _findIndex(
    carts,
-   (n: ICartItemPreview) =>
+   (n: ICartItem) =>
     n.idProduct === cart.idProduct && n.size === cart.size
   );
   if (idx !== -1) {
@@ -44,7 +41,7 @@ export default function useCart() {
    copy[idx].quantity += cart.quantity;
    dispatch(setCart(copy));
   } else {
-   const copy: ICartItemPreview[] = _cloneDeep(carts);
+   const copy: ICartItem[] = _cloneDeep(carts);
    copy.push(cart);
    dispatch(setCart(copy));
   }
@@ -55,7 +52,7 @@ export default function useCart() {
   dispatch(getPreviewAction({ carts, voucher }))
    .then(unwrapResult)
    .then((res: any) => {
-    setCartPreview(res.data.list);
+    dispatch(setPreview(res.data.list));
     dispatch(setTotalCost(res.data.totalCost));
     dispatch(setTotalQuantity(res.data.totalQuantity));
     dispatch(setDiscount(res.data.discount));
@@ -68,7 +65,7 @@ export default function useCart() {
  };
 
  const calcTotalQuantity = () => {
-  const copy: ICartItemPreview[] = _cloneDeep(carts);
+  const copy: ICartItem[] = _cloneDeep(carts);
   const totalQuantity = _reduce(
    copy,
    (result: any, item) => {
@@ -86,7 +83,7 @@ export default function useCart() {
   if (!quantity) {
    const copy = _filter(
     _cloneDeep(carts),
-    (n: ICartItemPreview) => n.idProduct !== idProduct
+    (n: ICartItem) => n.idProduct !== idProduct
    );
    dispatch(setCart(copy));
    return;
@@ -94,8 +91,7 @@ export default function useCart() {
 
   const idx = _findIndex(
    carts,
-   (n: ICartItemPreview) =>
-    n.idProduct === idProduct && n.size === size
+   (n: ICartItem) => n.idProduct === idProduct && n.size === size
   );
   if (carts[idx].quantity) {
    const copy = _cloneDeep(carts);
@@ -104,14 +100,14 @@ export default function useCart() {
   } else {
    const copy = _filter(
     _cloneDeep(carts),
-    (n: ICartItemPreview) => n.idProduct === idProduct
+    (n: ICartItem) => n.idProduct === idProduct
    );
    dispatch(setCart(copy));
   }
  };
  const removeCart = (idProduct: string, size: any) => {
   let copy = _cloneDeep(carts);
-  const idx = _findIndex(copy, (n: ICartItemPreview) => {
+  const idx = _findIndex(copy, (n: ICartItem) => {
    return n.size === size && n.idProduct === idProduct;
   });
   let remove: any = [];
@@ -137,7 +133,6 @@ export default function useCart() {
   addCart,
   calcTotalQuantity,
   getPreviewCart,
-  cartPreview,
   updateQuantity,
   removeCart,
  };

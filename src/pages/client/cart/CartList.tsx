@@ -1,15 +1,17 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Button, InputNumber, Table, Tag } from "antd";
 import { ColumnType } from "antd/lib/table";
+import { useAppSelector } from "app/store";
 import { ICartItemPreview } from "constants/models/cart.model";
 import useCart from "hook/useCart";
 import useDefineSearch from "hook/useDefineSearch";
 import React from "react";
 import { formatMoney } from "utils/common";
 
-export default function CartList({ list }: { list: any }) {
+export default function CartList() {
  const { getColumnSearchProps } = useDefineSearch();
  const { removeCart, updateQuantity } = useCart();
+ const { preview } = useAppSelector().cart;
 
  const columns: ColumnType<ICartItemPreview>[] = [
   {
@@ -86,7 +88,7 @@ export default function CartList({ list }: { list: any }) {
   <div>
    <Table
     bordered
-    dataSource={list}
+    dataSource={preview}
     columns={columns}
     pagination={false}
     rowKey={(record) => Math.random()}

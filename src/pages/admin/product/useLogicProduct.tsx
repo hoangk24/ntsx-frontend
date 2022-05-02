@@ -1,7 +1,6 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { message } from "antd";
 import { useAppDispatch } from "app/store";
-import { ICategory } from "constants/models/category.model";
 import { IProduct } from "constants/models/product.model";
 import {
  addProductAction,
@@ -9,7 +8,7 @@ import {
  getProductAction,
 } from "features/product/product.action";
 import { useLoading } from "hook/useLoading";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useLogicProduct() {
  const [products, setProducts] = useState<IProduct[] | []>([]);

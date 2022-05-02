@@ -7,7 +7,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
- const { getPreviewCart, cartPreview } = useCart();
+ const { getPreviewCart } = useCart();
  const { carts, voucher } = useAppSelector().cart;
  const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export default function Cart() {
  return (
   <div>
    <Typography.Title>Giỏ hàng của bạn</Typography.Title>
-   <CartList list={cartPreview} />
+   <CartList />
    <CartForm />
   </div>
  );

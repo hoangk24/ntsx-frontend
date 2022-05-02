@@ -17,15 +17,21 @@ export enum TypeCreateCart {
 export default function usePayment() {
  const navigate = useNavigate();
  const { user } = useAppSelector().auth;
- const { carts, discount, finalCost, totalCost, totalQuantity } =
-  useAppSelector().cart;
+ const {
+  carts,
+  preview,
+  discount,
+  finalCost,
+  totalCost,
+  totalQuantity,
+ } = useAppSelector().cart;
+
  const loading = useLoading();
  const dispatch = useAppDispatch();
  const onPaymentSuccess = (type: TypeCreateCart, data: any) => {
   let address = "";
   let phoneNumber = "";
   let fullName = "";
-
   switch (type) {
    case TypeCreateCart.BeforeRecieved:
     address = data.address;
@@ -38,11 +44,10 @@ export default function usePayment() {
     fullName = data?.name?.surname + data?.name?.given_name;
     break;
   }
-  console.log(data);
 
   const create: CreateCartRequest = {
    user: user?._id || "",
-   list: carts,
+   list: preview,
    totalCost,
    totalQuantity,
    discount,

@@ -12,7 +12,7 @@ import {
 import { useAppSelector } from "app/store";
 import { ICategory } from "constants/models/category.model";
 import { IProduct } from "constants/models/product.model";
-import useLogicProduct from "pages/admin/product/useLogicProduct";
+import useLogicProduct from "pages/admin/product/product/useLogicProduct";
 import React, { useEffect } from "react";
 import _filter from "lodash/filter";
 import { createRule } from "pages/client/cart/Payment";

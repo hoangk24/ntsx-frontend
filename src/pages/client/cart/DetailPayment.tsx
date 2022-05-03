@@ -3,14 +3,12 @@ import { useAppDispatch, useAppSelector } from "app/store";
 import { setVoucher } from "features/cart/cartSlice";
 import useVoucher from "hook/useVoucher";
 import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { formatMoney } from "utils/common";
 import "./DetailPayment.scss";
 export default function DetailPayment() {
- const navigate = useNavigate();
  const [voucherString, setVoucherString] = useState("");
- const { voucher, discount, finalCost, totalQuantity, totalCost } =
-  useAppSelector().cart;
+ const { voucher, preview } = useAppSelector().cart;
+
  const { addVoucher } = useVoucher();
  const dispatch = useAppDispatch();
  const mapVoucer = useMemo(() => {
@@ -28,11 +26,11 @@ export default function DetailPayment() {
   <table className="detail-payment-table">
    <tr>
     <th>Tổng số lượng:</th>
-    <td>{totalQuantity || 0}</td>
+    <td>{preview?.totalQuantity || 0}</td>
    </tr>
    <tr>
     <th>Ước tính:</th>
-    <td>{formatMoney(totalCost || 0)}</td>
+    <td>{formatMoney(preview?.totalCost || 0)}</td>
    </tr>
    <tr>
     <th>Voucher:</th>
@@ -47,7 +45,9 @@ export default function DetailPayment() {
         />
        </Col>
        <Col>
-        <Button onClick={() => addVoucher(voucherString)} block>
+        <Button
+         onClick={() => addVoucher(voucherString.toUpperCase())}
+         block>
          Áp dụng
         </Button>
        </Col>
@@ -57,11 +57,11 @@ export default function DetailPayment() {
    </tr>
    <tr>
     <th>Giảm giá:</th>
-    <td>{formatMoney(discount || 0)}</td>
+    <td>{formatMoney(preview?.discount || 0)}</td>
    </tr>
    <tr>
     <th>Tổng thanh toán</th>
-    <td> {formatMoney(finalCost || 0)}</td>
+    <td> {formatMoney(preview?.finalCost || 0)}</td>
    </tr>
   </table>
  );

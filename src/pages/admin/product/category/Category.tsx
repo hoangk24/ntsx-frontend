@@ -18,7 +18,7 @@ import { IImage } from "constants/models/common.model";
 import { setCategory } from "features/category/categorySlice";
 import useUpload from "hook/useUpload";
 import AddSubcategory from "pages/admin/product/category/AddSubcategory";
-import useNSX from "pages/admin/product/useNSX";
+import useNSX from "pages/admin/product/category/useNSX";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { removeAccents } from "utils/common";
@@ -118,7 +118,7 @@ export default function Category() {
         </Upload>
        </Form.Item>
        <Space>
-        <Button>Huỷ</Button>
+        <Button onClick={() => setOpenAddCategory(false)}>Huỷ</Button>
         <Button htmlType="submit">Thêm</Button>
        </Space>
       </Form>

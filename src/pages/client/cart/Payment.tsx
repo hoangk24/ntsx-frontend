@@ -1,22 +1,23 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { Button, Form, Input, Result, Select, Tabs } from "antd";
 import { useAppSelector } from "app/store";
+import { CartStatus } from "constants/models/cart.model";
 import {
  ICity,
  IDistrict,
  IWard,
 } from "constants/models/province.mode";
+import { CreateCartRequest } from "constants/payload/cart.payload";
+import useCart, { TypeCreateCart } from "hook/useCart";
 import useProvince from "hook/useProvince";
-import usePayment, {
- TypeCreateCart,
-} from "pages/client/cart/usePayment";
 import React, { useCallback, useEffect } from "react";
 export const createRule = (name: string) => ({
  required: true,
  message: `${name} không được để trống!`,
 });
 export default function Payment() {
- const { finalCost, isDisabled } = useAppSelector().cart;
+ const { preview, carts } = useAppSelector().cart;
+
  const {
   city,
   district,
@@ -26,15 +27,11 @@ export default function Payment() {
   fetchCity,
  } = useProvince();
  const [form] = Form.useForm();
- useEffect(() => {
-  fetchCity();
- }, []);
-
  const { Option } = Select;
- const { onPaymentSuccess } = usePayment();
-
+const { paidWithPaypal, getPreviewCart, paidWithoutPaypal } =
+  useCart();
  const { TabPane } = Tabs;
-
+ const { user } = useAppSelector().auth;
  const onFinish = useCallback(() => {
   form.validateFields().then((value: any) => {
    const data = {
@@ -42,10 +39,19 @@ export default function Payment() {
     fullName: value.fullName,
     phoneNumber: value.phoneNumber,
    };
-   onPaymentSuccess(TypeCreateCart.BeforeRecieved, data);
+   paidWithoutPaypal(data);
   });
  }, [form]);
- if (isDisabled)
+
+ useEffect(() => {
+  fetchCity();
+ }, []);
+
+ useEffect(() => {
+  getPreviewCart();
+ }, [carts]);
+
+ if (preview?.isDisabled)
   return (
    <Result
     status={"403"}
@@ -63,7 +69,7 @@ export default function Payment() {
         purchase_units: [
          {
           amount: {
-           value: (finalCost * 0.000044) as any,
+           value: (preview.finalCost * 0.000044) as any,
           },
          },
         ],
@@ -71,7 +77,7 @@ export default function Payment() {
       }}
       onApprove={(data, actions: any) => {
        return actions.order.capture().then((details: any) => {
-        onPaymentSuccess(TypeCreateCart.PayPal, details.payer);
+        paidWithPaypal(details.payer);
        });
       }}
      />

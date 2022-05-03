@@ -24,18 +24,16 @@ export default function useVoucher() {
    loading?.hide();
    return;
   }
-  dispatch(checkVoucherAction({ voucher: voucher.toUpperCase() }))
+  dispatch(checkVoucherAction({ voucher }))
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
     dispatch(setVoucher(voucher));
    })
-   .catch((err) => {
-    console.log(err);
-    message.error(err.message);
-   })
+   .catch((err) => message.error(err.message))
    .finally(() => loading?.hide());
  };
+
  const getVoucher = () => {
   dispatch(getVoucherAction({}))
    .then(unwrapResult)

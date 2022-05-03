@@ -1,8 +1,8 @@
 import { Button, Form, Space, Table, Tabs } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { CartStatus, ICart } from "constants/models/cart.model";
+import useCart from "hook/useCart";
 import _filter from "lodash/filter";
-import useCart from "pages/admin/cart/useCart";
 import React, { useEffect } from "react";
 import { formatDate, formatMoney } from "utils/common";
 import "./CartAdmin.scss";
@@ -49,7 +49,7 @@ export default function CartAdmin() {
 
     const mapList = list.map((it: any) => {
      return (
-      <div>{`${it?.idProduct.name}-${it.size} x ${it.quantity}`}</div>
+      <div>{`${it?.idProduct?.name}-${it.size} x ${it.quantity}`}</div>
      );
     });
     return <>{mapList}</>;

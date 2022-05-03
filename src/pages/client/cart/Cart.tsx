@@ -12,10 +12,13 @@ export default function Cart() {
  const navigate = useNavigate();
 
  useEffect(() => {
-  getPreviewCart();
+  const fetch = async () => {
+   await getPreviewCart();
+  };
+  fetch();
  }, [carts, voucher]);
 
- if (!carts.length)
+ if (!carts)
   return (
    <Result
     status="404"

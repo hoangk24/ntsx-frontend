@@ -2,7 +2,7 @@ import { Form, Input, Modal, Typography } from "antd";
 import { ISubCategory } from "constants/models/category.model";
 import { AddSubCategoryPayload } from "constants/payload/category.payload";
 import { useResetFormOnCloseModal } from "hook/useResetFormModal";
-import useNSX from "pages/admin/product/useNSX";
+import useNSX from "pages/admin/product/category/useNSX";
 import { useForm } from "rc-field-form";
 import React, { useCallback, useEffect, useState } from "react";
 import { removeAccents } from "utils/common";

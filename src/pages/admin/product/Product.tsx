@@ -1,5 +1,4 @@
 import {
- BarcodeOutlined,
  BarsOutlined,
  DeleteOutlined,
  EditOutlined,
@@ -8,16 +7,14 @@ import {
 import { Avatar, Button, Space, Table, Tabs } from "antd";
 import { IImage } from "constants/models/common.model";
 import useDefineSearch from "hook/useDefineSearch";
-import AddProduct from "pages/admin/product/AddProduct";
+import AddProduct from "pages/admin/product/product/AddProduct";
 import Category from "pages/admin/product/category/Category";
-import NSX from "pages/admin/product/NSX";
-import useLogicProduct from "pages/admin/product/useLogicProduct";
+import useLogicProduct from "pages/admin/product/product/useLogicProduct";
 import React, { useEffect, useState } from "react";
 import { formatDate, formatMoney } from "utils/common";
 
 export default function Product() {
  const [openAddModal, setOpenAddModal] = useState(false);
- const [openNSXModal, setOpenNSXModal] = useState(false);
  const { deleteProduct, products, addProduct, fetchProduct } =
   useLogicProduct();
  const { getColumnSearchProps } = useDefineSearch();
@@ -107,11 +104,6 @@ export default function Product() {
   <div className="product">
    <Space className="product__header py-2">
     <Button
-     onClick={() => setOpenNSXModal(true)}
-     icon={<BarsOutlined />}>
-     Danh mục
-    </Button>
-    <Button
      icon={<PlusOutlined />}
      onClick={() => setOpenAddModal(true)}>
      Thêm sản phẩm
@@ -132,7 +124,6 @@ export default function Product() {
      </Tabs.TabPane>
     </Tabs>
    </div>
-   <div className="product__footer"></div>
    <AddProduct
     onAddProduct={addProduct}
     hide={setOpenAddModal}

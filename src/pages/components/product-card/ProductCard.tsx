@@ -21,10 +21,9 @@ export default function ProductCard({ data, className }: Props) {
   <Card
    className={classNames("product-card", className)}
    hoverable
-   actions={[<PlusOutlined />, <HeartOutlined />]}
    style={{ width: "100%" }}
    cover={
-    <img  
+    <img
      onClick={() => navigate(`/product/detail/${data?._id}`)}
      src={data.posters?.[0]?.url}
     />

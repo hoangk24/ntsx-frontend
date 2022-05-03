@@ -88,7 +88,7 @@ export default function CartList() {
   <div>
    <Table
     bordered
-    dataSource={preview}
+    dataSource={preview?.list || []}
     columns={columns}
     pagination={false}
     rowKey={(record) => Math.random()}

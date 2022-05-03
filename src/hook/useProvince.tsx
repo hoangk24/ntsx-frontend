@@ -32,7 +32,6 @@ export default function useProvince() {
  const onChangeDistrict = async (id: string) => {
   try {
    const res: any = await getWard(id);
-   console.log(res);
 
    setWard(res.data.data);
   } catch (error) {}

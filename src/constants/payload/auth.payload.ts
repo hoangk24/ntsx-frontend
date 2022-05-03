@@ -11,3 +11,8 @@ export interface CreateEmailPayload {
  title: string;
  message: string;
 }
+export interface RegisterPayload {
+ email: string;
+ password: string;
+ fullName: string;
+}

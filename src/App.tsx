@@ -7,6 +7,7 @@ import DiscountAdmin from "pages/admin/discount/DiscountAdmin";
 import Product from "pages/admin/product/Product";
 import User from "pages/admin/user/User";
 import Login from "pages/auth/login/Login";
+import Register from "pages/auth/register/Register";
 import CartManagement from "pages/client/cart-management/CartManagement";
 import Cart from "pages/client/cart/Cart";
 import Category from "pages/client/category/Category";
@@ -18,7 +19,7 @@ import Errors from "pages/error/Errors";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 export default function App() {
-   useLoadRequired();
+ useLoadRequired();
 
  return (
   <BrowserRouter>
@@ -47,6 +48,7 @@ export default function App() {
      <Route path="comment" element={<Comment />} />
     </Route>
     <Route path="login" element={<Login />} />
+    <Route path="register" element={<Register />} />
     <Route path="*" element={<Errors />} />
    </Routes>
   </BrowserRouter>

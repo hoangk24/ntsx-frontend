@@ -1,4 +1,4 @@
-import { Form, Input, Checkbox, Button } from "antd";
+import { Form, Input, Checkbox, Button, Space } from "antd";
 import useLogIn from "pages/auth/login/useLogIn";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -43,9 +43,10 @@ export default function Login() {
       </Form.Item>
      </Form>
     </div>
-    <div className="footer">
-     <Link to="forgot-password">Quên mật khẩu</Link>
-    </div>
+    <Space>
+     <Link to="/register">Đăng ký</Link>
+     <Link to="/forgot-password">Quên mật khẩu</Link>
+    </Space>
    </div>
   </div>
  );

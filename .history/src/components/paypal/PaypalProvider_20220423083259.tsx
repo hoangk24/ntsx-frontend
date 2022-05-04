@@ -3,10 +3,8 @@ import {
  ReactPayPalScriptOptions,
 } from "@paypal/react-paypal-js";
 import React, { ReactNode } from "react";
-type Props = {
- children: React.ReactNode;
-};
-export default function PaypalProvider({ children }: Props) {
+
+export default function PaypalProvider({ children }: any) {
  const options = {
   "client-id":
    "AbpVYNIhifd1sGCRXREus6oanzHHMNAVaR9BLXZFSSO9HCHitOvEQnxLsieZbGKDqKC1f71ms-7yY2rQ",

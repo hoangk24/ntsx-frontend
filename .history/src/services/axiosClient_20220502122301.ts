@@ -3,7 +3,6 @@ import { BASE_URL } from "services/apiEnpoint";
 import qs from "query-string";
 import { getNewAccessToken } from "./auth.service";
 import { useNavigate } from "react-router-dom";
-import { message } from "antd";
 export const axiosClient = axios.create({
  baseURL: BASE_URL,
  headers: {
@@ -37,7 +36,6 @@ axiosClient.interceptors.response.use(
     return axiosClient(originalRequest);
    } catch (error) {
     localStorage.clear();
-    message.error("Hết hạn đăng nhập vui lòng đăng nhập lại!");
     return (window.location.href = "/login");
    }
   }

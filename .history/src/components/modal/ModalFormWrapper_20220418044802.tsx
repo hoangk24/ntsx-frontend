@@ -4,7 +4,7 @@ import React from "react";
 type Props = {
  visible: boolean;
  onHide: () => void;
- children: React.ReactNode;
+ children: any;
  onSubmit: () => void;
  form: FormInstance;
  okeText?: string;

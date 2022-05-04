@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@400;600&family=Lato&family=Roboto+Slab&family=Ubuntu&display=swap');
+@import "bootstrap-utilities";
+@import "antd/dist/antd.css";
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.btn-grad {
+    cursor: pointer;
+    background-image: linear-gradient(
+            to right,
+            #ff512f 0%,
+            #f09819 51%,
+            #ff512f 100%
+    );
+}
+
+.btn-grad {
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-size: 1.3rem;
+    border: none;
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.btn-grad:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}

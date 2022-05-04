@@ -21,10 +21,8 @@ const store = configureStore({
   }),
 });
 export const persistor = persistStore(store);
-type Props = {
- children: React.ReactNode;
-};
-export const StoreProvider = ({ children }: Props) => {
+
+export const StoreProvider = ({ children }: any) => {
  return (
   <Provider store={store}>
    <PersistGate loading={null} persistor={persistor}>

@@ -56,7 +56,9 @@ function CartList({ mycart }: { mycart: ICart }) {
    dataIndex: "idProduct",
    key: "price",
    render: (_, record) => (
-    <Tag color={"green"}>{formatMoney(record.idProduct.price)}</Tag>
+    <Tag color={"green"}>
+     {/* {formatMoney(record.idProduct.price as any)} */}
+    </Tag>
    ),
   },
   {

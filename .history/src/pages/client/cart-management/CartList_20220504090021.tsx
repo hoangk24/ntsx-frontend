@@ -24,14 +24,13 @@ import {
  EditOutlined,
  SolutionOutlined,
 } from "@ant-design/icons";
-import { ColumnsType } from "antd/es/table";
 
 function CartList({ mycart }: { mycart: ICart }) {
  const { Step } = Steps;
  const { step2, step3, step4, step1, step5 } = getStatus(
   mycart.status
  );
- const columns: ColumnsType<ICartItem> = [
+ const columns: ColumnType<ICartItem>[] = [
   {
    title: "Hình ảnh",
    render: (text: string, record: any) => (
@@ -53,10 +52,12 @@ function CartList({ mycart }: { mycart: ICart }) {
   },
   {
    title: "Đơn giá",
-   dataIndex: "idProduct",
+   dataIndex: "idProduct.price",
    key: "price",
    render: (_, record) => (
-    <Tag color={"green"}>{formatMoney(record.idProduct.price)}</Tag>
+    <Tag color={"green"}>
+     {formatMoney(record.idProduct.price as string)}
+    </Tag>
    ),
   },
   {
@@ -132,7 +133,9 @@ function CartList({ mycart }: { mycart: ICart }) {
       </Form.Item>
       <Form.Item label={"Trạng thái"}>
        <Tag>
-        {mycart.isPaided ? "Đã thanh toán" : "Chưa thanh toán"}
+        {mycart.status === CartStatus.PAIDED
+         ? "Đã thanh toán"
+         : "Chưa thanh toán"}
        </Tag>
       </Form.Item>
       <Form.Item label={"Thao tác"}>

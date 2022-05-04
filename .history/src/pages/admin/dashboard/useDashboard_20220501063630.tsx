@@ -37,7 +37,7 @@ export default function useDashboard() {
        {record.list.map((it) => (
         <Avatar
          key={Math.random()}
-         src={(it.idProduct as any).posters[0].url}
+         src={(it.idProduct as IProduct).posters[0].url}
         />
        ))}
       </Avatar.Group>

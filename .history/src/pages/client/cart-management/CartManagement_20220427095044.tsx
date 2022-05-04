@@ -16,7 +16,7 @@ function CartManagement() {
    return (
     <Result status={"404"} subTitle={"Bạn chưa có đơn hàng nào"} />
    );
-  return myCart.map((it: any) => (
+  return myCart.map((it: ICart) => (
    <CartList key={Math.random()} mycart={it} />
   ));
  }, [myCart]);

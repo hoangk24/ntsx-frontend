@@ -35,7 +35,7 @@
  },
  "devDependencies": {
   "@types/node": "^17.0.25",
-  "@types/react": "^17.0.2",
+  "@types/react": "^17.0.44",
   "@types/react-dom": "^17.0.2",
   "@types/react-highlight-words": "^0.16.4",
   "@types/react-slick": "^0.23.8",

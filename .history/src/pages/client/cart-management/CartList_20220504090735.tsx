@@ -55,9 +55,12 @@ function CartList({ mycart }: { mycart: ICart }) {
    title: "Đơn giá",
    dataIndex: "idProduct",
    key: "price",
-   render: (_, record) => (
-    <Tag color={"green"}>{formatMoney(record.idProduct.price)}</Tag>
-   ),
+   render: (_, record) => {
+    const {} = record.idProduct;
+    return (
+     <Tag color={"green"}>{formatMoney(record.idProduct.price)}</Tag>
+    );
+   },
   },
   {
    title: "Số lượng",

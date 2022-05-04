@@ -20,6 +20,7 @@ export default function useRegister() {
     message.success(res.message);
     setIsSuccess(true);
    })
+   .catch((err: any) => message.error(err.message))
    .finally(() => loading?.hide());
  };
  return { isSuccess, register };

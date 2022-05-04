@@ -8,6 +8,7 @@ import Product from "pages/admin/product/Product";
 import User from "pages/admin/user/User";
 import Login from "pages/auth/login/Login";
 import Register from "pages/auth/register/Register";
+import Verfied from "pages/auth/verfied/Verfied";
 import CartManagement from "pages/client/cart-management/CartManagement";
 import Cart from "pages/client/cart/Cart";
 import Category from "pages/client/category/Category";
@@ -48,6 +49,7 @@ export default function App() {
      <Route path="comment" element={<Comment />} />
     </Route>
     <Route path="login" element={<Login />} />
+    <Route path="verified-email" element={<Verfied />} />
     <Route path="register" element={<Register />} />
     <Route path="*" element={<Errors />} />
    </Routes>

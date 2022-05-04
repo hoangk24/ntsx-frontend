@@ -9,6 +9,9 @@ import { axiosClient } from "services/axiosClient";
 type ResendMailRequest = (
  body: ResendMailPayload
 ) => Promise<AxiosResponse<{ data: any; message: string }>>;
+type VerfiedEmailRequest = (body: {
+ token: string;
+}) => Promise<AxiosResponse<{ data: any; message: string }>>;
 
 type CreateMailRequest = (
  body: CreateEmailPayload
@@ -19,3 +22,5 @@ export const re_verifiedMail: ResendMailRequest = (body) =>
 
 export const create_mail: CreateMailRequest = (body) =>
  axiosClient.post(API_ENDPOINT.MAIl.CREATE, body);
+export const verified: VerfiedEmailRequest = (body) =>
+ axiosClient.post(API_ENDPOINT.MAIl.VERIFIED, body);

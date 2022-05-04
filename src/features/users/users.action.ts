@@ -5,12 +5,19 @@ import {
 } from "constants/payload/auth.payload";
 import {
  ActiveMailPayload,
+ ChangePasswordPayload,
  ChangeRolePayload,
  CreateUserRequest,
+ ForgotPasswordPayload,
 } from "constants/payload/user.payload";
-import { create_mail, re_verifiedMail } from "services/email.service";
+import {
+ create_mail,
+ forgotPassword,
+ re_verifiedMail,
+} from "services/email.service";
 import {
  activeMail,
+ changePassword,
  changeRole,
  createUser,
  deleteUser,
@@ -23,6 +30,29 @@ export const getAllUserAction = createAsyncThunk(
  async (body, { rejectWithValue }) => {
   try {
    const res = await getAllUser(body);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
+
+export const changePasswordAction = createAsyncThunk(
+ "users/changePasswordAction",
+ async (body: ChangePasswordPayload, { rejectWithValue }) => {
+  try {
+   const res = await changePassword(body);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
+export const forgotPasswordAction = createAsyncThunk(
+ "users/forgotPasswordAction",
+ async (body: ForgotPasswordPayload, { rejectWithValue }) => {
+  try {
+   const res = await forgotPassword(body);
    return res.data;
   } catch (error: any) {
    return rejectWithValue(error?.response.data);

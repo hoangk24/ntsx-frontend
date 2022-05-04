@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import {
  ActiveMailPayload,
+ ChangePasswordPayload,
  ChangeRolePayload,
  CreateUserRequest,
 } from "constants/payload/user.payload";
@@ -18,6 +19,9 @@ type GetUserInfo = (
 type CreateUser = (
  body: CreateUserRequest
 ) => Promise<AxiosResponse<{ data: any; message: string }>>;
+type ChangePassword = (
+ body: ChangePasswordPayload
+) => Promise<AxiosResponse<{ data: any; message: string }>>;
 
 type DeleteUser = (
  id: string
@@ -28,6 +32,9 @@ type ChangeRole = (
 type ActiveMail = (
  body: ActiveMailPayload
 ) => Promise<AxiosResponse<{ data: any; message: string }>>;
+
+export const changePassword: ChangePassword = (body) =>
+ axiosClient.post(API_ENDPOINT.USER.CHANGE_PASSWORD, body);
 
 export const getAllUser: GetAllUser = (body) =>
  axiosClient.get(API_ENDPOINT.USER.GET);

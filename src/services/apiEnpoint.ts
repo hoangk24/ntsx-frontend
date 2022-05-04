@@ -14,6 +14,7 @@ const API_ENDPOINT = {
   UPDATE: "/users/update-users",
   DELETE: "/users/delete-users",
   CHANGE_ROLE: "/users/change-role",
+  CHANGE_PASSWORD: "/users/change-password",
  },
  PRODUCT: {
   GET_ALL: "/product/get-all-product",

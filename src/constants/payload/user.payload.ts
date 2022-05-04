@@ -20,3 +20,10 @@ export interface ChangeRolePayload {
 export interface ActiveMailPayload {
  id: string;
 }
+export interface ChangePasswordPayload {
+ token: string;
+ email: string;
+}
+export interface ForgotPasswordPayload {
+ email: string;
+}

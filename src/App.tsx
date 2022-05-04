@@ -6,6 +6,8 @@ import Dashboard from "pages/admin/dashboard/Dashboard";
 import DiscountAdmin from "pages/admin/discount/DiscountAdmin";
 import Product from "pages/admin/product/Product";
 import User from "pages/admin/user/User";
+import ChangePassword from "pages/auth/forgot-password/ChangePassword";
+import FortgotPassword from "pages/auth/forgot-password/FortgotPassword";
 import Login from "pages/auth/login/Login";
 import Register from "pages/auth/register/Register";
 import Verfied from "pages/auth/verfied/Verfied";
@@ -49,8 +51,10 @@ export default function App() {
      <Route path="comment" element={<Comment />} />
     </Route>
     <Route path="login" element={<Login />} />
+    <Route path="forgot-password" element={<FortgotPassword />} />
     <Route path="verified-email" element={<Verfied />} />
     <Route path="register" element={<Register />} />
+    <Route path="change-password" element={<ChangePassword />} />
     <Route path="*" element={<Errors />} />
    </Routes>
   </BrowserRouter>

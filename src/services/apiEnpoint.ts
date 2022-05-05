@@ -44,6 +44,7 @@ const API_ENDPOINT = {
   GET: "/category/get-category",
   CREATE: "/category/create-category",
   GET_PRODUCT: "/product/get-product-by-category",
+  UPDATE: "/category/update-category",
  },
  SUB_CATEGORY: {
   CREATE: "/category/create-nsx",

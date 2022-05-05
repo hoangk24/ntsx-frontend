@@ -1,0 +1,29 @@
+.home-category {
+ margin-top: 3rem;
+ .category {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  &-btn {
+   //  padding: 1rem;
+   .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    img {
+     display: block;
+     width: 30%;
+    }
+    h3 {
+     font-size: 1.3rem;
+     margin-bottom: 0 !important;
+    }
+   }
+  }
+ }
+}

@@ -1,7 +1,6 @@
 import ClientRoute from "components/adminRoute/ClientRoute";
 import useLoadRequired from "hook/useLoadRequired";
 import CartAdmin from "pages/admin/cart/CartAdmin";
-import Comment from "pages/admin/comment/Comment";
 import Dashboard from "pages/admin/dashboard/Dashboard";
 import DiscountAdmin from "pages/admin/discount/DiscountAdmin";
 import Product from "pages/admin/product/Product";
@@ -48,7 +47,6 @@ export default function App() {
      <Route path="cart" element={<CartAdmin />} />
      <Route path="discount" element={<DiscountAdmin />} />
      <Route path="user" element={<User />} />
-     <Route path="comment" element={<Comment />} />
     </Route>
     <Route path="login" element={<Login />} />
     <Route path="forgot-password" element={<FortgotPassword />} />

@@ -9,7 +9,7 @@ import ReactDOM from "react-dom";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "./index.css";
-
+import "./grid.css";
 ReactDOM.render(
  <Compose
   components={[

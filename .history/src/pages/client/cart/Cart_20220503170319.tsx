@@ -18,7 +18,7 @@ export default function Cart() {
   fetch();
  }, [carts, voucher]);
 
- if (!carts)
+ if (!carts.length)
   return (
    <Result
     status="404"

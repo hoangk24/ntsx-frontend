@@ -116,6 +116,7 @@ export default function CartProvider({ children }: any) {
    dispatch(setCart(copy));
    return;
   }
+
   const idx = _findIndex(
    carts,
    (n: ICartItem) => n.idProduct === idProduct && n.size === size

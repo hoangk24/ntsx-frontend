@@ -4,6 +4,7 @@ import { ColumnsType } from "antd/lib/table";
 import { useAppDispatch } from "app/store";
 import { ICart } from "constants/models/cart.model";
 import { IProduct } from "constants/models/product.model";
+import { Moment } from "moment";
 import React, { useState } from "react";
 import { getDashboard } from "services/dashboard.service";
 import { formatMoney } from "utils/common";
@@ -14,15 +15,16 @@ interface DashboardHome {
  carts: number;
  cartTable: ICart[];
  totalCost: number;
+ saleTable: any;
+ costTable: any;
 }
 export default function useDashboard() {
  const dispatch = useAppDispatch();
  const [data, setData] = useState<DashboardHome>();
 
- const getHome = async () => {
+ const getHome = async (data?: { startDate: any; endDate: any }) => {
   try {
-   const res: any = await getDashboard();
-
+   const res: any = await getDashboard(data);
    setData(res.data.data);
   } catch (error) {}
  };
@@ -75,30 +77,53 @@ export default function useDashboard() {
    ),
   },
  ];
- const columnsProduct: ColumnsType<IProduct> = [
+ const columnsProduct: ColumnsType<any> = [
   {
    title: "Sản phẩm",
-   dataIndex: "list",
+   dataIndex: "",
    render: (text, record) => {
     return (
-     <>
-      <Avatar.Group>
-       {record.posters.map((it) => (
-        <Avatar key={Math.random()} src={it.url} />
-       ))}
-      </Avatar.Group>
-     </>
+     <Avatar
+      key={Math.random()}
+      src={record?.infoProduct?.posters?.[0]?.url}
+     />
     );
    },
   },
   {
    title: "Tên sản phẩm",
-   dataIndex: "name",
+   dataIndex: "infoProduct.name",
+   render: (text, record) => <>{record?.infoProduct?.name}</>,
   },
   {
    title: "Số lượng bán ra",
-   dataIndex: "",
+   dataIndex: "totalQuantity",
   },
  ];
- return { getHome, data, columnsCart, columnsProduct };
+
+ const columnsCost: ColumnsType<any> = [
+  {
+   title: "Sản phẩm",
+   dataIndex: "",
+   render: (text, record) => {
+    return (
+     <Avatar
+      key={Math.random()}
+      src={record?.infoProduct?.posters?.[0]?.url}
+     />
+    );
+   },
+  },
+  {
+   title: "Tên sản phẩm",
+   dataIndex: "infoProduct.name",
+   render: (text, record) => <>{record?.infoProduct?.name}</>,
+  },
+  {
+   title: "Tổng tiền bán",
+   dataIndex: "totalCost",
+   render: (text) => <>{formatMoney(text)}</>,
+  },
+ ];
+ return { getHome, data, columnsCart, columnsProduct, columnsCost };
 }

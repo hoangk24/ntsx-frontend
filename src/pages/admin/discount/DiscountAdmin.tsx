@@ -12,7 +12,7 @@ import { IDiscount } from "constants/models/discount.model";
 import moment from "moment";
 import AddDiscount from "pages/admin/discount/AddDiscount";
 import UpdateDiscount from "pages/admin/discount/UpdateDiscount";
-import useDiscount from "pages/admin/discount/useDiscount";
+import { useDiscount } from "pages/admin/discount/useDiscount";
 import Voucher from "pages/admin/discount/Voucher";
 import React, { useEffect, useState } from "react";
 import { formatDate } from "utils/common";

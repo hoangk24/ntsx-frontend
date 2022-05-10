@@ -30,7 +30,6 @@ const SizeForm: React.FC<ModalFormProps> = ({
      label={"Số lượng"}
      name="quantity"
      rules={[{ required: true }]}>
-     {/* <Slider min={1} /> */}
      <InputNumber min={1} />
     </Form.Item>
    </Form>

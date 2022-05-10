@@ -1,24 +1,37 @@
 import {
- BarsOutlined,
  DeleteOutlined,
  EditOutlined,
  PlusOutlined,
+ ReloadOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Space, Table, Tabs } from "antd";
+import {
+ Avatar,
+ Badge,
+ Button,
+ Form,
+ Select,
+ Space,
+ Table,
+ Typography,
+} from "antd";
+import { ColumnsType } from "antd/lib/table";
+import { useAppSelector } from "app/store";
+import { ICategory } from "constants/models/category.model";
 import { IImage } from "constants/models/common.model";
+import { IProduct, ISizes } from "constants/models/product.model";
 import useDefineSearch from "hook/useDefineSearch";
+import { useProduct } from "hook/useProduct";
 import AddProduct from "pages/admin/product/product/AddProduct";
-import Category from "pages/admin/product/category/Category";
-import useLogicProduct from "pages/admin/product/product/useLogicProduct";
-import React, { useEffect, useState } from "react";
-import { formatDate, formatMoney } from "utils/common";
+import React, { useState } from "react";
+import { formatDate } from "utils/common";
 
 export default function Product() {
  const [openAddModal, setOpenAddModal] = useState(false);
- const { deleteProduct, products, addProduct, fetchProduct } =
-  useLogicProduct();
+ const { deleteProduct, products, fetchProduct } = useProduct();
  const { getColumnSearchProps } = useDefineSearch();
- const columns = [
+ const { categories } = useAppSelector().category;
+ const { Option } = Select;
+ const columns: ColumnsType<IProduct> = [
   {
    title: "Hình ảnh",
    dataIndex: "posters",
@@ -37,36 +50,38 @@ export default function Product() {
    title: "Tên sản phẩm",
    dataIndex: "name",
    key: "name",
-   ...getColumnSearchProps("name"),
   },
   {
    title: "Đơn giá",
    dataIndex: "price",
    key: "price",
-   render: (price: any) => {
-    return <div>{formatMoney(price)}</div>;
-   },
   },
   {
-   title: "Giảm giá",
-   dataIndex: "discount",
-   key: "discount",
+   title: "Size - Số lượng",
+   dataIndex: "size",
+   key: "size",
+   render: (text, record) => (
+    <Space direction="vertical">
+     {record.size.map((it: ISizes) => (
+      <Badge
+       color={it.quantity > 0 ? "green" : "red"}
+       text={`Size ${it.size} - ${it.quantity} Đôi`}
+      />
+     ))}
+    </Space>
+   ),
   },
   {
-   title: "Danh mục",
+   title: "DM",
    dataIndex: "category",
    key: "category",
-   render: (text: string, record: any, index: number) => {
-    return <div>{record.category.name}</div>;
-   },
+   render: (text, record) => <>{record.category.name}</>,
   },
   {
-   title: "Nhà sản xuất",
+   title: "NSX",
    dataIndex: "nsx",
    key: "nsx",
-   render: (text: string, record: any, index: number) => {
-    return <div>{record.nsx.name}</div>;
-   },
+   render: (text, record) => <>{record.nsx.name}</>,
   },
   {
    title: "Thời gian",
@@ -82,23 +97,19 @@ export default function Product() {
   },
   {
    title: "Thao tác",
-   key: "action",
    render: (text: string, record: any, index: number) => {
     return (
-     <>
+     <Space>
       <Button
        onClick={() => deleteProduct(record._id)}
        icon={<DeleteOutlined />}
       />
-      <Button icon={<EditOutlined />} />
-     </>
+      <Button onClick={() => {}} icon={<EditOutlined />} />
+     </Space>
     );
    },
   },
  ];
- useEffect(() => {
-  fetchProduct();
- }, []);
 
  return (
   <div className="product">
@@ -108,26 +119,21 @@ export default function Product() {
      onClick={() => setOpenAddModal(true)}>
      Thêm sản phẩm
     </Button>
+    <Button onClick={() => fetchProduct()} icon={<ReloadOutlined />}>
+     Làm mới
+    </Button>
    </Space>
-   <div className="product__content">
-    <Tabs defaultActiveKey="1">
-     <Tabs.TabPane tab="Sản phẩm" key={1}>
-      <Table
-       bordered
-       dataSource={products}
-       columns={columns}
-       rowKey={(record) => Math.random()}
-      />
-     </Tabs.TabPane>
-     <Tabs.TabPane tab="Danh mục" key={2}>
-      <Category />
-     </Tabs.TabPane>
-    </Tabs>
-   </div>
+   <Table
+    rowKey={(record) => record._id}
+    expandable={{
+     expandedRowRender: (record) => <p>{record.note}</p>,
+    }}
+    dataSource={products}
+    columns={columns}
+   />
    <AddProduct
-    onAddProduct={addProduct}
-    hide={setOpenAddModal}
     show={openAddModal}
+    hide={() => setOpenAddModal(false)}
    />
   </div>
  );

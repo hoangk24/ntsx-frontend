@@ -6,7 +6,6 @@ import {
 import { Avatar, Badge, Button, Dropdown, Menu, Space } from "antd";
 import { useAppSelector } from "app/store";
 import useLogOut from "containers/auth/useLogOut";
-import useCart from "hook/useCart";
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -15,10 +14,6 @@ export default function Auth() {
  const { user, isLogin } = useAppSelector().auth;
  const { preview, carts } = useAppSelector().cart;
  const { fetchLogOut } = useLogOut();
- const { getPreviewCart } = useCart();
- useEffect(() => {
-  getPreviewCart();
- }, [carts]);
 
  const menuUser = (
   <Menu>

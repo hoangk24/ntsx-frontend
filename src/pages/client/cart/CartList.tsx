@@ -3,7 +3,7 @@ import { Avatar, Button, InputNumber, Table, Tag } from "antd";
 import { ColumnType } from "antd/lib/table";
 import { useAppSelector } from "app/store";
 import { ICartItemPreview } from "constants/models/cart.model";
-import useCart from "hook/useCart";
+import { useCart } from "hook/useCart";
 import useDefineSearch from "hook/useDefineSearch";
 import React from "react";
 import { formatMoney } from "utils/common";

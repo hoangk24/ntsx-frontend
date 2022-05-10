@@ -11,15 +11,13 @@ import {
 } from "antd";
 import { useAppSelector } from "app/store";
 import { ICategory } from "constants/models/category.model";
-import { IProduct } from "constants/models/product.model";
-import useLogicProduct from "pages/admin/product/product/useLogicProduct";
-import React, { useEffect, useState } from "react";
-import _filter from "lodash/filter";
-import { createRule } from "pages/client/cart/Payment";
-import useDiscount from "pages/admin/discount/useDiscount";
-import moment from "moment";
 import { IDiscount } from "constants/models/discount.model";
-import _reduce from "lodash/reduce";
+import moment from "moment";
+import { useDiscount } from "pages/admin/discount/useDiscount";
+import { useProduct } from "hook/useProduct";
+import React, { useEffect } from "react";
+import _filter from "lodash/filter";
+import { IProduct } from "constants/models/product.model";
 type Props = {
  visible: boolean;
  hide: () => void;
@@ -32,7 +30,7 @@ export default function UpdateDiscount({
 }: Props) {
  const { TabPane } = Tabs;
  const { categories } = useAppSelector().category;
- const { fetchProduct, products } = useLogicProduct();
+ const { fetchProduct, products } = useProduct();
  const {
   defaultCheckedList,
   onChangeCheckList,
@@ -42,10 +40,10 @@ export default function UpdateDiscount({
 
  const [form] = Form.useForm();
 
- useEffect(() => {
-  fetchProduct();
-  setCheckedList(data?.list || []);
- }, [data]);
+ //  useEffect(() => {
+ //   fetchProduct();
+ //   setCheckedList(data?.list || []);
+ //  }, [data]);
 
  const onFinish = (values: any) => {
   const { endDate, name, percent, startDate } = values;

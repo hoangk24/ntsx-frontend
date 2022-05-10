@@ -1,9 +1,8 @@
 import ClientRoute from "components/adminRoute/ClientRoute";
-import useLoadRequired from "hook/useLoadRequired";
 import CartAdmin from "pages/admin/cart/CartAdmin";
 import Dashboard from "pages/admin/dashboard/Dashboard";
 import DiscountAdmin from "pages/admin/discount/DiscountAdmin";
-import Product from "pages/admin/product/Product";
+import Product from "pages/admin/product/ProductWrapper";
 import User from "pages/admin/user/User";
 import ChangePassword from "pages/auth/forgot-password/ChangePassword";
 import FortgotPassword from "pages/auth/forgot-password/FortgotPassword";
@@ -18,43 +17,45 @@ import Nsx from "pages/client/nsx/Nsx";
 import PaymentSuccess from "pages/client/payment/PaymentSuccess";
 import ProductDetail from "pages/client/product-detail/ProductDetail";
 import Errors from "pages/error/Errors";
+import Compose from "containers/compose/Compose";
+
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 export default function App() {
- useLoadRequired();
-
  return (
   <BrowserRouter>
-   <Routes>
-    //! CLIENT ROUTE
-    <Route path="/" element={<ClientRoute />}>
-     <Route index element={<Home />} />
-     <Route path="cart">
-      <Route path={""} element={<Cart />} />
-      <Route path={"my-cart"} element={<CartManagement />} />
+   <Compose>
+    <Routes>
+     //! CLIENT ROUTE
+     <Route path="/" element={<ClientRoute />}>
+      <Route index element={<Home />} />
+      <Route path="cart">
+       <Route path={""} element={<Cart />} />
+       <Route path={"my-cart"} element={<CartManagement />} />
+      </Route>
+      <Route path="payment-success" element={<PaymentSuccess />} />
+      <Route path="product">
+       <Route path="nsx/:path" element={<Nsx />} />
+       <Route path="category/:path" element={<Category />} />
+       <Route path="detail/:id" element={<ProductDetail />} />
+      </Route>
      </Route>
-     <Route path="payment-success" element={<PaymentSuccess />} />
-     <Route path="product">
-      <Route path="nsx/:path" element={<Nsx />} />
-      <Route path="category/:path" element={<Category />} />
-      <Route path="detail/:id" element={<ProductDetail />} />
+     //! ADMIN ROUTE
+     <Route path="admin" element={<ClientRoute type="private" />}>
+      <Route path="" element={<Dashboard />} />
+      <Route path="product" element={<Product />} />
+      <Route path="cart" element={<CartAdmin />} />
+      <Route path="discount" element={<DiscountAdmin />} />
+      <Route path="user" element={<User />} />
      </Route>
-    </Route>
-    //! ADMIN ROUTE
-    <Route path="admin" element={<ClientRoute type="private" />}>
-     <Route path="" element={<Dashboard />} />
-     <Route path="product" element={<Product />} />
-     <Route path="cart" element={<CartAdmin />} />
-     <Route path="discount" element={<DiscountAdmin />} />
-     <Route path="user" element={<User />} />
-    </Route>
-    <Route path="login" element={<Login />} />
-    <Route path="forgot-password" element={<FortgotPassword />} />
-    <Route path="verified-email" element={<Verfied />} />
-    <Route path="register" element={<Register />} />
-    <Route path="change-password" element={<ChangePassword />} />
-    <Route path="*" element={<Errors />} />
-   </Routes>
+     <Route path="login" element={<Login />} />
+     <Route path="forgot-password" element={<FortgotPassword />} />
+     <Route path="verified-email" element={<Verfied />} />
+     <Route path="register" element={<Register />} />
+     <Route path="change-password" element={<ChangePassword />} />
+     <Route path="*" element={<Errors />} />
+    </Routes>
+   </Compose>
   </BrowserRouter>
  );
 }

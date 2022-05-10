@@ -26,7 +26,7 @@ import { useLoading } from "hook/useLoading";
 import _cloneDeep from "lodash/cloneDeep";
 import _filter from "lodash/filter";
 import _findIndex from "lodash/findIndex";
-import { useCallback, useEffect } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useState from "react-usestateref"; // see this line
 
@@ -34,7 +34,23 @@ export enum TypeCreateCart {
  PayPal = 1,
  BeforeRecieved = 2,
 }
-export default function useCart() {
+interface ICartContext {
+ myCart: ICartItem[];
+ getMycart: any;
+ addCart: any;
+ getPreviewCart: any;
+ updateQuantity: any;
+ removeCart: any;
+ paidWithPaypal: any;
+ paidWithoutPaypal: any;
+ changeStatus: any;
+ getAllCart: any;
+ data: ICart[];
+}
+const CartContext = createContext<ICartContext>({} as ICartContext);
+export const useCart = () => useContext(CartContext);
+
+export default function CartProvider({ children }: any) {
  const { voucher, preview, carts } = useAppSelector().cart;
  const [myCart, setMyCart] = useState<ICartItem[] | []>([]);
  const [test, setTest, testRef] = useState<any>();
@@ -48,6 +64,10 @@ export default function useCart() {
  useEffect(() => {
   setTest(preview);
  }, [preview]);
+
+ useEffect(() => {
+  getPreviewCart();
+ }, [carts, voucher]);
 
  const addCart = (cart: ICartItem) => {
   const idx = _findIndex(
@@ -139,7 +159,7 @@ export default function useCart() {
    totalCost: testRef.current.totalCost,
    totalQuantity: testRef.current.totalQuantity,
    finalCost: testRef.current.finalCost,
-   phoneNumber: data?.phoneNumber,
+   phoneNumber: "0344184570",
    status: CartStatus.CREATING,
   };
   loading?.show();
@@ -204,17 +224,22 @@ export default function useCart() {
    })
    .finally(() => loading?.hide());
  };
- return {
-  myCart,
-  getMycart,
-  addCart,
-  getPreviewCart,
-  updateQuantity,
-  removeCart,
-  paidWithPaypal,
-  paidWithoutPaypal,
-  changeStatus,
-  getAllCart,
-  data,
- };
+ return (
+  <CartContext.Provider
+   value={{
+    myCart,
+    getMycart,
+    addCart,
+    getPreviewCart,
+    updateQuantity,
+    removeCart,
+    paidWithPaypal,
+    paidWithoutPaypal,
+    changeStatus,
+    getAllCart,
+    data,
+   }}>
+   {children}
+  </CartContext.Provider>
+ );
 }

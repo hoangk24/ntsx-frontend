@@ -1,22 +1,13 @@
 import { Button, Result, Typography } from "antd";
 import { useAppSelector } from "app/store";
-import useCart from "hook/useCart";
 import CartForm from "pages/client/cart/CartForm";
 import CartList from "pages/client/cart/CartList";
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
- const { getPreviewCart } = useCart();
  const { carts, voucher } = useAppSelector().cart;
  const navigate = useNavigate();
-
- useEffect(() => {
-  const fetch = async () => {
-   await getPreviewCart();
-  };
-  fetch();
- }, [carts, voucher]);
 
  if (!carts || !carts.length)
   return (

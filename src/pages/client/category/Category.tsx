@@ -3,13 +3,17 @@ import { IProduct } from "constants/models/product.model";
 import { Col, Result, Row } from "antd";
 import ProductCard from "pages/components/product-card/ProductCard";
 import HomeCategory from "pages/client/home/category/HomeCategory";
-import useCategory from "pages/client/category/useCategory";
+import { useCategory } from "hook/useCategory";
+import { useParams } from "react-router-dom";
 
 function Category() {
- const { getProduct, product, path } = useCategory();
+ const { product, getProduct } = useCategory();
+ const { path } = useParams();
+
  useEffect(() => {
-  getProduct();
+  getProduct(path);
  }, [path]);
+
  const mapProduct = useMemo(() => {
   if (!product.length)
    return (
@@ -21,7 +25,7 @@ function Category() {
   return (
    <Row gutter={5} className={"mt-5"}>
     {product.map((it: IProduct) => (
-     <Col span={4}>
+     <Col key={Math.random()} span={4}>
       <ProductCard key={Math.random()} data={it} className={""} />
      </Col>
     ))}

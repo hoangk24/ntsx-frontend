@@ -8,7 +8,7 @@ import {
  IWard,
 } from "constants/models/province.mode";
 import { CreateCartRequest } from "constants/payload/cart.payload";
-import useCart, { TypeCreateCart } from "hook/useCart";
+import { useCart } from "hook/useCart";
 import useProvince from "hook/useProvince";
 import React, { useCallback, useEffect } from "react";
 export const createRule = (name: string) => ({
@@ -28,7 +28,7 @@ export default function Payment() {
  } = useProvince();
  const [form] = Form.useForm();
  const { Option } = Select;
-const { paidWithPaypal, getPreviewCart, paidWithoutPaypal } =
+ const { paidWithPaypal, getPreviewCart, paidWithoutPaypal } =
   useCart();
  const { TabPane } = Tabs;
  const { user } = useAppSelector().auth;

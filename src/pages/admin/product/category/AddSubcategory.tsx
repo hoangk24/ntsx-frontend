@@ -1,10 +1,8 @@
 import { Form, Input, Modal, Typography } from "antd";
 import { ISubCategory } from "constants/models/category.model";
-import { AddSubCategoryPayload } from "constants/payload/category.payload";
 import { useResetFormOnCloseModal } from "hook/useResetFormModal";
-import useNSX from "pages/admin/product/category/useNSX";
-import { useForm } from "rc-field-form";
-import React, { useCallback, useEffect, useState } from "react";
+import { useNsx } from "hook/useNSX";
+import React, { useCallback, useState } from "react";
 import { removeAccents } from "utils/common";
 type Props = {
  visible: boolean;
@@ -17,18 +15,20 @@ export default function AddSubcategory({
  category,
 }: Props) {
  const [form] = Form.useForm();
- const { addSubcategory } = useNSX();
+ const { addSubcategory } = useNsx();
  useResetFormOnCloseModal({ form, visible });
  const [name, setName] = useState("");
+
  const onSubmit = useCallback(
   (value: any) => {
-   addSubcategory({
+   const data = {
     category: category._id as string,
     name: value.name,
     path: removeAccents(value.name)
      .toLowerCase()
      .replaceAll(" ", "-"),
-   });
+   };
+   addSubcategory(data, () => onHide(false));
   },
   [form]
  );

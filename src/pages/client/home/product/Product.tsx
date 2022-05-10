@@ -1,13 +1,13 @@
 import { Button, Col, Row } from "antd";
 import { IProduct } from "constants/models/product.model";
-import useFectchProduct from "pages/client/home/product/useFectchProduct";
+import { useProduct } from "hook/useProduct";
 import ProductCard from "pages/components/product-card/ProductCard";
 import ProductCardLoading from "pages/components/product-card/ProductCardLoading";
 import React, { useMemo } from "react";
 import { formatMoney } from "utils/common";
 import "./Product.scss";
 export default function ProductListing() {
- const { products } = useFectchProduct();
+ const { products } = useProduct();
 
  const mapProduct = useMemo(() => {
   if (products?.length)
@@ -16,7 +16,7 @@ export default function ProductListing() {
      <ProductCard className="product-card" data={it} />
     </Col>
    ));
-  else return <></>;
+  else return <>Loading....</>;
  }, [products]);
 
  return (

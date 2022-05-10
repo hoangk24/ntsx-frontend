@@ -8,13 +8,30 @@ import {
  getProductAction,
 } from "features/product/product.action";
 import { useLoading } from "hook/useLoading";
-import { useState } from "react";
+import React, {
+ createContext,
+ useContext,
+ useEffect,
+ useState,
+} from "react";
 
-export default function useLogicProduct() {
+interface IProductContext {
+ fetchProduct: () => void;
+ deleteProduct: (id: string) => void;
+ addProduct: (formData: any) => void;
+ products: IProduct[];
+}
+export const ProductContext = createContext<IProductContext>(
+ {} as IProductContext
+);
+export const useProduct = () => useContext(ProductContext);
+
+export default function ProductProvider({ children }: any) {
  const [products, setProducts] = useState<IProduct[] | []>([]);
 
  const dispatch = useAppDispatch();
  const loading = useLoading();
+
  const fetchProduct = async () => {
   loading?.show();
   dispatch(getProductAction({}))
@@ -25,6 +42,7 @@ export default function useLogicProduct() {
    .catch((err: any) => message.error(err.message))
    .finally(() => loading?.hide());
  };
+
  const addProduct = (formData: any) => {
   loading?.show();
   dispatch(addProductAction(formData))
@@ -39,7 +57,6 @@ export default function useLogicProduct() {
    .finally(() => loading?.hide());
  };
 
- //!delete product
  const deleteProduct = (id: string) => {
   loading?.show();
   dispatch(deleteProductAction({ id }))
@@ -52,10 +69,19 @@ export default function useLogicProduct() {
    .finally(() => loading?.hide());
  };
 
- return {
-  fetchProduct,
-  addProduct,
-  products,
-  deleteProduct,
- };
+ useEffect(() => {
+  fetchProduct();
+ }, []);
+
+ return (
+  <ProductContext.Provider
+   value={{
+    fetchProduct,
+    deleteProduct,
+    addProduct,
+    products,
+   }}>
+   {children}
+  </ProductContext.Provider>
+ );
 }

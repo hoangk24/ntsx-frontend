@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo } from "react";
-import useCart from "hook/useCart";
 import { Result } from "antd";
 import { ICart } from "../../../constants/models/cart.model";
 import CartList from "./CartList";
+import { useCart } from "hook/useCart";
 
 function CartManagement() {
  const { getMycart, myCart } = useCart();

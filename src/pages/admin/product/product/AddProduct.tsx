@@ -1,12 +1,14 @@
 import { PlusOutlined } from "@ant-design/icons";
 import {
  Button,
+ Descriptions,
  Form,
  Input,
  InputNumber,
  message,
  Modal,
  Select,
+ Space,
  Typography,
  Upload,
 } from "antd";
@@ -18,15 +20,16 @@ import {
 } from "constants/models/category.model";
 import useUpload from "hook/useUpload";
 import SizeForm from "pages/admin/product/product/AddSizeModal";
+import { useProduct } from "hook/useProduct";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
+import { ISizes } from "constants/models/product.model";
 type Props = {
  show: any;
  hide: React.Dispatch<React.SetStateAction<boolean>>;
- onAddProduct: any;
 };
 export default function AddProduct(props: Props) {
- const { hide, show, onAddProduct } = props;
+ const { hide, show } = props;
  const [onOpenSizeModal, setOnOpenSizeModal] = useState(false);
  const { categories } = useSelector(
   (state: RootState) => state.category
@@ -37,10 +40,8 @@ export default function AddProduct(props: Props) {
   useUpload();
  const [cateSelected, setCateSelected] = useState<ISubCategory[]>([]);
  const [form] = Form.useForm();
-
+ const { addProduct } = useProduct();
  const changeCate = (value: string) => {
-  console.log(value);
-
   const selected = categories.findIndex(
    (item: ICategory) => item._id === value
   );
@@ -63,13 +64,14 @@ export default function AddProduct(props: Props) {
    formData.append("nsx", value.nsx);
    formData.append("category", value.category);
    formData.append("price", value.price);
-   onAddProduct(formData);
+   addProduct(formData);
   },
   [form, fileList]
  );
 
  return (
   <Modal
+   width={"40%"}
    title="Thêm sản phẩm"
    onOk={() => form.submit()}
    visible={show}
@@ -77,7 +79,7 @@ export default function AddProduct(props: Props) {
    <Form.Provider
     onFormFinish={(name: any, { values, forms }: any) => {
      if (name === "sizeForm") {
-      const { productForm } = forms;
+      const { productForm, sizeForm } = forms;
       const sizes = productForm.getFieldValue("size") || [];
       productForm.setFieldsValue({
        size: [...sizes, values],
@@ -96,6 +98,7 @@ export default function AddProduct(props: Props) {
      </Form.Item>
      <Form.Item label="Đơn giá" name="price">
       <InputNumber
+       min={1}
        placeholder="Nhập đơn giá"
        width={300}
        addonAfter="VNĐ"
@@ -136,30 +139,27 @@ export default function AddProduct(props: Props) {
       </Upload>
      </Form.Item>
      <Form.Item
-      label="Size"
+      wrapperCol={{ span: 24 }}
       name="size"
       dependencies={["size"]}
       shouldUpdate={(prevValues, curValues) => {
        return prevValues.size !== curValues.size;
       }}>
-      {({ getFieldValue }) => {
-       const sizes = getFieldValue("size") || [];
-
-       return sizes.length ? (
-        <ul>
-         {sizes.map((size: any, index: number) => (
-          <li key={index} className="user">
-           {size.size} - {size.quantity}
-          </li>
-         ))}
-        </ul>
-       ) : (
-        <Typography.Text className="ant-form-text" type="secondary">
-         No user yet.
-        </Typography.Text>
-       );
-      }}
+      <Typography.Paragraph code type="success">
+       Bảng size - Số lượng giày mỗi size
+      </Typography.Paragraph>
+      <Descriptions
+       style={{ width: "100%" }}
+       bordered
+       layout="vertical">
+       {form.getFieldValue("size")?.map((it: ISizes) => (
+        <Descriptions.Item label={`Số ${it.size}`}>
+         {it.quantity} đôi
+        </Descriptions.Item>
+       ))}
+      </Descriptions>
       <Button
+       block
        type="dashed"
        onClick={() => setOnOpenSizeModal(true)}
        icon={<PlusOutlined />}>

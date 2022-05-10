@@ -1,6 +1,7 @@
 import {
  EditOutlined,
  PlusOutlined,
+ ReloadOutlined,
  UploadOutlined,
 } from "@ant-design/icons";
 import {
@@ -16,31 +17,28 @@ import {
  Upload,
 } from "antd";
 import { ColumnsType } from "antd/es/table";
+import { useAppSelector } from "app/store";
 import {
  ICategory,
  ISubCategory,
 } from "constants/models/category.model";
 import { IImage } from "constants/models/common.model";
+import { useCategory } from "hook/useCategory";
+import { useNsx } from "hook/useNSX";
 import useUpload from "hook/useUpload";
 import AddSubcategory from "pages/admin/product/category/AddSubcategory";
-import useNSX from "pages/admin/product/category/useNSX";
 import React, { useCallback, useState } from "react";
 import { removeAccents } from "utils/common";
 
 export default function Category() {
- const {
-  categories,
-  deleteNSX,
-  addSubcategory,
-  addCategory,
-  updateCategory,
- } = useNSX();
+ const { deleteNSX, addSubcategory } = useNsx();
+ const { categories } = useAppSelector().category;
  const [openAddCategory, setOpenAddCategory] = useState(false);
  const [openAddSubCate, setOpenAddSubCate] = useState(false);
  const [category, setCategory] = useState<any>();
  const { beforeUpload, fileList, onChangeFileList, onRemove } =
   useUpload();
-
+ const { addCategory, fetchCategory, updateCategory } = useCategory();
  const [form] = Form.useForm();
  const column: ColumnsType<ICategory> = [
   {
@@ -52,10 +50,11 @@ export default function Category() {
      <Typography.Paragraph
       editable={{
        onChange: (text) => {
-        updateCategory(record._id, {
+        const data = {
          name: text,
          path: removeAccents(text).replaceAll(" ", "-").toLowerCase(),
-        });
+        };
+        updateCategory(record._id, data);
        },
       }}>
       {text}
@@ -125,33 +124,40 @@ export default function Category() {
 
  return (
   <>
-   <Space className="my-2" direction="vertical">
-    <Button
-     onClick={() => setOpenAddCategory(true)}
-     icon={<PlusOutlined />}>
-     Thêm danh mục
+   <Space>
+    <Space className="my-2" direction="vertical">
+     <Button
+      onClick={() => setOpenAddCategory(true)}
+      icon={<PlusOutlined />}>
+      Thêm danh mục
+     </Button>
+     {openAddCategory && (
+      <Card>
+       <Form onFinish={onFinish} labelCol={{ span: 12 }}>
+        <Form.Item label="Tên danh mục" name="name">
+         <Input />
+        </Form.Item>
+        <Form.Item label="Hình ảnh" name="logo">
+         <Upload
+          fileList={fileList}
+          beforeUpload={beforeUpload}
+          onChange={onChangeFileList}>
+          {!fileList.length && <Button icon={<UploadOutlined />} />}
+         </Upload>
+        </Form.Item>
+        <Space>
+         <Button onClick={() => setOpenAddCategory(false)}>
+          Huỷ
+         </Button>
+         <Button htmlType="submit">Thêm</Button>
+        </Space>
+       </Form>
+      </Card>
+     )}
+    </Space>
+    <Button icon={<ReloadOutlined />} onClick={() => fetchCategory()}>
+     Làm mói
     </Button>
-    {openAddCategory && (
-     <Card>
-      <Form onFinish={onFinish} labelCol={{ span: 12 }}>
-       <Form.Item label="Tên danh mục" name="name">
-        <Input />
-       </Form.Item>
-       <Form.Item label="Hình ảnh" name="logo">
-        <Upload
-         fileList={fileList}
-         beforeUpload={beforeUpload}
-         onChange={onChangeFileList}>
-         {!fileList.length && <Button icon={<UploadOutlined />} />}
-        </Upload>
-       </Form.Item>
-       <Space>
-        <Button onClick={() => setOpenAddCategory(false)}>Huỷ</Button>
-        <Button htmlType="submit">Thêm</Button>
-       </Space>
-      </Form>
-     </Card>
-    )}
    </Space>
    <Table
     dataSource={categories}

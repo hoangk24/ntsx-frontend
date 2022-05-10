@@ -12,11 +12,11 @@ import {
 import { useAppSelector } from "app/store";
 import { ICategory } from "constants/models/category.model";
 import { IProduct } from "constants/models/product.model";
-import useLogicProduct from "pages/admin/product/product/useLogicProduct";
 import React, { useEffect } from "react";
 import _filter from "lodash/filter";
 import { createRule } from "pages/client/cart/Payment";
-import useDiscount from "pages/admin/discount/useDiscount";
+import { useProduct } from "hook/useProduct";
+import { useDiscount } from "pages/admin/discount/useDiscount";
 type Props = {
  visible: boolean;
  hide: () => void;
@@ -24,7 +24,7 @@ type Props = {
 export default function AddDiscount({ hide, visible }: Props) {
  const { TabPane } = Tabs;
  const { categories } = useAppSelector().category;
- const { fetchProduct, products } = useLogicProduct();
+ const { fetchProduct, products } = useProduct();
  const { addDiscount } = useDiscount();
  useEffect(() => {
   fetchProduct();

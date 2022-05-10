@@ -1,11 +1,11 @@
 import { Form, InputNumber, Radio } from "antd";
+import { ICartItemPreview } from "constants/models/cart.model";
 import { IProduct, ISizes } from "constants/models/product.model";
-import useCart from "hook/useCart";
+import { useCart } from "hook/useCart";
 import useDetail from "pages/client/product-detail/detail/useDetail";
 import React from "react";
 import { formatMoney } from "utils/common";
 import "./Detail.scss";
-import { ICartItemPreview } from "../../../../constants/models/cart.model";
 
 type Props = {
  data: IProduct;
@@ -69,7 +69,6 @@ export default function Detail({ data }: Props) {
       defaultValue={1}
       min={1}
       max={maxQuantity}
-      style={{ margin: "0 16px" }}
      />
     </Form.Item>
     <button

@@ -14,14 +14,14 @@ export default function useDetail(size: ISizes[]) {
    size,
    (n: ISizes) => n.size === (e.target as any).value
   );
-  setSizeChoice(size[idx].size as any);
+  setSizeChoice(size?.[idx]?.size as any);
   setQuantityChoice(1);
   setMaxQuantity(size[idx].quantity);
  };
 
  useEffect(() => {
-  setMaxQuantity(size[0].quantity);
-  setSizeChoice(size[0].size as any);
+  setMaxQuantity(size?.[0]?.quantity);
+  setSizeChoice(size?.[0] as any);
  }, []);
 
  return {

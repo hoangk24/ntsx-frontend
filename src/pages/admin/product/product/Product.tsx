@@ -23,7 +23,7 @@ import useDefineSearch from "hook/useDefineSearch";
 import { useProduct } from "hook/useProduct";
 import AddProduct from "pages/admin/product/product/AddProduct";
 import React, { useState } from "react";
-import { formatDate } from "utils/common";
+import { formatDate, formatMoney } from "utils/common";
 
 export default function Product() {
  const [openAddModal, setOpenAddModal] = useState(false);
@@ -55,6 +55,7 @@ export default function Product() {
    title: "Đơn giá",
    dataIndex: "price",
    key: "price",
+   render: (text) => <>{formatMoney(text)}</>,
   },
   {
    title: "Size - Số lượng",

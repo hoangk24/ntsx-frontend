@@ -34,7 +34,7 @@ export default function CartList() {
    dataIndex: "size",
    key: "size",
    width: "10%",
-   render: (text) => <>{text.size}</>,
+   render: (text) => <>{text}</>,
   },
   {
    title: "Đơn giá",

@@ -41,6 +41,6 @@ export interface ICartItemPreview {
 
 export interface ICartItem {
  idProduct: any;
- size: number;
+ size: any;
  quantity: number;
 }

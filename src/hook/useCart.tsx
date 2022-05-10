@@ -78,15 +78,16 @@ export default function CartProvider({ children }: any) {
   const idx = _findIndex(
    carts,
    (n: ICartItem) =>
-    n.idProduct === cart.idProduct && n.size === cart.size
+    n.idProduct === cart.idProduct && n.size === cart.size.size
   );
   if (idx !== -1) {
    const copy = _cloneDeep(carts);
    copy[idx].quantity += cart.quantity;
    dispatch(setCart(copy));
   } else {
+   console.log("chua co cart nao");
    const copy = carts ? [...carts] : [];
-   copy.push(cart);
+   copy.push({ ...cart, size: cart.size.size });
    dispatch(setCart(copy));
   }
  };

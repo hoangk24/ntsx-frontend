@@ -19,14 +19,41 @@ import {
  resendMailAction,
 } from "features/users/users.action";
 import { useLoading } from "hook/useLoading";
-import React, { useState } from "react";
+import React, {
+ createContext,
+ useContext,
+ useEffect,
+ useState,
+} from "react";
+interface IUserContext {
+ setData: any;
+ data: any;
+ addUser: any;
+ deleteUser: any;
+ currentUser: any;
+ fetchAllUser: any;
+ resendMail: any;
+ createMail: any;
+ activeMail: any;
+ fetchUser: any;
+ changeRole: any;
+}
+const UserContext = createContext<IUserContext>({} as IUserContext);
 
-export default function useLogicUser() {
+export const useUser = () => useContext(UserContext);
+export default function UserProvider({
+ children,
+}: {
+ children: React.ReactNode;
+}) {
  const [data, setData] = useState([]);
  const dispatch = useAppDispatch();
  const loading = useLoading();
  const [currentUser, setCurrentUser] = useState<IUser>();
 
+ useEffect(() => {
+  fetchAllUser();
+ }, []);
  const fetchAllUser = () => {
   loading?.show();
   dispatch(getAllUserAction())
@@ -100,40 +127,43 @@ export default function useLogicUser() {
    .finally(() => setLoading(false));
  };
 
- const changeRole = (data: ChangeRolePayload, fn: any) => {
+ const changeRole = (data: ChangeRolePayload) => {
   dispatch(changeRoleAction(data))
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
-    fn();
    })
    .catch((err) => message.error(err.message))
    .finally(() => {});
  };
 
- const activeMail = async (data: ActiveMailPayload, fn: any) => {
+ const activeMail = async (data: ActiveMailPayload) => {
   dispatch(activeMailAction(data))
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
     fetchUser(data.id);
-    fn();
    })
    .catch((err) => message.error(err.message))
    .finally(() => {});
  };
 
- return {
-  setData,
-  data,
-  addUser,
-  deleteUser,
-  currentUser,
-  fetchAllUser,
-  resendMail,
-  createMail,
-  activeMail,
-  fetchUser,
-  changeRole,
- };
+ return (
+  <UserContext.Provider
+   value={{
+    setData,
+    data,
+    addUser,
+    deleteUser,
+    currentUser,
+    fetchAllUser,
+    resendMail,
+    createMail,
+    activeMail,
+    fetchUser,
+    changeRole,
+   }}>
+   {children}
+  </UserContext.Provider>
+ );
 }

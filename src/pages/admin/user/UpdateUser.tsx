@@ -1,19 +1,23 @@
 import { Avatar, Button, Form, Modal, Select, Tag } from "antd";
 import { Role } from "constants/models/auth.model";
-import useLogicUser from "pages/admin/user/useLogicUser";
+import { useUser } from "pages/admin/user/useUser";
 import React, { useEffect } from "react";
 type Props = {
  show: boolean;
  hide: any;
  idUser: string;
- fetchAll: any;
 };
 export default function UpdateUser(props: Props) {
- const { hide, show, idUser, fetchAll } = props;
+ const { hide, show, idUser } = props;
  const { Option } = Select;
  const [form] = Form.useForm();
- const { fetchUser, currentUser, activeMail, changeRole } =
-  useLogicUser();
+ const {
+  fetchUser,
+  currentUser,
+  activeMail,
+  changeRole,
+  fetchAllUser,
+ } = useUser();
 
  useEffect(() => {
   fetchUser(idUser);
@@ -23,7 +27,10 @@ export default function UpdateUser(props: Props) {
   <Modal
    title="Cật nhật người dùng "
    visible={show}
-   onCancel={() => hide(false)}>
+   onCancel={() => {
+    hide(false);
+    fetchAllUser();
+   }}>
    <Form
     form={form}
     labelCol={{ span: 5 }}
@@ -46,7 +53,7 @@ export default function UpdateUser(props: Props) {
 
      <Button
       onClick={() => {
-       activeMail({ id: currentUser?._id as string }, fetchAll);
+       activeMail({ id: currentUser?._id as string });
       }}>
       Xác minh
      </Button>
@@ -55,13 +62,10 @@ export default function UpdateUser(props: Props) {
      <Select
       defaultValue={currentUser?.role as Role}
       onChange={(value: Role) => {
-       changeRole(
-        {
-         id: currentUser?._id as string,
-         role: value,
-        },
-        fetchAll
-       );
+       changeRole({
+        id: currentUser?._id as string,
+        role: value,
+       });
       }}>
       <Option value={Role.ADMIN}>Admin</Option>
       <Option value={Role.USER}>User</Option>

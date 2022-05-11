@@ -1,9 +1,10 @@
 import ClientRoute from "components/adminRoute/ClientRoute";
+import Compose from "containers/compose/Compose";
 import CartAdmin from "pages/admin/cart/CartAdmin";
 import Dashboard from "pages/admin/dashboard/Dashboard";
 import DiscountAdmin from "pages/admin/discount/DiscountAdmin";
 import Product from "pages/admin/product/ProductWrapper";
-import User from "pages/admin/user/User";
+import UserWrapper from "pages/admin/user/UserWrapper";
 import ChangePassword from "pages/auth/forgot-password/ChangePassword";
 import FortgotPassword from "pages/auth/forgot-password/FortgotPassword";
 import Login from "pages/auth/login/Login";
@@ -17,10 +18,9 @@ import Nsx from "pages/client/nsx/Nsx";
 import PaymentSuccess from "pages/client/payment/PaymentSuccess";
 import ProductDetail from "pages/client/product-detail/ProductDetail";
 import Errors from "pages/error/Errors";
-import Compose from "containers/compose/Compose";
-
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 export default function App() {
  return (
   <BrowserRouter>
@@ -46,7 +46,7 @@ export default function App() {
       <Route path="product" element={<Product />} />
       <Route path="cart" element={<CartAdmin />} />
       <Route path="discount" element={<DiscountAdmin />} />
-      <Route path="user" element={<User />} />
+      <Route path="user" element={<UserWrapper />} />
      </Route>
      <Route path="login" element={<Login />} />
      <Route path="forgot-password" element={<FortgotPassword />} />

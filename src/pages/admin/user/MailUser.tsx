@@ -2,8 +2,8 @@ import { Button, Form, Input, Modal, Typography } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { CreateEmailPayload } from "constants/payload/auth.payload";
 import { CreateEmailValueForm } from "constants/payload/user.payload";
+import { useUser } from "pages/admin/user/useUser";
 import React, { useCallback, useEffect, useState } from "react";
-import useLogicUser from "./useLogicUser";
 
 type Props = {
  show: any;
@@ -14,8 +14,7 @@ export default function MailUser(props: Props) {
  const { hide, show, idUser } = props;
  const [sendMailLoading, setSendMailLoading] = useState(false);
  const [form] = Form.useForm();
- const { createMail, resendMail, fetchUser, currentUser } =
-  useLogicUser();
+ const { createMail, resendMail, fetchUser, currentUser } = useUser();
 
  useEffect(() => {
   fetchUser(idUser);

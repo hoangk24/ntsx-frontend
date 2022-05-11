@@ -1,7 +1,7 @@
 import { Form, Input, Modal } from "antd";
 import { CreateUserRequest } from "constants/payload/user.payload";
+import { useUser } from "pages/admin/user/useUser";
 import React, { useCallback } from "react";
-import useLogicUser from "./useLogicUser";
 
 type Props = {
  show: any;
@@ -10,7 +10,7 @@ type Props = {
 export default function AddUser(props: Props) {
  const { hide, show } = props;
  const [form] = Form.useForm();
- const { addUser } = useLogicUser();
+ const { addUser } = useUser();
 
  const submitForm = useCallback(() => {
   form.validateFields().then((value: CreateUserRequest) => {

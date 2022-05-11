@@ -1,12 +1,12 @@
 import { Avatar, Button, Popconfirm, Space, Table, Tag } from "antd";
 import useDefineSearch from "hook/useDefineSearch";
-import useLogicUser from "pages/admin/user/useLogicUser";
 import React, { useEffect, useState } from "react";
 import { IUser, Role } from "constants/models/auth.model";
 import { ColumnsType } from "antd/es/table";
 import AddUser from "pages/admin/user/AddUser";
 import MailUser from "pages/admin/user/MailUser";
-import UpdateUser from "pages/admin/user/UpdatUser";
+import UpdateUser from "pages/admin/user/UpdateUser";
+import { useUser } from "pages/admin/user/useUser";
 
 export default function User() {
  const [openAddModal, setOpenAddModal] = useState(false);
@@ -14,7 +14,7 @@ export default function User() {
  const [openSendMailModal, setOpenSendMailModal] = useState(false);
  const { getColumnSearchProps } = useDefineSearch();
  const [id, setId] = useState<string>("");
- const { data, fetchAllUser, deleteUser } = useLogicUser();
+ const { data, deleteUser } = useUser();
 
  const columns: ColumnsType<IUser> = [
   {
@@ -91,10 +91,6 @@ export default function User() {
   },
  ];
 
- useEffect(() => {
-  fetchAllUser();
- }, []);
-
  return (
   <div className="product">
    <Space className={"my-2"}>
@@ -118,7 +114,6 @@ export default function User() {
    )}
    {id && (
     <UpdateUser
-     fetchAll={fetchAllUser}
      idUser={id}
      show={openUpdateModal}
      hide={setOpenUpdateModal}

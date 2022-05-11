@@ -24,12 +24,12 @@ export default function MailUser(props: Props) {
  const submitForm = useCallback(() => {
   form.validateFields().then(async (value: CreateEmailValueForm) => {
    const data: CreateEmailPayload = {
-    idUser: currentUser?._id || "",
+    idUser: currentUser?._id as string,
     ...value,
    };
    createMail(data, setSendMailLoading, form.resetFields);
   });
- }, [form]);
+ }, [form, currentUser?._id]);
 
  return (
   <Modal

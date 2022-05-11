@@ -6,6 +6,7 @@ import {
  addProductAction,
  deleteProductAction,
  getProductAction,
+ updateProductAction,
 } from "features/product/product.action";
 import { useLoading } from "hook/useLoading";
 import React, {
@@ -20,6 +21,7 @@ interface IProductContext {
  deleteProduct: (id: string) => void;
  addProduct: (formData: any) => void;
  products: IProduct[];
+ updateProduct: (id: string, data: Partial<IProduct>) => Promise<any>;
 }
 export const ProductContext = createContext<IProductContext>(
  {} as IProductContext
@@ -32,6 +34,20 @@ export default function ProductProvider({ children }: any) {
  const dispatch = useAppDispatch();
  const loading = useLoading();
 
+ const updateProduct = async (
+  id: string,
+  data: Partial<IProduct>
+ ) => {
+  loading?.show();
+  return dispatch(updateProductAction({ id, data }))
+   .then(unwrapResult)
+   .then((res: any) => {
+    message.success(res.message);
+    fetchProduct();
+   })
+   .catch((err: any) => message.error(err.message))
+   .finally(() => loading?.hide());
+ };
  const fetchProduct = async () => {
   loading?.show();
   dispatch(getProductAction({}))
@@ -80,6 +96,7 @@ export default function ProductProvider({ children }: any) {
     deleteProduct,
     addProduct,
     products,
+    updateProduct,
    }}>
    {children}
   </ProductContext.Provider>

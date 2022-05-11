@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { IProduct } from "constants/models/product.model";
 import { IVoucher } from "constants/models/voucher.model";
 import {
  addDiscount,
@@ -13,6 +14,7 @@ import {
  getProductByCategory,
  getProductByNsx,
  getProductDetail,
+ updateProduct,
 } from "services/product.service";
 import {
  addVoucher,
@@ -37,6 +39,23 @@ export const getProductAction = createAsyncThunk(
  async (body: any, { rejectWithValue }) => {
   try {
    const res = await getProduct();
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
+export const updateProductAction = createAsyncThunk(
+ "product/updateProductAction",
+ async (
+  body: {
+   id: string;
+   data: Partial<IProduct>;
+  },
+  { rejectWithValue }
+ ) => {
+  try {
+   const res = await updateProduct(body);
    return res.data;
   } catch (error: any) {
    return rejectWithValue(error?.response.data);

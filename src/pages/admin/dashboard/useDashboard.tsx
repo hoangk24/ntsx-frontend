@@ -4,6 +4,7 @@ import { ColumnsType } from "antd/lib/table";
 import { useAppDispatch } from "app/store";
 import { ICart } from "constants/models/cart.model";
 import { IProduct } from "constants/models/product.model";
+import { useLoading } from "hook/useLoading";
 import { Moment } from "moment";
 import React, { useState } from "react";
 import { getDashboard } from "services/dashboard.service";
@@ -19,14 +20,17 @@ interface DashboardHome {
  costTable: any;
 }
 export default function useDashboard() {
- const dispatch = useAppDispatch();
  const [data, setData] = useState<DashboardHome>();
-
+ const loading = useLoading();
  const getHome = async (data?: { startDate: any; endDate: any }) => {
+  loading?.show();
   try {
    const res: any = await getDashboard(data);
    setData(res.data.data);
-  } catch (error) {}
+  } catch (error) {
+   console.log(error);
+  }
+  loading?.hide();
  };
  const columnsCart: ColumnsType<ICart> = [
   {

@@ -9,6 +9,9 @@ import {
  Badge,
  Button,
  Form,
+ Input,
+ InputNumber,
+ Popconfirm,
  Select,
  Space,
  Table,
@@ -22,15 +25,24 @@ import { IProduct, ISizes } from "constants/models/product.model";
 import useDefineSearch from "hook/useDefineSearch";
 import { useProduct } from "hook/useProduct";
 import AddProduct from "pages/admin/product/product/AddProduct";
+import EditCategory from "pages/admin/product/product/category/EditCategory";
+import EditSize from "pages/admin/product/product/size/EditSize";
 import React, { useState } from "react";
 import { formatDate, formatMoney } from "utils/common";
 
 export default function Product() {
  const [openAddModal, setOpenAddModal] = useState(false);
- const { deleteProduct, products, fetchProduct } = useProduct();
+ const { deleteProduct, products, fetchProduct, updateProduct } =
+  useProduct();
+ const [openEditSize, setOpenEditSize] = useState({
+  editing: false,
+  product: {} as IProduct,
+ });
  const { getColumnSearchProps } = useDefineSearch();
- const { categories } = useAppSelector().category;
- const { Option } = Select;
+ const [openCategory, setOpenCategory] = useState({
+  editing: false,
+  product: {} as IProduct,
+ });
  const columns: ColumnsType<IProduct> = [
   {
    title: "Hình ảnh",
@@ -50,12 +62,30 @@ export default function Product() {
    title: "Tên sản phẩm",
    dataIndex: "name",
    key: "name",
+   ...getColumnSearchProps("name"),
+   render: (text, record) => (
+    <Typography.Paragraph
+     editable={{
+      onChange: (text) => updateProduct(record._id, { name: text }),
+     }}>
+     {text}
+    </Typography.Paragraph>
+   ),
   },
   {
    title: "Đơn giá",
    dataIndex: "price",
    key: "price",
-   render: (text) => <>{formatMoney(text)}</>,
+   render: (text, record) => (
+    <InputNumber
+     onChange={(value: number) =>
+      updateProduct(record._id, { price: value })
+     }
+     min={1}
+     defaultValue={text}
+     addonAfter="VNĐ"
+    />
+   ),
   },
   {
    title: "Size - Số lượng",
@@ -69,6 +99,17 @@ export default function Product() {
        text={`Size ${it.size} - ${it.quantity} Đôi`}
       />
      ))}
+     <Button
+      onClick={() => {
+       setOpenEditSize({
+        editing: true,
+        product: record,
+       });
+      }}
+      icon={<EditOutlined />}
+      block>
+      Cật nhật
+     </Button>
     </Space>
    ),
   },
@@ -76,14 +117,24 @@ export default function Product() {
    title: "DM",
    dataIndex: "category",
    key: "category",
-   render: (text, record) => <>{record.category.name}</>,
+   render: (text, record) => (
+    <Space>
+     <Typography>
+      {record.category.name} - {record.nsx.name}
+     </Typography>
+     <Button
+      onClick={() =>
+       setOpenCategory({
+        editing: true,
+        product: record,
+       })
+      }
+      icon={<EditOutlined />}
+     />
+    </Space>
+   ),
   },
-  {
-   title: "NSX",
-   dataIndex: "nsx",
-   key: "nsx",
-   render: (text, record) => <>{record.nsx.name}</>,
-  },
+
   {
    title: "Thời gian",
    dataIndex: "createAt",
@@ -101,11 +152,11 @@ export default function Product() {
    render: (text: string, record: any, index: number) => {
     return (
      <Space>
-      <Button
-       onClick={() => deleteProduct(record._id)}
-       icon={<DeleteOutlined />}
-      />
-      <Button onClick={() => {}} icon={<EditOutlined />} />
+      <Popconfirm
+       title="Bạn chắc chắn muốn xoá sản phẩm này!"
+       onConfirm={() => deleteProduct(record._id)}>
+       <Button icon={<DeleteOutlined />} />
+      </Popconfirm>
      </Space>
     );
    },
@@ -127,7 +178,14 @@ export default function Product() {
    <Table
     rowKey={(record) => record._id}
     expandable={{
-     expandedRowRender: (record) => <p>{record.note}</p>,
+     expandedRowRender: (record) => (
+      <Typography.Paragraph
+       editable={{
+        onChange: (text) => updateProduct(record._id, { note: text }),
+       }}>
+       {record.note}
+      </Typography.Paragraph>
+     ),
     }}
     dataSource={products}
     columns={columns}
@@ -135,6 +193,20 @@ export default function Product() {
    <AddProduct
     show={openAddModal}
     hide={() => setOpenAddModal(false)}
+   />
+   <EditSize
+    product={openEditSize.product}
+    onHide={() =>
+     setOpenEditSize({ product: {} as IProduct, editing: false })
+    }
+    visible={openEditSize.editing}
+   />
+   <EditCategory
+    product={openCategory.product}
+    onHide={() =>
+     setOpenCategory({ product: {} as IProduct, editing: false })
+    }
+    visible={openCategory.editing}
    />
   </div>
  );

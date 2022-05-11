@@ -1,6 +1,5 @@
-import { message, Upload } from "antd";
 import { UploadFile } from "antd/lib/upload/interface";
-import React, { useCallback, useState } from "react";
+import { useState } from "react";
 
 export default function useUpload() {
  const [fileList, setFileList] = useState<UploadFile[]>([]);

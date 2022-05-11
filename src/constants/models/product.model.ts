@@ -37,6 +37,7 @@ export interface INSX {
 }
 
 export interface ISizes {
+ _id?: string;
  size: number | string;
  quantity: number;
 }

@@ -19,7 +19,7 @@ import {
  ISubCategory,
 } from "constants/models/category.model";
 import useUpload from "hook/useUpload";
-import SizeForm from "pages/admin/product/product/AddSizeModal";
+import SizeForm from "pages/admin/product/product/size/AddSizeModal";
 import { useProduct } from "hook/useProduct";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";

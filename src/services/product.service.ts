@@ -22,6 +22,10 @@ type DeleteProduct = (params: {
 type AddProductRequest = (
  body: any
 ) => Promise<AxiosResponse<{ data: IProduct; message: string }>>;
+type UpdateProductRequest = (body: {
+ id: string;
+ data: Partial<IProduct>;
+}) => Promise<AxiosResponse<{ data: IProduct; message: string }>>;
 
 export const getProduct: GetProduct = () =>
  axiosClient.get(API_ENDPOINT.PRODUCT.GET_ALL);
@@ -41,3 +45,9 @@ export const addProduct: AddProductRequest = (body) =>
  axiosClient.post(API_ENDPOINT.PRODUCT.CREATE, body, {
   ...configUpload,
  });
+
+export const updateProduct: UpdateProductRequest = (body) =>
+ axiosClient.post(
+  `${API_ENDPOINT.PRODUCT.UPDATE}/${body.id}`,
+  body.data
+ );

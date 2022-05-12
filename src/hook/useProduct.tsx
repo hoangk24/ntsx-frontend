@@ -65,7 +65,6 @@ export default function ProductProvider({ children }: any) {
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
-    console.log(res);
    })
    .catch((err: any) => {
     message.error(err.message);

@@ -84,11 +84,6 @@ export default function CategoryProvider({ children }: any) {
   fetchCategory();
  }, []);
 
- //  useEffect(() => {
- //   console.log("render");
- //   getProduct();
- //  }, [path]);
-
  return (
   <CategoryContext.Provider
    value={{

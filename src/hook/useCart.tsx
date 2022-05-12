@@ -85,7 +85,6 @@ export default function CartProvider({ children }: any) {
    copy[idx].quantity += cart.quantity;
    dispatch(setCart(copy));
   } else {
-   console.log("chua co cart nao");
    const copy = carts ? [...carts] : [];
    copy.push({ ...cart, size: cart.size.size });
    dispatch(setCart(copy));

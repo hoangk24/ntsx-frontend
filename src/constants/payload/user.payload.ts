@@ -27,3 +27,10 @@ export interface ChangePasswordPayload {
 export interface ForgotPasswordPayload {
  email: string;
 }
+export interface UpdatePasswordPayload {
+ oldPassword: string;
+ newPassword: string;
+}
+export interface UpdateInformationPayload {
+ data: any;
+}

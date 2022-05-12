@@ -6,7 +6,8 @@ import {
 import { Avatar, Badge, Button, Dropdown, Menu, Space } from "antd";
 import { useAppSelector } from "app/store";
 import useLogOut from "containers/auth/useLogOut";
-import React, { useEffect } from "react";
+import Information from "containers/information/Information";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Auth() {
@@ -14,9 +15,15 @@ export default function Auth() {
  const { user, isLogin } = useAppSelector().auth;
  const { preview, carts } = useAppSelector().cart;
  const { fetchLogOut } = useLogOut();
-
+ const [showInfomation, setShowInfomation] = useState(false);
  const menuUser = (
   <Menu>
+   <Menu.Item
+    onClick={() => setShowInfomation(true)}
+    key="1"
+    icon={<UserOutlined />}>
+    Thông tin
+   </Menu.Item>
    <Menu.Item key="2" icon={<ShoppingCartOutlined />}>
     <Link to={"/cart/my-cart"}> Đơn hàng</Link>
    </Menu.Item>
@@ -47,6 +54,10 @@ export default function Auth() {
    ) : (
     <Button onClick={() => navigate("/login")}>Đăng nhập</Button>
    )}
+   <Information
+    visible={showInfomation}
+    onHide={() => setShowInfomation(false)}
+   />
   </Space>
  );
 }

@@ -27,9 +27,7 @@ export default function useDashboard() {
   try {
    const res: any = await getDashboard(data);
    setData(res.data.data);
-  } catch (error) {
-   console.log(error);
-  }
+  } catch (error) {}
   loading?.hide();
  };
  const columnsCart: ColumnsType<ICart> = [

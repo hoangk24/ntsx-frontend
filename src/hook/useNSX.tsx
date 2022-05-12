@@ -25,7 +25,6 @@ export default function NsxProvider({ children }: any) {
  const deleteNSX = (id: string) => {
   loading?.show();
   setTimeout(() => {
-   console.log(id);
    loading?.hide();
   }, 1000);
  };
@@ -35,7 +34,6 @@ export default function NsxProvider({ children }: any) {
    .then(unwrapResult)
    .then((res: any) => {
     setProduct(res?.data);
-    console.log(res);
    })
    .finally(() => loading?.hide());
  };

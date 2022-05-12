@@ -12,9 +12,10 @@ const authSlice = createSlice({
   isLogin: false,
  } as State,
  reducers: {
+  setUser(state: State, action: PayloadAction<IUser>) {
+   state.user = action.payload;
+  },
   setAuth(state: State, action: PayloadAction<any>) {
-   console.log(action.payload);
-
    state.user = action.payload.user;
    state.isLogin = true;
    localStorage.setItem("token", action.payload.token.token);
@@ -36,5 +37,5 @@ const authSlice = createSlice({
  },
 });
 
-export const { setAuth, setLogOut } = authSlice.actions;
+export const { setAuth, setLogOut, setUser } = authSlice.actions;
 export default authSlice.reducer;

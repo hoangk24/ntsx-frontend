@@ -112,7 +112,11 @@ export default function CartAdmin() {
        </Button>
       )}
       {record.status === CartStatus.DONE && <>Giao thành công</>}
-      {record.status !== CartStatus.DONE && (
+      {![
+       CartStatus.DONE,
+       CartStatus.CANCLE,
+       CartStatus.SHIPPING,
+      ].includes(record.status) && (
        <Button
         onClick={() => {
          changeStatus({ id: record._id, status: CartStatus.CANCLE });

@@ -9,6 +9,8 @@ import {
  ChangeRolePayload,
  CreateUserRequest,
  ForgotPasswordPayload,
+ UpdateInformationPayload,
+ UpdatePasswordPayload,
 } from "constants/payload/user.payload";
 import {
  create_mail,
@@ -23,6 +25,8 @@ import {
  deleteUser,
  getAllUser,
  getUserInfo,
+ updateInformation,
+ updatePassword,
 } from "services/user.service";
 
 export const getAllUserAction = createAsyncThunk(
@@ -37,11 +41,33 @@ export const getAllUserAction = createAsyncThunk(
  }
 );
 
+export const updateInformationAction = createAsyncThunk(
+ "users/updateInformationAction",
+ async (body: UpdateInformationPayload, { rejectWithValue }) => {
+  try {
+   const res = await updateInformation(body);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
 export const changePasswordAction = createAsyncThunk(
  "users/changePasswordAction",
  async (body: ChangePasswordPayload, { rejectWithValue }) => {
   try {
    const res = await changePassword(body);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
+export const updatePasswordAction = createAsyncThunk(
+ "users/updatePasswordAction",
+ async (body: UpdatePasswordPayload, { rejectWithValue }) => {
+  try {
+   const res = await updatePassword(body);
    return res.data;
   } catch (error: any) {
    return rejectWithValue(error?.response.data);

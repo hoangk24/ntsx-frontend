@@ -3,8 +3,17 @@ import {
  UploadOutlined,
  UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Badge, Button, Dropdown, Menu, Space } from "antd";
+import {
+ Avatar,
+ Badge,
+ Button,
+ Dropdown,
+ Input,
+ Menu,
+ Space,
+} from "antd";
 import { useAppSelector } from "app/store";
+import Search from "components/search/Search";
 import useLogOut from "containers/auth/useLogOut";
 import Information from "containers/information/Information";
 import React, { useState } from "react";
@@ -14,6 +23,7 @@ export default function Auth() {
  const navigate = useNavigate();
  const { user, isLogin } = useAppSelector().auth;
  const { preview, carts } = useAppSelector().cart;
+ const [openSearch, setOpenSearch] = useState(false);
  const { fetchLogOut } = useLogOut();
  const [showInfomation, setShowInfomation] = useState(false);
  const menuUser = (
@@ -37,6 +47,11 @@ export default function Auth() {
  );
  return (
   <Space className="header-end">
+   <Input
+    placeholder="Tìm kiếm"
+    value={""}
+    onClick={() => setOpenSearch(true)}
+   />
    <Badge count={preview?.totalQuantity} showZero>
     <Button
      onClick={() => navigate("/cart")}
@@ -58,6 +73,7 @@ export default function Auth() {
     visible={showInfomation}
     onHide={() => setShowInfomation(false)}
    />
+   <Search visible={openSearch} onHide={() => setOpenSearch(false)} />
   </Space>
  );
 }

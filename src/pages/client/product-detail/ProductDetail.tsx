@@ -7,9 +7,7 @@ import "./ProductDetail.scss";
 export default function ProductDetail() {
  const { description, detail, posters, fetchDetail } =
   useLogicProductDetail();
- useEffect(() => {
-  fetchDetail();
- }, []);
+
  return (
   <div className="product-detail">
    <div className="row">

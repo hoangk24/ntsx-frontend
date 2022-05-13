@@ -3,7 +3,7 @@ import { useAppDispatch } from "app/store";
 import { IProduct } from "constants/models/product.model";
 import { getProductDetailAction } from "features/product/product.action";
 import { useLoading } from "hook/useLoading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export default function useLogicProductDetail() {
@@ -26,7 +26,9 @@ export default function useLogicProductDetail() {
    })
    .finally(() => loading?.hide());
  };
-
+ useEffect(() => {
+  fetchDetail();
+ }, [id]);
  return {
   id,
   fetchDetail,

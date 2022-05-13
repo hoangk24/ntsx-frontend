@@ -6,6 +6,9 @@ import { axiosClient, configUpload } from "services/axiosClient";
 type GetProduct = () => Promise<
  AxiosResponse<{ data: IProduct[]; message: string }>
 >;
+type SearchProduct = (params: {
+ search: string;
+}) => Promise<AxiosResponse<{ data: IProduct[]; message: string }>>;
 type GetProductByCategory = (
  path: string
 ) => Promise<AxiosResponse<{ data: IProduct[]; message: string }>>;
@@ -29,6 +32,10 @@ type UpdateProductRequest = (body: {
 
 export const getProduct: GetProduct = () =>
  axiosClient.get(API_ENDPOINT.PRODUCT.GET_ALL);
+
+export const searchProduct: SearchProduct = (params) =>
+ axiosClient.get(API_ENDPOINT.PRODUCT.SEARCH, { params });
+
 export const getProductByCategory: GetProductByCategory = (path) =>
  axiosClient.get(`${API_ENDPOINT.CATEGORY.GET_PRODUCT}/${path}`);
 

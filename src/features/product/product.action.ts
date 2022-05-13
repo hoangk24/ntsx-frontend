@@ -14,6 +14,7 @@ import {
  getProductByCategory,
  getProductByNsx,
  getProductDetail,
+ searchProduct,
  updateProduct,
 } from "services/product.service";
 import {
@@ -56,6 +57,17 @@ export const updateProductAction = createAsyncThunk(
  ) => {
   try {
    const res = await updateProduct(body);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
+export const searchProductDetailAction = createAsyncThunk(
+ "product/search-product",
+ async (params: { search: string }, { rejectWithValue }) => {
+  try {
+   const res = await searchProduct(params);
    return res.data;
   } catch (error: any) {
    return rejectWithValue(error?.response.data);

@@ -26,6 +26,7 @@ const API_ENDPOINT = {
   CREATE: "/product/create-product",
   UPDATE: "/product/update-product",
   DELETE: "/product/delete-product",
+  SEARCH: "/product/search-product",
  },
  DISCOUNT: {
   GET: "/discount/get-discount",

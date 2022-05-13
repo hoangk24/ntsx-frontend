@@ -5,6 +5,7 @@ export interface IUser {
  fullName: string;
  role: Role;
  avatar: string;
+ isDeleted: boolean;
 }
 export interface IEmail {
  _id: string;
@@ -13,6 +14,7 @@ export interface IEmail {
 }
 
 export enum Role {
+ "MASTER" = 0,
  "ADMIN" = 1,
  "USER" = 2,
 }

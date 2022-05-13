@@ -1,3 +1,4 @@
+import AdminRoute from "components/adminRoute/AdminRoute";
 import ClientRoute from "components/adminRoute/ClientRoute";
 import Compose from "containers/compose/Compose";
 import CartAdmin from "pages/admin/cart/CartAdmin";
@@ -27,11 +28,10 @@ export default function App() {
    <Compose>
     <Routes>
      //! CLIENT ROUTE
-     <Route path="/" element={<ClientRoute />}>
+     <Route path="/" element={<ClientRoute type="public" />}>
       <Route index element={<Home />} />
       <Route path="cart">
        <Route path={""} element={<Cart />} />
-       <Route path={"my-cart"} element={<CartManagement />} />
       </Route>
       <Route path="payment-success" element={<PaymentSuccess />} />
       <Route path="product">
@@ -40,8 +40,13 @@ export default function App() {
        <Route path="detail/:id" element={<ProductDetail />} />
       </Route>
      </Route>
+     <Route path="/" element={<ClientRoute type="private" />}>
+      <Route path="cart">
+       <Route path={"my-cart"} element={<CartManagement />} />
+      </Route>
+     </Route>
      //! ADMIN ROUTE
-     <Route path="admin" element={<ClientRoute type="private" />}>
+     <Route path="admin" element={<AdminRoute />}>
       <Route path="" element={<Dashboard />} />
       <Route path="product" element={<Product />} />
       <Route path="cart" element={<CartAdmin />} />

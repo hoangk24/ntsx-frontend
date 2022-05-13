@@ -14,7 +14,7 @@ export default function ClientRoute({ type }: { type: RouteType }) {
   (state: RootState) => state?.auth
  );
  if (type === "private") {
-  return isLogin && user?.role === Role.ADMIN ? (
+  return isLogin && user ? (
    <DefaultLayout>
     <Outlet />
    </DefaultLayout>

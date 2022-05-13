@@ -10,7 +10,9 @@ export default function AdminRoute() {
   (state: RootState) => state?.auth
  );
 
- return isLogin && user?.role === Role.ADMIN ? (
+ return isLogin &&
+  user &&
+  [Role.ADMIN, Role.MASTER].includes(user?.role) ? (
   <DefaultLayout>
    <Outlet />
   </DefaultLayout>

@@ -13,28 +13,28 @@ import { axiosClient, configUpload } from "services/axiosClient";
 
 type GetAllUser = (
  body: any
-) => Promise<AxiosResponse<{ data: any; message: string }>>;
+) => Promise<AxiosResponse<{ data: IUser[]; message: string }>>;
 
 type GetUserInfo = (
  id: string
-) => Promise<AxiosResponse<{ data: any; message: string }>>;
+) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
 
 type CreateUser = (
  body: CreateUserRequest
-) => Promise<AxiosResponse<{ data: any; message: string }>>;
+) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
 type ChangePassword = (
  body: ChangePasswordPayload
-) => Promise<AxiosResponse<{ data: any; message: string }>>;
+) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
 type UpdatePassword = (
  body: UpdatePasswordPayload
 ) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
 
 type DeleteUser = (
  id: string
-) => Promise<AxiosResponse<{ data: any; message: string }>>;
+) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
 type ChangeRole = (
  body: ChangeRolePayload
-) => Promise<AxiosResponse<{ data: any; message: string }>>;
+) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
 
 type ActiveMail = (
  body: ActiveMailPayload

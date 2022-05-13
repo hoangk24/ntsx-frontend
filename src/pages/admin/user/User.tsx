@@ -1,4 +1,13 @@
-import { Avatar, Button, Popconfirm, Space, Table, Tag } from "antd";
+import {
+ Avatar,
+ Badge,
+ Button,
+ Popconfirm,
+ Space,
+ Table,
+ Tabs,
+ Tag,
+} from "antd";
 import useDefineSearch from "hook/useDefineSearch";
 import React, { useEffect, useState } from "react";
 import { IUser, Role } from "constants/models/auth.model";
@@ -7,6 +16,7 @@ import AddUser from "pages/admin/user/AddUser";
 import MailUser from "pages/admin/user/MailUser";
 import UpdateUser from "pages/admin/user/UpdateUser";
 import { useUser } from "pages/admin/user/useUser";
+import { LockOutlined, UnlockOutlined } from "@ant-design/icons";
 
 export default function User() {
  const [openAddModal, setOpenAddModal] = useState(false);
@@ -48,6 +58,16 @@ export default function User() {
     ),
   },
   {
+   title: "Trạng thái",
+   dataIndex: "isDeleted",
+   render: (text, record) => (
+    <Badge
+     color={!record.isDeleted ? "green" : "red"}
+     text={!record.isDeleted ? "Đang hoạt động" : "Đang khoá"}
+    />
+   ),
+  },
+  {
    title: "Quyền",
    dataIndex: "role",
    key: "role",
@@ -65,11 +85,19 @@ export default function User() {
     return (
      <>
       <Popconfirm
-       title="Are you sure?"
-       okText="Yes"
-       cancelText="No"
+       title={
+        !record.isDeleted
+         ? "Khoá tài khoản này"
+         : "Mở khoá tài khoản này"
+       }
+       okText={!record.isDeleted ? "Khoá" : "Mở khoá"}
+       cancelText="Huỷ"
        onConfirm={() => deleteUser(record?._id)}>
-       <Button>Xoá</Button>
+       <Button
+        icon={
+         !record.isDeleted ? <LockOutlined /> : <UnlockOutlined />
+        }
+       />
       </Popconfirm>
       <Button
        onClick={() => {
@@ -105,6 +133,7 @@ export default function User() {
     columns={columns}
     rowKey={(record) => Math.random()}
    />
+
    {id && (
     <MailUser
      idUser={id}

@@ -29,7 +29,11 @@ export default function DefaultLayout({ children }: any) {
     <div className={"logo"} onClick={() => navigate("/")}>
      <img src={logo} alt="" />
     </div>
-    {user?.role === Role.ADMIN ? <MenuAdmin /> : <MenuUser />}
+    {user && [Role.ADMIN, Role.MASTER].includes(user.role) ? (
+     <MenuAdmin />
+    ) : (
+     <MenuUser />
+    )}
    </Sider>
    <Layout className="site-layout" style={{ marginLeft: 200 }}>
     <Header className="site-layout-background header">

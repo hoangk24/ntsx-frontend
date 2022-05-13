@@ -4,9 +4,7 @@ import { useAppDispatch } from "app/store";
 import { RegisterPayload } from "constants/payload/auth.payload";
 import { registerAction } from "features/auth/auth.actions";
 import { useLoading } from "hook/useLoading";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function useRegister() {
  const [isSuccess, setIsSuccess] = useState(false);
@@ -20,7 +18,10 @@ export default function useRegister() {
     message.success(res.message);
     setIsSuccess(true);
    })
-   .catch((err: any) => message.error(err.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => loading?.hide());
  };
  return { isSuccess, register };

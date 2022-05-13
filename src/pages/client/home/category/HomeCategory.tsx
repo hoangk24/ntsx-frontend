@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import "./Category.scss";
 import CategoryLoading from "pages/client/home/category/CategoryLoading";
 import { useNavigate } from "react-router-dom";
-import { Col, Row } from "antd";
+import { Col, Row, Typography } from "antd";
 
 export default function HomeCategory() {
  const categories = useSelector(
@@ -44,11 +44,10 @@ export default function HomeCategory() {
 
  return (
   <div className="home-category">
-   <h1 className="home-category-title">Danh mục sản phẩm</h1>
+   <Typography.Title>Danh mục sản phẩm</Typography.Title>
    <Row gutter={[15, 15]} className="category">
     {mapCatgegories}
    </Row>
-   {/* <div className="category">{mapCatgegories}</div> */}
   </div>
  );
 }

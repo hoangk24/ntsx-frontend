@@ -1,5 +1,5 @@
+import { CartStatus } from "constants/models/cart.model";
 import moment from "moment";
-import { CartStatus } from "../constants/models/cart.model";
 
 export const formatMoney = (T: number) =>
  T.toLocaleString("vi", { style: "currency", currency: "VND" });

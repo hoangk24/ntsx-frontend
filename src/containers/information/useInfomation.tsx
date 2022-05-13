@@ -36,7 +36,10 @@ export default function useInfomation() {
      },
     });
    })
-   .catch((err: any) => message.error(err.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => loading?.hide());
  };
  const update = (
@@ -63,7 +66,10 @@ export default function useInfomation() {
     dispatch(setUser(res?.data));
     message.success(res?.message);
    })
-   .catch((err: any) => message.error(err.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => loading?.hide());
  };
  return { update, updatePassword };

@@ -2,6 +2,7 @@ import { Button, Form, Space, Table, Tabs } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { CartStatus, ICart } from "constants/models/cart.model";
 import { useCart } from "hook/useCart";
+import useDefineSearch from "hook/useDefineSearch";
 import _filter from "lodash/filter";
 import React, { useEffect } from "react";
 import { formatDate, formatMoney } from "utils/common";
@@ -9,11 +10,12 @@ import "./CartAdmin.scss";
 export default function CartAdmin() {
  const { changeStatus, data, getAllCart } = useCart();
  const { TabPane } = Tabs;
-
+ const { getColumnSearchProps } = useDefineSearch();
  const columns: ColumnsType<ICart> = [
   {
    title: "Mã đơn hàng",
    dataIndex: "_id",
+   ...getColumnSearchProps("_id"),
   },
   {
    title: "Thông tin người nhận",

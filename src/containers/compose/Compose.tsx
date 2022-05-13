@@ -6,6 +6,7 @@ import LoadingProvider from "hook/useLoading";
 import NsxProvider from "hook/useNSX";
 import ProductProvider from "hook/useProduct";
 import SocketProvider from "hook/useSocket";
+import VoucherProvider from "hook/useVoucher";
 import DiscountProvider from "pages/admin/discount/useDiscount";
 import React from "react";
 interface Props {
@@ -26,6 +27,7 @@ export default function Compose(props: Props) {
     NsxProvider,
     CategoryProvider,
     CartProvider,
+    VoucherProvider,
    ].reduceRight((acc, Comp) => {
     return <Comp>{acc}</Comp>;
    }, children)}

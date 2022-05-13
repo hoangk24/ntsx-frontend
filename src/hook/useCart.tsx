@@ -78,7 +78,7 @@ export default function CartProvider({ children }: any) {
   const idx = _findIndex(
    carts,
    (n: ICartItem) =>
-    n.idProduct === cart.idProduct && n.size === cart.size.size
+    n.idProduct === cart.idProduct && n.size === cart.size
   );
   if (idx !== -1) {
    const copy = _cloneDeep(carts);
@@ -86,7 +86,7 @@ export default function CartProvider({ children }: any) {
    dispatch(setCart(copy));
   } else {
    const copy = carts ? [...carts] : [];
-   copy.push({ ...cart, size: cart.size.size });
+   copy.push({ ...cart, size: cart.size });
    dispatch(setCart(copy));
   }
  };
@@ -177,6 +177,7 @@ export default function CartProvider({ children }: any) {
     dispatch(setSuccessPayment());
    })
    .catch((err: any) => {
+    loading?.hide();
     message.error(err.message);
    })
    .finally(() => loading?.hide());
@@ -206,6 +207,7 @@ export default function CartProvider({ children }: any) {
     dispatch(setSuccessPayment());
    })
    .catch((err: any) => {
+    loading?.hide();
     message.error(err.message);
    })
    .finally(() => loading?.hide());

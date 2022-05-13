@@ -11,9 +11,23 @@ import {
  updateVoucherAction,
 } from "features/product/product.action";
 import { useLoading } from "hook/useLoading";
-import { useState } from "react";
-
-export default function useVoucher() {
+import { createContext, useContext, useState } from "react";
+interface IVoucherContext {
+ addVoucher: any;
+ getVoucher: any;
+ voucherList: any;
+ createVoucher: any;
+ updateVoucher: any;
+ deleteVoucher: any;
+}
+const VoucherContext = createContext<IVoucherContext>(
+ {} as IVoucherContext
+);
+export const useVoucher = () => useContext(VoucherContext);
+interface Props {
+ children: React.ReactNode;
+}
+export default function VoucherProvider({ children }: Props) {
  const loading = useLoading();
  const dispatch = useAppDispatch();
  const [voucherList, setVoucherList] = useState([]);
@@ -24,13 +38,16 @@ export default function useVoucher() {
    loading?.hide();
    return;
   }
-  dispatch(checkVoucherAction({ voucher }))
+  return dispatch(checkVoucherAction({ voucher }))
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
     dispatch(setVoucher(voucher));
    })
-   .catch((err) => message.error(err.message))
+   .catch((err) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => loading?.hide());
  };
 
@@ -43,12 +60,15 @@ export default function useVoucher() {
  };
  const createVoucher = (data: IVoucher) => {
   loading?.show();
-  dispatch(createVoucherAction(data))
+  return dispatch(createVoucherAction(data))
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
    })
-   .catch((err: any) => message.error(err?.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err?.message);
+   })
    .finally(() => loading?.hide());
  };
  const updateVoucher = (id: string, data: any) => {
@@ -59,7 +79,10 @@ export default function useVoucher() {
     message.success(res);
     getVoucher();
    })
-   .catch((err: any) => message.error(err?.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err?.message);
+   })
    .finally(() => loading?.hide());
  };
  const deleteVoucher = (id: string) => {
@@ -70,15 +93,23 @@ export default function useVoucher() {
     message.success(res);
     getVoucher();
    })
-   .catch((err: any) => message.error(err?.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err?.message);
+   })
    .finally(() => loading?.hide());
  };
- return {
-  addVoucher,
-  getVoucher,
-  voucherList,
-  createVoucher,
-  updateVoucher,
-  deleteVoucher,
- };
+ return (
+  <VoucherContext.Provider
+   value={{
+    addVoucher,
+    getVoucher,
+    voucherList,
+    createVoucher,
+    updateVoucher,
+    deleteVoucher,
+   }}>
+   {children}
+  </VoucherContext.Provider>
+ );
 }

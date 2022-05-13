@@ -7,10 +7,10 @@ import {
  Switch,
 } from "antd";
 import { IVoucher } from "constants/models/voucher.model";
-import useVoucher from "hook/useVoucher";
+import { useVoucher } from "hook/useVoucher";
 import moment from "moment";
 import { createRule } from "pages/client/cart/Payment";
-import React from "react";
+import React, { useEffect } from "react";
 import { formatDate } from "utils/common";
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
 export default function AddVoucher({ hide, visible }: Props) {
  const { RangePicker } = DatePicker;
  const [form] = Form.useForm();
- const { createVoucher } = useVoucher();
+ const { createVoucher, getVoucher } = useVoucher();
  const onFinish = (values: any) => {
   const { expired, percent, voucher } = values;
   const data: any = {
@@ -29,8 +29,11 @@ export default function AddVoucher({ hide, visible }: Props) {
    startDate: moment(expired[0]),
    endDate: moment(expired[1]),
   };
-  createVoucher(data);
+  createVoucher(data).then(() => hide());
  };
+ useEffect(() => {
+  getVoucher();
+ }, [visible]);
 
  return (
   <Modal

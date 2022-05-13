@@ -1,10 +1,8 @@
-import { Button, Col, Row } from "antd";
+import { Col, Row, Space, Typography } from "antd";
 import { IProduct } from "constants/models/product.model";
 import { useProduct } from "hook/useProduct";
 import ProductCard from "pages/components/product-card/ProductCard";
-import ProductCardLoading from "pages/components/product-card/ProductCardLoading";
-import React, { useMemo } from "react";
-import { formatMoney } from "utils/common";
+import React, { useMemo, useState } from "react";
 import "./Product.scss";
 export default function ProductListing() {
  const { products } = useProduct();
@@ -20,9 +18,11 @@ export default function ProductListing() {
  }, [products]);
 
  return (
-  <div className="product">
-   <h1 className="product-title">Danh sách sản phẩm</h1>
+  <Space className="product mt-3" direction="vertical">
+   <Typography.Title className="product-title">
+    Danh sách sản phẩm
+   </Typography.Title>
    <Row gutter={[5, 5]}>{mapProduct}</Row>
-  </div>
+  </Space>
  );
 }

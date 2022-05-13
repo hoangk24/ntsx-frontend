@@ -17,6 +17,7 @@ export interface ICart {
  updatedAt: Date;
  isPaided: boolean;
  isDisabled: boolean;
+ isCommented: boolean;
 }
 
 export enum CartStatus {

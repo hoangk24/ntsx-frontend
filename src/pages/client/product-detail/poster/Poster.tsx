@@ -1,12 +1,12 @@
 import { Image } from "antd";
 import { IImage } from "constants/models/common.model";
+import { useProductDetail } from "pages/client/product-detail/useProductDetail";
 import React from "react";
 import Slider, { Settings } from "react-slick";
 import "./Poster.scss";
-type Props = {
- posters: IImage[];
-};
-export default function Poster({ posters }: Props) {
+
+export default function Poster() {
+ const { posters } = useProductDetail();
  const config: Settings = {
   slidesToScroll: 1,
   slidesToShow: 1,

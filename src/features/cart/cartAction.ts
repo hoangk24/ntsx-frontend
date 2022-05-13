@@ -2,11 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
  ChangeStatusRequest,
  CreateCartRequest,
+ CreateCommentPayload,
 } from "constants/payload/cart.payload";
 import {
  changeStatus,
  checkVoucher,
  createCart,
+ createComment,
  getAllCart,
  getCartUser,
  getPreview,
@@ -74,6 +76,17 @@ export const changeStatusAction = createAsyncThunk(
  async (body: ChangeStatusRequest, { rejectWithValue }) => {
   try {
    const res = await changeStatus(body);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
+export const createCommentAction = createAsyncThunk(
+ "cart/createCommentAction",
+ async (body: CreateCommentPayload, { rejectWithValue }) => {
+  try {
+   const res = await createComment(body);
    return res.data;
   } catch (error: any) {
    return rejectWithValue(error?.response.data);

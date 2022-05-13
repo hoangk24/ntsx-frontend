@@ -45,7 +45,10 @@ export default function ProductProvider({ children }: any) {
     message.success(res.message);
     fetchProduct();
    })
-   .catch((err: any) => message.error(err.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => loading?.hide());
  };
  const fetchProduct = async () => {
@@ -55,7 +58,10 @@ export default function ProductProvider({ children }: any) {
    .then((res: any) => {
     setProducts(res.data);
    })
-   .catch((err: any) => message.error(err.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => loading?.hide());
  };
 
@@ -67,6 +73,7 @@ export default function ProductProvider({ children }: any) {
     message.success(res.message);
    })
    .catch((err: any) => {
+    loading?.hide();
     message.error(err.message);
    })
    .finally(() => loading?.hide());
@@ -80,7 +87,10 @@ export default function ProductProvider({ children }: any) {
     message.success(res.message);
     fetchProduct();
    })
-   .catch((err: any) => message.error(err?.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err?.message);
+   })
    .finally(() => loading?.hide());
  };
 

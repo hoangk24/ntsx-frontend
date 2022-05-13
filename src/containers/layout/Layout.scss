@@ -1,62 +1,85 @@
 #components-layout-demo-custom-trigger .trigger {
-  padding: 0 24px;
-  font-size: 18px;
-  line-height: 64px;
-  cursor: pointer;
-  transition: color 0.3s;
+ padding: 0 24px;
+ font-size: 18px;
+ line-height: 64px;
+ cursor: pointer;
+ transition: color 0.3s;
 }
 
 #components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
+ color: #1890ff;
 }
 
 .logo {
-  margin-top: 1rem;
-  height: 70px;
-  overflow: hidden;
-  //background: red;
-  position: relative;
-  cursor: pointer;
+ margin-top: 1rem;
+ height: 70px;
+ overflow: hidden;
+ //background: red;
+ position: relative;
+ cursor: pointer;
 
-  img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: block;
-    width: 100%;
-  }
+ img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 100%;
+ }
 
-  h1 {
-    color: white;
-    font-family: "Poppins", sans-serif;
-    font-size: 2rem;
-    margin: 0;
-    font-weight: bold;
-  }
+ h1 {
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 2rem;
+  margin: 0;
+  font-weight: bold;
+ }
 }
 
 .site-layout .site-layout-background {
-  background-color: white;
+ background-color: white;
 }
 
 .header {
-  display: flex;
-  align-items: center;
+ display: flex;
+ align-items: center;
 
-  &-start {
-  }
+ &-start {
+ }
 
-  &-center {
-    flex: 1;
-  }
+ &-center {
+  flex: 1;
+ }
 
-  &-end {
-  }
+ &-end {
+ }
 }
 
 .menu-cart {
-  background-color: white;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  padding: 1rem;
+ background-color: white;
+ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+ padding: 1rem;
+}
+
+.wrapper {
+ .ant-tabs-nav {
+  .ant-tabs-nav-wrap {
+   justify-content: center;
+   .ant-tabs-tab {
+    margin: 0 !important;
+    padding: 1rem 1.3rem;
+   }
+  }
+  .ant-tabs-nav-more {
+   display: none;
+  }
+ }
+ .ant-tabs-nav-list {
+  .ant-tabs-nav-list {
+   width: 100% !important;
+  }
+  .ant-tabs-tab-btn {
+   color: white;
+  }
+ }
 }

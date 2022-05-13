@@ -69,7 +69,10 @@ export default function CategoryProvider({ children }: any) {
    .then((res: any) => {
     message.success(res.message);
    })
-   .catch((err: any) => message.error(err.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => loading?.hide());
  };
 

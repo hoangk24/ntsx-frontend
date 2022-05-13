@@ -3,6 +3,7 @@ import { ICart } from "constants/models/cart.model";
 import {
  ChangeStatusRequest,
  CreateCartRequest,
+ CreateCommentPayload,
 } from "constants/payload/cart.payload";
 import { API_ENDPOINT } from "services/apiEnpoint";
 import { axiosClient } from "services/axiosClient";
@@ -16,7 +17,9 @@ type ICheckVoucher = (
 type ICreateCart = (
  body: CreateCartRequest
 ) => Promise<AxiosResponse<{ data: ICart; message: string }>>;
-
+type ICreateComment = (
+ body: CreateCommentPayload
+) => Promise<AxiosResponse<{ data: ICart; message: string }>>;
 type IChangeStatus = (
  body: ChangeStatusRequest
 ) => Promise<AxiosResponse<{ data: any; message: string }>>;
@@ -38,3 +41,6 @@ export const createCart: ICreateCart = (body) =>
 
 export const getAllCart: IGetAlltCart = () =>
  axiosClient.get(API_ENDPOINT.CART.GET_ALL_CART);
+
+export const createComment: ICreateComment = (body) =>
+ axiosClient.post(API_ENDPOINT.COMMENT.CREATE, body);

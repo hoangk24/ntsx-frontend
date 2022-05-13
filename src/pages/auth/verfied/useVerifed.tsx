@@ -20,6 +20,7 @@ export default function useVerifed() {
     message.success(res.message);
    })
    .catch((err: any) => {
+    loading?.hide();
     setError(true);
    })
    .finally(() => loading?.hide());

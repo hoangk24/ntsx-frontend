@@ -25,12 +25,15 @@ import {
  SolutionOutlined,
 } from "@ant-design/icons";
 import { ColumnsType } from "antd/es/table";
+import CreateComment from "pages/client/product-detail/comment/CreateComment";
 
 function CartList({ mycart }: { mycart: ICart }) {
  const { Step } = Steps;
  const { step2, step3, step4, step1, step5 } = getStatus(
   mycart.status
  );
+ console.log(mycart.isCommented);
+
  const columns: ColumnsType<ICartItem> = [
   {
    title: "Hình ảnh",
@@ -65,6 +68,8 @@ function CartList({ mycart }: { mycart: ICart }) {
    key: "quantity",
   },
  ];
+ console.log(mycart);
+
  return (
   <Card className={"my-5"} bordered>
    <Form labelCol={{ span: 2 }} wrapperCol={{ span: 20, offset: 1 }}>
@@ -135,12 +140,19 @@ function CartList({ mycart }: { mycart: ICart }) {
         {mycart.isPaided ? "Đã thanh toán" : "Chưa thanh toán"}
        </Tag>
       </Form.Item>
-      <Form.Item label={"Thao tác"}>
-       <Button>Huỷ</Button>
-      </Form.Item>
+      {[CartStatus.CREATING].includes(mycart.status) && (
+       <Form.Item label={"Thao tác"}>
+        <Button>Huỷ</Button>
+       </Form.Item>
+      )}
      </Form>
     </Form.Item>
    </Form>
+   {mycart.status === CartStatus.DONE && !mycart.isCommented && (
+    <Card>
+     <CreateComment cartId={mycart._id} product={mycart.list} />
+    </Card>
+   )}
   </Card>
  );
 }

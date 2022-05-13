@@ -55,11 +55,15 @@ export default function DiscountProvider({ children }: any) {
  };
 
  const updateDiscountFn = async (id: string, data: any) => {
+  loading?.show();
   try {
-   await updateDiscount(id, data);
-   message.success("update thành công");
-  } catch (error) {
-   message.error("update k thành công");
+   return await updateDiscount(id, data).then((res: any) => {
+    loading?.hide();
+    message.success(res.data.message);
+   });
+  } catch (error: any) {
+   loading?.hide();
+   message.error(error.data.message);
   }
  };
 

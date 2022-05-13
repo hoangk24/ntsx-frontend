@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { IVoucher } from "constants/models/voucher.model";
-import useVoucher from "hook/useVoucher";
+import { useVoucher } from "hook/useVoucher";
 import moment from "moment";
 import AddVoucher from "pages/admin/discount/AddVoucher";
 import React, { useEffect, useState } from "react";

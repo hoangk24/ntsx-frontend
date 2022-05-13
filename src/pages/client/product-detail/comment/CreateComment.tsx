@@ -1,34 +1,38 @@
 import { Avatar, Button, Comment, Form, Rate } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useAppSelector } from "app/store";
+import { ICartItem } from "constants/models/cart.model";
 import { IComment } from "constants/models/comment.model";
 import { rateName } from "constants/models/product.model";
+import { useCart } from "hook/useCart";
 import useComment from "pages/client/product-detail/comment/useComment";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-
-export default function CreateComment() {
- const { createComment } = useComment();
- const { id } = useParams();
- const { user, isLogin } = useAppSelector().auth;
+interface Props {
+ cartId: string;
+ product: ICartItem[];
+}
+export default function CreateComment({ product, cartId }: Props) {
+ const { user } = useAppSelector().auth;
+ const { getMycart } = useCart();
  const [form] = useForm();
- const onFinish = (value: any) => {
-  const comment: IComment = {
-   message: value?.message,
-   product: id,
-   user: user?._id,
-   rate: value.rate,
-  };
-  createComment(comment);
+ const { createComment } = useComment();
+ const onFinish = async (value: any) => {
+  for (const prod of product) {
+   const comment: IComment = {
+    message: value?.message,
+    product: prod.idProduct._id,
+    user: user?._id,
+    rate: value.rate,
+   };
+   await createComment({
+    cartId,
+    comment,
+   }).then(() => getMycart());
+  }
   form.resetFields();
  };
 
- if (!isLogin)
-  return (
-   <div>
-    Hãy <Link to="/login">Đăng nhập</Link> để đánh giá sản phẩm này
-   </div>
-  );
  return (
   <Comment
    author={<span>{user?.fullName}</span>}

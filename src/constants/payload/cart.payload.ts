@@ -2,6 +2,7 @@ import {
  CartStatus,
  ICartItemPreview,
 } from "constants/models/cart.model";
+import { IComment } from "constants/models/comment.model";
 
 export interface CreateCartRequest {
  user: string;
@@ -20,4 +21,8 @@ export interface CreateCartRequest {
 export interface ChangeStatusRequest {
  id: string;
  status: CartStatus;
+}
+export interface CreateCommentPayload {
+ cartId: string;
+ comment: IComment;
 }

@@ -1,40 +1,25 @@
-import {IComment} from "constants/models/comment.model";
-import {useSocket} from "hook/useSocket";
-import {useState} from "react";
-import {useParams} from "react-router-dom";
-import {getComment} from "services/comment.service";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { message } from "antd";
+import { useAppDispatch } from "app/store";
+import { CreateCommentPayload } from "constants/payload/cart.payload";
+import { createCommentAction } from "features/cart/cartAction";
+import { useLoading } from "hook/useLoading";
+import React from "react";
 
 export default function useComment() {
-    const {id} = useParams();
-    const [comment, setComment] = useState<IComment[]>([]);
-    const {socket} = useSocket();
+ const dispatch = useAppDispatch();
+ const loading = useLoading();
 
-    const joinRoomProduct = () => {
-        socket.emit("joinRoom", id);
-    };
-    const leaveRoomProduct = () => {
-        socket.emit("leaveRoom", id);
-    };
-    const getCommentProduct = async () => {
-        const res: any = await getComment(id as string);
-        setComment(res?.data?.data);
-    };
-    const createComment = (comment: IComment) => {
-        socket.emit("createComment", {room: id, comment});
-    };
-    const removeComment = (idComment: string) => {
-        socket.emit("removeComment", {room: id, id: idComment});
-    };
-
-
-    return {
-        id,
-        leaveRoomProduct,
-        getCommentProduct,
-        comment,
-        createComment,
-        socket,
-        removeComment,
-        joinRoomProduct,
-    };
+ const createComment = (data: CreateCommentPayload) => {
+  loading?.show();
+  return dispatch(createCommentAction(data))
+   .then(unwrapResult)
+   .then((res: any) => message.success(res.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
+   .finally(() => loading?.hide());
+ };
+ return { createComment };
 }

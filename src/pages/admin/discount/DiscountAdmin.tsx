@@ -1,15 +1,7 @@
 import { EditOutlined } from "@ant-design/icons";
-import {
- Button,
- DatePicker,
- InputNumber,
- Space,
- Table,
- Tag,
-} from "antd";
+import { Button, Space, Table, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { IDiscount } from "constants/models/discount.model";
-import moment from "moment";
 import AddDiscount from "pages/admin/discount/AddDiscount";
 import UpdateDiscount from "pages/admin/discount/UpdateDiscount";
 import { useDiscount } from "pages/admin/discount/useDiscount";

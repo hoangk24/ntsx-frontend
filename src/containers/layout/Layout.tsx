@@ -1,4 +1,4 @@
-import { Input, Layout } from "antd";
+import { Input, Layout, Tabs } from "antd";
 import { RootState } from "app/store";
 import { Role } from "constants/models/auth.model";
 import Auth from "containers/auth/Auth";
@@ -15,7 +15,7 @@ export default function DefaultLayout({ children }: any) {
  const { user } = useSelector((state: RootState) => state.auth);
  const navigate = useNavigate();
  return (
-  <Layout style={{ minHeight: "100vh" }}>
+  <Layout style={{ minHeight: "100vh" }} className="wrapper">
    <Sider
     trigger={null}
     style={{
@@ -30,7 +30,14 @@ export default function DefaultLayout({ children }: any) {
      <img src={logo} alt="" />
     </div>
     {user && [Role.ADMIN, Role.MASTER].includes(user.role) ? (
-     <MenuAdmin />
+     <Tabs defaultActiveKey="1">
+      <Tabs.TabPane className="tabkey" tab="Admin" key={"1"}>
+       <MenuAdmin />
+      </Tabs.TabPane>
+      <Tabs.TabPane className="tabkey" key={"2"} tab="Client">
+       <MenuUser />
+      </Tabs.TabPane>
+     </Tabs>
     ) : (
      <MenuUser />
     )}

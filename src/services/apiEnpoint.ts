@@ -42,6 +42,7 @@ const API_ENDPOINT = {
  },
  COMMENT: {
   GET: "/comments/get-comments",
+  CREATE: "/cart/create-comment",
  },
  CATEGORY: {
   GET: "/category/get-category",

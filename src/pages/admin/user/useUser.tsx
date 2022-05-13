@@ -69,7 +69,10 @@ export default function UserProvider({
    .then((res: any) => {
     setCurrentUser(res?.data);
    })
-   .catch((err) => message.error(err.message))
+   .catch((err) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => {
     loading?.hide();
    });
@@ -80,7 +83,10 @@ export default function UserProvider({
   dispatch(deleteUserAction(id))
    .then(unwrapResult)
    .then((res: any) => fetchAllUser())
-   .catch((err) => message.error(err.message))
+   .catch((err) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => {
     loading?.hide();
    });
@@ -94,7 +100,10 @@ export default function UserProvider({
     message.success(res?.message);
     fetchAllUser();
    })
-   .catch((err) => message.error(err.message))
+   .catch((err) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => {
     loading?.hide();
    });
@@ -107,7 +116,10 @@ export default function UserProvider({
    .then((res: any) => {
     message.success(res.message);
    })
-   .catch((err: any) => message.error(err?.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err?.message);
+   })
    .finally(() => loading?.hide());
  };
 
@@ -123,7 +135,10 @@ export default function UserProvider({
     message.success(res.message);
     resetFields();
    })
-   .catch((err: any) => message.error(err?.message))
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err?.message);
+   })
    .finally(() => setLoading(false));
  };
 
@@ -133,19 +148,28 @@ export default function UserProvider({
    .then((res: any) => {
     message.success(res.message);
    })
-   .catch((err) => message.error(err.message))
+   .catch((err) => {
+    loading?.hide();
+    message.error(err.message);
+   })
    .finally(() => {});
  };
 
  const activeMail = async (data: ActiveMailPayload) => {
+  loading?.show();
   dispatch(activeMailAction(data))
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
     fetchUser(data.id);
    })
-   .catch((err) => message.error(err.message))
-   .finally(() => {});
+   .catch((err) => {
+    loading?.hide();
+    message.error(err.message);
+   })
+   .finally(() => {
+    loading?.hide();
+   });
  };
 
  return (

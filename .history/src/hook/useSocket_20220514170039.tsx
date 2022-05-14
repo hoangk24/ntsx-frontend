@@ -13,7 +13,7 @@ import io, { Socket } from "socket.io-client";
 interface ISocket {
  socket: Socket;
 }
-const socket = io(import.meta.env.BASE_URL);
+const socket = io("http://localhost:5005");
 
 export const SocketContext = createContext<ISocket>({ socket });
 export const useSocket = () => useContext(SocketContext);

@@ -1,4 +1,12 @@
-import { Button, Form, Input, Modal, Typography } from "antd";
+import {
+ Button,
+ Form,
+ Input,
+ Modal,
+ Typography,
+ TextArea,
+} from "antd";
+import TextArea from "antd/lib/input/TextArea";
 import { CreateEmailPayload } from "constants/payload/auth.payload";
 import { CreateEmailValueForm } from "constants/payload/user.payload";
 import { useUser } from "pages/admin/user/useUser";
@@ -60,11 +68,11 @@ export default function MailUser(props: Props) {
      <Input placeholder="Nhập tiêu đề" />
     </Form.Item>
     <Form.Item label="Nội dung" name={"message"}>
-     {/* <Input
+     <TextArea
       rows={4}
       placeholder="Nhập nội dung email"
       maxLength={6}
-     /> */}
+     />
     </Form.Item>
    </Form>
   </Modal>

@@ -51,10 +51,9 @@ export default function CartList() {
    key: "quantity",
    width: "10%",
    render: (text: string, record: ICartItemPreview) => {
-    return record.maxSize !== 0 ? (
+    return !record.isEmpty ? (
      <InputNumber
       min={1}
-      max={record.maxSize}
       defaultValue={(record?.quantity as any) || 0}
       onChange={(e: number) => {
        updateQuantity(record.idProduct, record.size, e);

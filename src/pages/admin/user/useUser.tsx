@@ -84,12 +84,8 @@ export default function UserProvider({
   dispatch(deleteUserAction(id))
    .then(unwrapResult)
    .then((res: any) => {
-    console.log(res);
-
     if (res?.data?.isDeleted) {
      socket.emit("lockUser", res?.data?._id);
-    } else {
-     socket.emit("unLockUser", res?.data?._id);
     }
     fetchAllUser();
    })

@@ -13,7 +13,7 @@ import io, { Socket } from "socket.io-client";
 interface ISocket {
  socket: Socket;
 }
-const socket = io(import.meta.env.VITE_API_ENDPOINT);
+const socket = io(import.meta.env.BASE_URL);
 
 export const SocketContext = createContext<ISocket>({ socket });
 export const useSocket = () => useContext(SocketContext);
@@ -31,7 +31,6 @@ export default function SocketProvider({ children }: any) {
    socket.on("userWasLocked", (id) => {
     console.log(id);
 
-    console.log(id);
     if (id === user?._id) {
      Modal.confirm({
       title:
@@ -47,7 +46,7 @@ export default function SocketProvider({ children }: any) {
     }
    });
   }
- }, [socket, isLogin]);
+ }, [socket]);
  return (
   <SocketContext.Provider value={{ socket }}>
    {children}

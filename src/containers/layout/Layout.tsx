@@ -17,6 +17,7 @@ export default function DefaultLayout({ children }: any) {
  return (
   <Layout style={{ minHeight: "100vh" }} className="wrapper">
    <Sider
+    className="sider"
     trigger={null}
     style={{
      overflow: "auto",

@@ -1,19 +1,35 @@
-import { Input, Layout, Tabs } from "antd";
-import { RootState } from "app/store";
+import {
+ Button,
+ Input,
+ Layout,
+ message,
+ Modal,
+ Space,
+ Tabs,
+} from "antd";
+import { RootState, useAppDispatch } from "app/store";
 import { Role } from "constants/models/auth.model";
 import Auth from "containers/auth/Auth";
 import MenuAdmin from "containers/auth/MenuAdmin";
 import MenuUser from "containers/auth/MenuUser";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./Layout.scss";
 import logo from "./logo.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSocket } from "hook/useSocket";
+import { generateUUID } from "utils/common";
+import { setLogOut } from "features/auth/auth.slice";
 
 export default function DefaultLayout({ children }: any) {
- const { Header, Sider, Content } = Layout;
- const { user } = useSelector((state: RootState) => state.auth);
+ const { Header, Sider, Content, Footer } = Layout;
+ const { user, isLogin } = useSelector(
+  (state: RootState) => state.auth
+ );
  const navigate = useNavigate();
+
+ const dispatch = useAppDispatch();
+
  return (
   <Layout style={{ minHeight: "100vh" }} className="wrapper">
    <Sider
@@ -59,6 +75,9 @@ export default function DefaultLayout({ children }: any) {
      }}>
      {children}
     </Content>
+    <Footer style={{ textAlign: "center" }}>
+     Ant Design ©2018 Created by NTX TEAM - Thành viên Online 0
+    </Footer>
    </Layout>
   </Layout>
  );

@@ -19,6 +19,7 @@ import {
  resendMailAction,
 } from "features/users/users.action";
 import { useLoading } from "hook/useLoading";
+import { useSocket } from "hook/useSocket";
 import React, {
  createContext,
  useContext,
@@ -50,7 +51,7 @@ export default function UserProvider({
  const dispatch = useAppDispatch();
  const loading = useLoading();
  const [currentUser, setCurrentUser] = useState<IUser>();
-
+ const { socket } = useSocket();
  useEffect(() => {
   fetchAllUser();
  }, []);
@@ -82,7 +83,16 @@ export default function UserProvider({
   loading?.show();
   dispatch(deleteUserAction(id))
    .then(unwrapResult)
-   .then((res: any) => fetchAllUser())
+   .then((res: any) => {
+    console.log(res);
+
+    if (res?.data?.isDeleted) {
+     socket.emit("lockUser", res?.data?._id);
+    } else {
+     socket.emit("unLockUser", res?.data?._id);
+    }
+    fetchAllUser();
+   })
    .catch((err) => {
     loading?.hide();
     message.error(err.message);

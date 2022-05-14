@@ -18,6 +18,7 @@ import Home from "pages/client/home/Home";
 import Nsx from "pages/client/nsx/Nsx";
 import PaymentSuccess from "pages/client/payment/PaymentSuccess";
 import ProductDetail from "pages/client/product-detail/ProductDetail";
+import Contact from "pages/contact/Contact";
 import Errors from "pages/error/Errors";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -58,6 +59,7 @@ export default function App() {
      <Route path="verified-email" element={<Verfied />} />
      <Route path="register" element={<Register />} />
      <Route path="change-password" element={<ChangePassword />} />
+     <Route path="contact" element={<Contact />} />
      <Route path="*" element={<Errors />} />
     </Routes>
    </Compose>

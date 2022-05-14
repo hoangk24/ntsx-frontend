@@ -8,17 +8,20 @@
   "useDefineForClassFields": true,
   "lib": ["DOM", "DOM.Iterable", "ESNext"],
   "allowJs": false,
-  "skipLibCheck": false,
-  "esModuleInterop": false,
   "moduleResolution": "node",
+  "skipLibCheck": true,
+  "esModuleInterop": false,
   "allowSyntheticDefaultImports": true,
   "strict": true,
   "forceConsistentCasingInFileNames": true,
   "module": "ESNext",
+  "resolveJsonModule": true,
   "isolatedModules": true,
   "noEmit": true,
   "jsx": "react-jsx"
  },
  "include": ["src"],
+ "exclude": ["/node_modules/", "/bin", "/obj"],
+
  "references": [{ "path": "./tsconfig.node.json" }]
 }

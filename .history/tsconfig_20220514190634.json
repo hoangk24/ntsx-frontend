@@ -8,17 +8,21 @@
   "useDefineForClassFields": true,
   "lib": ["DOM", "DOM.Iterable", "ESNext"],
   "allowJs": false,
+  "moduleResolution": "node",
   "skipLibCheck": false,
   "esModuleInterop": false,
-  "moduleResolution": "node",
   "allowSyntheticDefaultImports": true,
   "strict": true,
   "forceConsistentCasingInFileNames": true,
   "module": "ESNext",
+  "resolveJsonModule": true,
   "isolatedModules": true,
   "noEmit": true,
   "jsx": "react-jsx"
  },
  "include": ["src"],
+ "files": [
+  "./node_modules/redux-persist/types/integration/react.d.ts"
+ ],
  "references": [{ "path": "./tsconfig.node.json" }]
 }

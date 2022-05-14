@@ -1,7 +1,7 @@
 import { Button, Col, Input, Row, Tag } from "antd";
 import { useAppDispatch, useAppSelector } from "app/store";
 import { setVoucher } from "features/cart/cartSlice";
-import useVoucher from "hook/useVoucher";
+import { useVoucher } from "hook/useVoucher";
 import React, { useMemo, useState } from "react";
 import { formatMoney } from "utils/common";
 import "./DetailPayment.scss";

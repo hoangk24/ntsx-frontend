@@ -24,10 +24,8 @@ const VoucherContext = createContext<IVoucherContext>(
  {} as IVoucherContext
 );
 export const useVoucher = () => useContext(VoucherContext);
-interface Props {
- children: React.ReactNode;
-}
-export default function VoucherProvider({ children }: Props) {
+
+export default function VoucherProvider({ children }: any) {
  const loading = useLoading();
  const dispatch = useAppDispatch();
  const [voucherList, setVoucherList] = useState([]);

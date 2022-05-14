@@ -2,6 +2,7 @@ import { Avatar, Comment, Rate, Space } from "antd";
 import { useAppSelector } from "app/store";
 import { Role } from "constants/models/auth.model";
 import { IComment } from "constants/models/comment.model";
+import useComment from "pages/client/product-detail/comment/useComment";
 import React from "react";
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 };
 export default function CommentItem({ comment }: Props) {
  const { user } = useAppSelector().auth;
+ const { removeComment } = useComment();
  return (
   <Comment
    author={
@@ -20,7 +22,7 @@ export default function CommentItem({ comment }: Props) {
       user?._id === comment?.user?._id) && (
       <span
        onClick={() => {
-        // removeComment(comment._id as string);
+        removeComment(comment._id as string);
        }}
        className="action">
        Xoá

@@ -1,4 +1,5 @@
 import { IComment } from "constants/models/comment.model";
+import CreateComment from "pages/client/product-detail/comment/CreateComment";
 import { useProductDetail } from "pages/client/product-detail/useProductDetail";
 import CommentItem from "pages/components/comments/CommentItem";
 import React, { useEffect, useMemo } from "react";

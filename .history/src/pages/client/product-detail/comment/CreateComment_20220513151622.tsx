@@ -7,6 +7,7 @@ import { rateName } from "constants/models/product.model";
 import { useCart } from "hook/useCart";
 import useComment from "pages/client/product-detail/comment/useComment";
 import React from "react";
+import { Link, useParams } from "react-router-dom";
 interface Props {
  cartId: string;
  product: ICartItem[];

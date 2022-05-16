@@ -32,10 +32,10 @@ export default function UpdateUser(props: Props) {
      <span>{user?.fullName}</span>
     </Form.Item>
     <Form.Item label="Email">
-     <span>{user?.email.email}</span>
+     <span>{user?.email?.email}</span>
     </Form.Item>
     <Form.Item label="Xác minh">
-     {user?.email.verified ? (
+     {user?.email?.verified ? (
       <Tag color={"green"}>Đã xác minh</Tag>
      ) : (
       <Tag color={"red"}>Chưa xác minh</Tag>

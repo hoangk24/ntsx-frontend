@@ -1,13 +1,13 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { BASE_URL } from "services/apiEnpoint";
-import qs from "query-string";
-import { getNewAccessToken } from "./auth.service";
-import { useNavigate } from "react-router-dom";
 import { message } from "antd";
+import axios, { AxiosRequestConfig } from "axios";
+import qs from "query-string";
+import { BASE_URL } from "services/apiEnpoint";
+import { getNewAccessToken } from "./auth.service";
 export const axiosClient = axios.create({
  baseURL: BASE_URL,
  headers: {
   "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "https://ntsxshop.netlify.app",
  },
  paramsSerializer: (params) => qs.stringify(params),
 });

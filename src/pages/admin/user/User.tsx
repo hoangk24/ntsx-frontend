@@ -20,10 +20,15 @@ import { LockOutlined, UnlockOutlined } from "@ant-design/icons";
 
 export default function User() {
  const [openAddModal, setOpenAddModal] = useState(false);
- const [openUpdateModal, setOpenUpdateModal] = useState(false);
- const [openSendMailModal, setOpenSendMailModal] = useState(false);
+ const [openUpdateModal, setOpenUpdateModal] = useState({
+  user: {} as IUser,
+  show: false,
+ });
+ const [openSendMailModal, setOpenSendMailModal] = useState({
+  user: {} as IUser,
+  show: false,
+ });
  const { getColumnSearchProps } = useDefineSearch();
- const [id, setId] = useState<string>("");
  const { data, deleteUser } = useUser();
 
  const columns: ColumnsType<IUser> = [
@@ -101,15 +106,19 @@ export default function User() {
       </Popconfirm>
       <Button
        onClick={() => {
-        setId(record._id);
-        setOpenSendMailModal(true);
+        setOpenSendMailModal({
+         show: true,
+         user: record,
+        });
        }}>
        Mail
       </Button>
       <Button
        onClick={() => {
-        setId(record._id);
-        setOpenUpdateModal(true);
+        setOpenUpdateModal({
+         show: true,
+         user: record,
+        });
        }}>
        Sửa
       </Button>
@@ -134,20 +143,20 @@ export default function User() {
     rowKey={(record) => Math.random()}
    />
 
-   {id && (
-    <MailUser
-     idUser={id}
-     show={openSendMailModal}
-     hide={setOpenSendMailModal}
-    />
-   )}
-   {id && (
-    <UpdateUser
-     idUser={id}
-     show={openUpdateModal}
-     hide={setOpenUpdateModal}
-    />
-   )}
+   <MailUser
+    user={openSendMailModal.user}
+    show={openSendMailModal.show}
+    hide={() =>
+     setOpenSendMailModal({ ...openSendMailModal, show: false })
+    }
+   />
+
+   <UpdateUser
+    user={openSendMailModal.user}
+    show={openUpdateModal.show}
+    hide={setOpenUpdateModal}
+   />
+
    <AddUser hide={() => setOpenAddModal(false)} show={openAddModal} />
   </div>
  );

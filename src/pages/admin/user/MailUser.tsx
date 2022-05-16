@@ -1,4 +1,5 @@
 import { Button, Form, Input, Modal, Typography } from "antd";
+import { IUser } from "constants/models/auth.model";
 import { CreateEmailPayload } from "constants/payload/auth.payload";
 import { CreateEmailValueForm } from "constants/payload/user.payload";
 import { useUser } from "pages/admin/user/useUser";
@@ -7,27 +8,23 @@ import React, { useCallback, useEffect, useState } from "react";
 type Props = {
  show: any;
  hide: React.Dispatch<React.SetStateAction<boolean>>;
- idUser: string;
+ user: IUser;
 };
 export default function MailUser(props: Props) {
- const { hide, show, idUser } = props;
+ const { hide, show, user } = props;
  const [sendMailLoading, setSendMailLoading] = useState(false);
  const [form] = Form.useForm();
- const { createMail, resendMail, fetchUser, currentUser } = useUser();
-
- useEffect(() => {
-  fetchUser(idUser);
- }, []);
+ const { createMail, resendMail } = useUser();
 
  const submitForm = useCallback(() => {
   form.validateFields().then(async (value: CreateEmailValueForm) => {
    const data: CreateEmailPayload = {
-    idUser: currentUser?._id as string,
+    idUser: user?._id as string,
     ...value,
    };
    createMail(data, setSendMailLoading, form.resetFields);
   });
- }, [form, currentUser?._id]);
+ }, [form, user?._id]);
 
  return (
   <Modal
@@ -43,15 +40,15 @@ export default function MailUser(props: Props) {
     labelCol={{ span: 5 }}
     wrapperCol={{ span: 17, offset: 2 }}>
     <Form.Item label="Xác minh">
-     <Button onClick={() => resendMail(currentUser?._id || "")}>
+     <Button onClick={() => resendMail(user?._id || "")}>
       Gửi lại email xác minh
      </Button>
     </Form.Item>
     <Form.Item label="Email to">
-     <Typography>{currentUser?.email?.email}</Typography>
+     <Typography>{user?.email?.email}</Typography>
     </Form.Item>
     <Form.Item label="Tên người nhận">
-     <Typography>{currentUser?.fullName}</Typography>
+     <Typography>{user?.fullName}</Typography>
     </Form.Item>
     <Form.Item label="Suject" name={"subject"}>
      <Input placeholder="Nhập subject" />
@@ -60,11 +57,11 @@ export default function MailUser(props: Props) {
      <Input placeholder="Nhập tiêu đề" />
     </Form.Item>
     <Form.Item label="Nội dung" name={"message"}>
-     {/* <Input
+     <Input.TextArea
       rows={4}
       placeholder="Nhập nội dung email"
       maxLength={6}
-     /> */}
+     />
     </Form.Item>
    </Form>
   </Modal>

@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import { IUser } from "constants/models/auth.model";
 import {
  LoginRequestPayload,
+ LogOutRequestPayload,
  RegisterPayload,
 } from "constants/payload/auth.payload";
 import { API_ENDPOINT } from "services/apiEnpoint";
@@ -21,7 +22,7 @@ type RegisterRequest = (body: RegisterPayload) => Promise<
  }>
 >;
 type LogOutRequest = (
- body: any
+ body: LogOutRequestPayload
 ) => Promise<AxiosResponse<{ data: any; message: string }>>;
 
 type NewAccessToken = (body: {
@@ -36,8 +37,8 @@ export const logIn: LoginRequest = (body) =>
 export const register: RegisterRequest = (body) =>
  axiosClient.post(API_ENDPOINT.AUTH.REGISTER, body);
 
-export const logOut: LogOutRequest = (body) =>
- axiosClient.post(API_ENDPOINT.AUTH.LOGOUT, body);
-
 export const getNewAccessToken: NewAccessToken = (body) =>
  axiosClient.post(API_ENDPOINT.AUTH.ACCESS_TOKEN, body);
+
+export const logOut: LogOutRequest = (body) =>
+ axiosClient.post(API_ENDPOINT.AUTH.LOGOUT, body);

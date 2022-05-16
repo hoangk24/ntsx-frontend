@@ -31,9 +31,19 @@ const cartSlice = createSlice({
    state.carts = [];
    state.voucher = "";
   },
+  resetCart(state) {
+   state.carts = [];
+   state.preview = null;
+   state.voucher = "";
+  },
  },
 });
 
 export default cartSlice.reducer;
-export const { setCart, setPreview, setVoucher, setSuccessPayment } =
- cartSlice.actions;
+export const {
+ setCart,
+ setPreview,
+ setVoucher,
+ setSuccessPayment,
+ resetCart,
+} = cartSlice.actions;

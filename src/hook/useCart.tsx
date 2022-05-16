@@ -26,6 +26,7 @@ import { useLoading } from "hook/useLoading";
 import _cloneDeep from "lodash/cloneDeep";
 import _filter from "lodash/filter";
 import _findIndex from "lodash/findIndex";
+import _isEmpty from "lodash/isEmpty";
 import {
  createContext,
  useCallback,
@@ -75,17 +76,16 @@ export default function CartProvider({ children }: any) {
  }, [carts, voucher]);
 
  const addCart = (cart: ICartItem) => {
+  let copy = !_isEmpty(carts) ? _cloneDeep(carts) : [];
   const idx = _findIndex(
    carts,
    (n: ICartItem) =>
     n.idProduct === cart.idProduct && n.size === cart.size
   );
   if (idx !== -1) {
-   const copy = _cloneDeep(carts);
    copy[idx].quantity += cart.quantity;
    dispatch(setCart(copy));
   } else {
-   const copy = carts ? [...carts] : [];
    copy.push({ ...cart, size: cart.size });
    dispatch(setCart(copy));
   }

@@ -20,10 +20,6 @@ const authSlice = createSlice({
    state.isLogin = true;
    localStorage.setItem("token", action.payload.token.token);
    localStorage.setItem(
-    "expired",
-    action.payload.refreshToken.expiresIn
-   );
-   localStorage.setItem(
     "refreshToken",
     action.payload.refreshToken.token
    );

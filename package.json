@@ -11,6 +11,7 @@
   "@ant-design/icons": "^4.7.0",
   "@paypal/react-paypal-js": "^7.6.0",
   "@reduxjs/toolkit": "^1.8.1",
+  "amend-object": "^2.0.0",
   "antd": "^4.20.4",
   "axios": "^0.26.1",
   "bootstrap-utilities": "^4.1.3",

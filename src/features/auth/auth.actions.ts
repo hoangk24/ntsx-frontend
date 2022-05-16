@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
  LoginRequestPayload,
+ LogOutRequestPayload,
  RegisterPayload,
 } from "constants/payload/auth.payload";
 import { logIn, logOut, register } from "services/auth.service";
@@ -30,7 +31,7 @@ export const registerAction = createAsyncThunk(
 );
 export const logOutAction = createAsyncThunk(
  "auth/logout",
- async (body, { rejectWithValue }) => {
+ async (body: LogOutRequestPayload, { rejectWithValue }) => {
   try {
    const res = await logOut(body);
    return res.data;

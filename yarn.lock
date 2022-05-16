@@ -442,6 +442,11 @@
     react-refresh "^0.12.0"
     resolve "^1.22.0"
 
+amend-object@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/amend-object/-/amend-object-2.0.0.tgz#6bf55e1e1c80b2062e090cb9dded101f55a57140"
+  integrity sha512-o+/1AgYEjC92ab9w9Tz6RPodNFXI2u5Ju9O+e5iNN2lKIZm8fKlxq7m8DAZ5WaEIXR12SGxSZ8KQasn2Ox4mQA==
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.npmjs.org/ansi-styles/-/ansi-styles-3.2.1.tgz"

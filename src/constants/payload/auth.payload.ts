@@ -1,3 +1,5 @@
+import { ICartItem } from "constants/models/cart.model";
+
 export interface LoginRequestPayload {
  email: string;
  password: string;
@@ -15,4 +17,8 @@ export interface RegisterPayload {
  email: string;
  password: string;
  fullName: string;
+}
+
+export interface LogOutRequestPayload {
+ cart: ICartItem[];
 }

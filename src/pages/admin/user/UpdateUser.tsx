@@ -1,5 +1,6 @@
 import { Avatar, Button, Form, Modal, Select, Tag } from "antd";
 import { IUser, Role } from "constants/models/auth.model";
+import useEffectSkipFisrtRender from "hook/useEffectSkipFisrtRender";
 import { useUser } from "pages/admin/user/useUser";
 import React, { useEffect } from "react";
 type Props = {
@@ -13,20 +14,26 @@ export default function UpdateUser(props: Props) {
  const [form] = Form.useForm();
  const { activeMail, changeRole, fetchAllUser } = useUser();
 
+ useEffectSkipFisrtRender(() => {
+  return () => {
+   fetchAllUser();
+  };
+ }, [show]);
+
  return (
   <Modal
    title="Cật nhật người dùng "
    visible={show}
+   footer={false}
    onCancel={() => {
     hide(false);
-    fetchAllUser();
    }}>
    <Form
     form={form}
     labelCol={{ span: 5 }}
     wrapperCol={{ span: 17, offset: 1 }}>
     <Form.Item>
-     <Avatar src="" size={"large"} />
+     <Avatar src={user?.avatar} size={"large"} />
     </Form.Item>
     <Form.Item label="Tên người dùng">
      <span>{user?.fullName}</span>

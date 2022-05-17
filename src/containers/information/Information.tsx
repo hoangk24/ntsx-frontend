@@ -84,7 +84,7 @@ export default function Information({ onHide, visible }: Props) {
     </Form.Item>
     <Form.Item label="Quyền">
      <Typography className="mb-0">
-      {Role[user?.role || Role.USER]}
+      {Role[user?.role as Role]}
      </Typography>
     </Form.Item>
     {showPassword && (

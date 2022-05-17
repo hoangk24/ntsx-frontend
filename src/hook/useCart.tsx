@@ -155,19 +155,23 @@ export default function CartProvider({ children }: any) {
  };
 
  const paidWithPaypal = (data: any) => {
+  console.log(data);
+
   const create: CreateCartRequest = {
    user: user?._id || "",
    list: testRef.current.list,
    fullName: data?.name?.surname + data?.name?.given_name,
    isPaided: true,
-   address: "bồng sơn hoài nhơn bình định",
+   address: `${data?.address?.address_line_1}, ${data?.address.address_line_2}`,
    discount: testRef.current.discount,
    totalCost: testRef.current.totalCost,
    totalQuantity: testRef.current.totalQuantity,
    finalCost: testRef.current.finalCost,
-   phoneNumber: "0344184570",
+   phoneNumber: data?.phoneNumber || "0344184570",
    status: CartStatus.CREATING,
   };
+  console.log(create);
+
   loading?.show();
   dispatch(createCartAction(create))
    .then(unwrapResult)

@@ -16,15 +16,29 @@ import AddUser from "pages/admin/user/AddUser";
 import MailUser from "pages/admin/user/MailUser";
 import UpdateUser from "pages/admin/user/UpdateUser";
 import { useUser } from "pages/admin/user/useUser";
-import { LockOutlined, UnlockOutlined } from "@ant-design/icons";
+import {
+ EditOutlined,
+ LockOutlined,
+ MailOutlined,
+ ReloadOutlined,
+ UnlockOutlined,
+ UserOutlined,
+} from "@ant-design/icons";
 
 export default function User() {
  const [openAddModal, setOpenAddModal] = useState(false);
- const [openUpdateModal, setOpenUpdateModal] = useState({
+ const { fetchAllUser } = useUser();
+ const [openUpdateModal, setOpenUpdateModal] = useState<{
+  user: IUser | any;
+  show: boolean;
+ }>({
   user: {} as IUser,
   show: false,
  });
- const [openSendMailModal, setOpenSendMailModal] = useState({
+ const [openSendMailModal, setOpenSendMailModal] = useState<{
+  user: IUser | any;
+  show: boolean;
+ }>({
   user: {} as IUser,
   show: false,
  });
@@ -105,23 +119,25 @@ export default function User() {
        />
       </Popconfirm>
       <Button
+       disabled={record.role === Role.MASTER}
        onClick={() => {
         setOpenSendMailModal({
-         show: true,
          user: record,
+         show: true,
         });
-       }}>
-       Mail
-      </Button>
+       }}
+       icon={<MailOutlined />}
+      />
       <Button
+       disabled={record.role === Role.MASTER}
        onClick={() => {
         setOpenUpdateModal({
-         show: true,
          user: record,
+         show: true,
         });
-       }}>
-       Sửa
-      </Button>
+       }}
+       icon={<EditOutlined />}
+      />
      </>
     );
    },
@@ -131,18 +147,23 @@ export default function User() {
  return (
   <div className="product">
    <Space className={"my-2"}>
-    <Button onClick={() => setOpenAddModal(true)}>
+    <Button
+     onClick={() => setOpenAddModal(true)}
+     icon={<UserOutlined />}>
      Thêm người dùng mới
+    </Button>
+    <Button onClick={() => fetchAllUser()} icon={<ReloadOutlined />}>
+     Làm mới
     </Button>
    </Space>
 
    <Table
+    bordered
     size={"small"}
     dataSource={data}
     columns={columns}
     rowKey={(record) => Math.random()}
    />
-
    <MailUser
     user={openSendMailModal.user}
     show={openSendMailModal.show}
@@ -150,13 +171,11 @@ export default function User() {
      setOpenSendMailModal({ ...openSendMailModal, show: false })
     }
    />
-
    <UpdateUser
-    user={openSendMailModal.user}
+    user={openUpdateModal.user}
     show={openUpdateModal.show}
     hide={setOpenUpdateModal}
    />
-
    <AddUser hide={() => setOpenAddModal(false)} show={openAddModal} />
   </div>
  );

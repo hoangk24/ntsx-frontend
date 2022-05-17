@@ -59,6 +59,7 @@ export default function Payment() {
     subTitle="Hãy xoá mặt hàng không đủ số lượng khỏi giỏ hàng để thanh toán"
    />
   );
+
  return (
   <div>
    <Tabs type="card">
@@ -69,7 +70,7 @@ export default function Payment() {
         purchase_units: [
          {
           amount: {
-           value: (preview.finalCost * 0.000044) as any,
+           value: `${(preview?.finalCost * 0.000043).toFixed(2)}`,
           },
          },
         ],

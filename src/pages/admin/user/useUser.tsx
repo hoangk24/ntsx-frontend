@@ -166,8 +166,7 @@ export default function UserProvider({
   dispatch(activeMailAction(data))
    .then(unwrapResult)
    .then((res: any) => {
-    message.success(res.message);
-    fetchUser(data.id);
+    message.success(res?.message);
    })
    .catch((err) => {
     loading?.hide();

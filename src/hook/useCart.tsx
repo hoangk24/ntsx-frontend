@@ -162,7 +162,9 @@ export default function CartProvider({ children }: any) {
    list: testRef.current.list,
    fullName: data?.name?.surname + data?.name?.given_name,
    isPaided: true,
-   address: `${data?.address?.address_line_1}, ${data?.address.address_line_2}`,
+   address: `${data?.address?.address_line_1 || "Bồng sơn"}, ${
+    data?.address.address_line_2 || "Hoài nhơn, Bình định"
+   }`,
    discount: testRef.current.discount,
    totalCost: testRef.current.totalCost,
    totalQuantity: testRef.current.totalQuantity,

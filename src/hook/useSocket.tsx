@@ -12,10 +12,11 @@ import io, { Socket } from "socket.io-client";
 
 interface ISocket {
  socket: Socket;
+ userOnline: number;
 }
 const socket = io(import.meta.env.VITE_API_ENDPOINT);
 
-export const SocketContext = createContext<ISocket>({ socket });
+export const SocketContext = createContext<ISocket>({} as ISocket);
 export const useSocket = () => useContext(SocketContext);
 
 export default function SocketProvider({ children }: any) {
@@ -27,11 +28,16 @@ export default function SocketProvider({ children }: any) {
  useEffect(() => {
   if (isLogin) {
    socket.emit("joinRoom", user?._id);
-   socket.on("countUser", (count: number) => setUserOnline(count));
-   socket.on("userWasLocked", (id) => {
-    console.log(id);
 
-    console.log(id);
+   socket.on("countUser", (count) => {
+    console.log(
+     "🚀 ~ file: useSocket.tsx ~ line 34 ~ socket.on ~ count",
+     count
+    );
+    setUserOnline(count);
+   });
+
+   socket.on("userWasLocked", (id) => {
     if (id === user?._id) {
      Modal.confirm({
       title:
@@ -47,9 +53,9 @@ export default function SocketProvider({ children }: any) {
     }
    });
   }
- }, [socket, isLogin]);
+ }, [socket]);
  return (
-  <SocketContext.Provider value={{ socket }}>
+  <SocketContext.Provider value={{ socket, userOnline }}>
    {children}
   </SocketContext.Provider>
  );

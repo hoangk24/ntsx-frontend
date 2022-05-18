@@ -1,13 +1,11 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { Button, Form, Input, Result, Select, Tabs } from "antd";
 import { useAppSelector } from "app/store";
-import { CartStatus } from "constants/models/cart.model";
 import {
  ICity,
  IDistrict,
  IWard,
 } from "constants/models/province.mode";
-import { CreateCartRequest } from "constants/payload/cart.payload";
 import { useCart } from "hook/useCart";
 import useProvince from "hook/useProvince";
 import React, { useCallback, useEffect } from "react";
@@ -46,10 +44,6 @@ export default function Payment() {
  useEffect(() => {
   fetchCity();
  }, []);
-
- useEffect(() => {
-  getPreviewCart();
- }, [carts]);
 
  if (preview?.isDisabled)
   return (

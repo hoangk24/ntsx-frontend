@@ -91,14 +91,10 @@ export default function CartProvider({ children }: any) {
   }
  };
  const getPreviewCart = () => {
-  loading?.show();
   dispatch(getPreviewAction({ carts, voucher: voucher || null }))
    .then(unwrapResult)
    .then((res: any) => {
     dispatch(setPreview(res?.data));
-   })
-   .finally(() => {
-    loading?.hide();
    });
  };
 

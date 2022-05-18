@@ -8,13 +8,16 @@ export default function ProductListing() {
  const { products } = useProduct();
 
  const mapProduct = useMemo(() => {
-  if (products?.length)
-   return products.map((it: IProduct) => (
-    <Col key={Math.random()} span={4}>
-     <ProductCard className="product-card" data={it} />
-    </Col>
-   ));
-  else return <>Loading....</>;
+  return products?.map((it: IProduct) => (
+   <Col
+    key={Math.random()}
+    xxl={{ span: 3 }}
+    xl={{ span: 4 }}
+    sm={{ span: 8 }}
+    xs={{ span: 24 }}>
+    <ProductCard className="product-card" data={it} />
+   </Col>
+  ));
  }, [products]);
 
  return (

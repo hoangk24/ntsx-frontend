@@ -87,7 +87,7 @@ export default function CartList() {
  ];
 
  return (
-  <div>
+  <div style={{ width: "100%", overflow: "auto" }}>
    <Table
     bordered
     dataSource={preview?.list || []}

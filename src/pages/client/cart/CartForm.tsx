@@ -5,13 +5,13 @@ import React from "react";
 
 export default function CartForm() {
  return (
-  <div className="">
+  <div className="cart-form">
    <Typography.Title>Thông tin đặt hàng</Typography.Title>
-   <Row className="p-5">
-    <Col span={12}>
+   <Row>
+    <Col lg={12} xs={24}>
      <DetailPayment />
     </Col>
-    <Col span={12}>
+    <Col lg={12} xs={24}>
      <Payment />
     </Col>
    </Row>

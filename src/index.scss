@@ -39,3 +39,8 @@ body::-webkit-scrollbar {
  color: #fff;
  text-decoration: none;
 }
+h1 {
+ @include breakpoint(992) {
+  font-size: 1.3rem !important;
+ }
+}

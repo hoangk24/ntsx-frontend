@@ -11,7 +11,7 @@ import saleImage from "./sale.png";
 import "./ProductCard.scss";
 type Props = {
  data: IProduct;
- className: string;
+ className?: string;
 };
 export default function ProductCard({ data, className }: Props) {
  const navigate = useNavigate();
@@ -21,7 +21,6 @@ export default function ProductCard({ data, className }: Props) {
   <Card
    className={classNames("product-card", className)}
    hoverable
-   style={{ width: "100%" }}
    cover={
     <img
      onClick={() => navigate(`/product/detail/${data?._id}`)}
@@ -34,20 +33,18 @@ export default function ProductCard({ data, className }: Props) {
    )}
    <Meta
     title={
-     <div>
-      <Space className="">
-       {data.discount > 0 ? (
-        <>
-         <Text type="danger">
-          {formatMoney(data?.price - data?.discount)}
-         </Text>
-         <Text delete>{formatMoney(data?.price)}</Text>
-        </>
-       ) : (
-        formatMoney(data?.price)
-       )}
-      </Space>
-     </div>
+     <Space className="">
+      {data.discount > 0 ? (
+       <>
+        <Text type="danger">
+         {formatMoney(data?.price - data?.discount)}
+        </Text>
+        <Text delete>{formatMoney(data?.price)}</Text>
+       </>
+      ) : (
+       formatMoney(data?.price)
+      )}
+     </Space>
     }
     description={data?.note.substring(0, 50)}
    />

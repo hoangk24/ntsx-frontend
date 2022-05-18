@@ -1,3 +1,4 @@
+import { Col, Row } from "antd";
 import Comment from "pages/client/product-detail/comment/Comment";
 import Detail from "pages/client/product-detail/detail/Detail";
 import Poster from "pages/client/product-detail/poster/Poster";
@@ -8,17 +9,15 @@ import "./ProductDetail.scss";
 export default function ProductDetail() {
  return (
   <ProductDetailProvider className="product-detail">
-   <div className="row">
-    <div className="poster col-4">
+   <Row gutter={[15, 15]}>
+    <Col xl={8} sm={24} className="poster ">
      <Poster />
-    </div>
-    <div className="detail col-8">
+    </Col>
+    <Col xl={16} xs={24} className="detail col-8">
      <Detail />
-    </div>
-   </div>
-   <div className="comment">
-    <Comment />
-   </div>
+    </Col>
+   </Row>
+   <Comment />
   </ProductDetailProvider>
  );
 }

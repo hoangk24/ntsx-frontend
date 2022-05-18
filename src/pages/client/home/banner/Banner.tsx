@@ -12,6 +12,7 @@ export default function Banner() {
   infinite: true,
   speed: 500,
   slidesToShow: 1,
+  arrows: false,
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 3000,

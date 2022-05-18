@@ -1,11 +1,17 @@
-import { Layout, Tabs } from "antd";
+import {
+ MenuFoldOutlined,
+ MenuUnfoldOutlined,
+} from "@ant-design/icons";
+import { Button, Layout, Tabs } from "antd";
 import { RootState } from "app/store";
 import { Role } from "constants/models/auth.model";
 import Auth from "containers/auth/Auth";
 import MenuAdmin from "containers/auth/MenuAdmin";
 import MenuUser from "containers/auth/MenuUser";
+import useBreakpoint from "hook/useBreakpoint";
+import useEffectSkipFisrtRender from "hook/useEffectSkipFisrtRender";
 import { useSocket } from "hook/useSocket";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Layout.scss";
@@ -16,55 +22,79 @@ export default function DefaultLayout({ children }: any) {
  const { user, isLogin } = useSelector(
   (state: RootState) => state.auth
  );
+ const [collapsed, setCollapsed] = useState(false);
  const { userOnline } = useSocket();
+ const point = useBreakpoint();
  const navigate = useNavigate();
+ useEffect(() => {
+  if (point === "lg") {
+   setCollapsed(false);
+  } else {
+   setCollapsed(true);
+  }
+ }, [point]);
 
  return (
-  <Layout style={{ minHeight: "100vh" }} className="wrapper">
+  <Layout className="wrapper">
    <Sider
+    collapsible
+    collapsed={collapsed}
+    onCollapse={setCollapsed}
     className="sider"
     trigger={null}
     style={{
-     overflow: "auto",
+     margin: collapsed ? -200 : 0,
      height: "100vh",
-     position: "fixed",
+     position: !collapsed ? "fixed" : "absolute",
      left: 0,
      top: 0,
      bottom: 0,
+     transition: "0.3s",
+     zIndex: 99999,
     }}>
-    <div className={"logo"} onClick={() => navigate("/")}>
-     <img src={logo} alt="" />
-    </div>
-    {user && [Role.ADMIN, Role.MASTER].includes(user.role) ? (
-     <Tabs defaultActiveKey="1">
-      <Tabs.TabPane className="tabkey" tab="Admin" key={"1"}>
-       <MenuAdmin />
-      </Tabs.TabPane>
-      <Tabs.TabPane className="tabkey" key={"2"} tab="Client">
+    {!collapsed && (
+     <>
+      <div className={"logo"} onClick={() => navigate("/")}>
+       <img src={logo} alt="" />
+      </div>
+      {user && [Role.ADMIN, Role.MASTER].includes(user.role) ? (
+       <Tabs defaultActiveKey="1">
+        <Tabs.TabPane className="tabkey" tab="Admin" key={"1"}>
+         <MenuAdmin />
+        </Tabs.TabPane>
+        <Tabs.TabPane className="tabkey" key={"2"} tab="Client">
+         <MenuUser />
+        </Tabs.TabPane>
+       </Tabs>
+      ) : (
        <MenuUser />
-      </Tabs.TabPane>
-     </Tabs>
-    ) : (
-     <MenuUser />
+      )}
+     </>
     )}
    </Sider>
-   <Layout className="site-layout" style={{ marginLeft: 200 }}>
-    <Header className="site-layout-background header">
+   <Layout
+    className="site-layout"
+    style={{
+     transition: "0.3s",
+     marginLeft: point === "lg" ? 200 : 0,
+    }}>
+    <Header className="header">
      <div className="header-start">
+      <Button
+       className="btn-collapsed"
+       onClick={() => setCollapsed(false)}
+       icon={
+        collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />
+       }
+      />
       <h3>Hello {user?.fullName}, have a nice day</h3>
      </div>
-     <div className="header-center"></div>
-     <Auth />
+     <div className="header-end">
+      <Auth />
+     </div>
     </Header>
-    <Content
-     className="site-layout-background"
-     style={{
-      margin: "24px 16px",
-      padding: 24,
-     }}>
-     {children}
-    </Content>
-    <Footer style={{ textAlign: "center" }}>
+    <Content className="content">{children}</Content>
+    <Footer className="footer">
      Ant Design ©2018 Created by NTX TEAM - Thành viên Online
      {userOnline || 0}
     </Footer>

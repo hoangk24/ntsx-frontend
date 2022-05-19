@@ -22,6 +22,7 @@ import {
  changePassword,
  changeRole,
  createUser,
+ deleteAccount,
  deleteUser,
  getAllUser,
  getUserInfo,
@@ -108,7 +109,20 @@ export const getUserInfoAction = createAsyncThunk(
   }
  }
 );
-
+export const deleteAccountAction = createAsyncThunk(
+ "users/delete-account",
+ async (
+  body: { id: string; isDeleted: boolean },
+  { rejectWithValue }
+ ) => {
+  try {
+   const res = await deleteAccount(body);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
 export const deleteUserAction = createAsyncThunk(
  "users/delete-user",
  async (params: string, { rejectWithValue }) => {

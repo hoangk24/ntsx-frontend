@@ -17,6 +17,7 @@ import MailUser from "pages/admin/user/MailUser";
 import UpdateUser from "pages/admin/user/UpdateUser";
 import { useUser } from "pages/admin/user/useUser";
 import {
+ DeleteOutlined,
  EditOutlined,
  LockOutlined,
  MailOutlined,
@@ -24,10 +25,10 @@ import {
  UnlockOutlined,
  UserOutlined,
 } from "@ant-design/icons";
-
+import _filter from "lodash/filter";
 export default function User() {
  const [openAddModal, setOpenAddModal] = useState(false);
- const { fetchAllUser } = useUser();
+ const { fetchAllUser, deleteAcccount } = useUser();
  const [openUpdateModal, setOpenUpdateModal] = useState<{
   user: IUser | any;
   show: boolean;
@@ -80,10 +81,16 @@ export default function User() {
    title: "Trạng thái",
    dataIndex: "isDeleted",
    render: (text, record) => (
-    <Badge
-     color={!record.isDeleted ? "green" : "red"}
-     text={!record.isDeleted ? "Đang hoạt động" : "Đang khoá"}
-    />
+    <>
+     {record?.__v === 1 ? (
+      <Badge color={"red"} text={"Đã xoá"} />
+     ) : (
+      <Badge
+       color={!record.isDeleted ? "green" : "red"}
+       text={!record.isDeleted ? "Đang hoạt động" : "Đang khoá"}
+      />
+     )}
+    </>
    ),
   },
   {
@@ -138,6 +145,22 @@ export default function User() {
        }}
        icon={<EditOutlined />}
       />
+      <Popconfirm
+       title={
+        !record?.__v ? "Xoá tài khoản này" : "Hoàn tác tài khoản này"
+       }
+       okText={!record?.__v ? "Xoá" : "Hoàn tác"}
+       cancelText="Huỷ"
+       onConfirm={() =>
+        deleteAcccount({
+         id: record._id,
+         isDeleted: record?.__v === 0,
+        })
+       }>
+       <Button
+        icon={!record?.__v ? <DeleteOutlined /> : <ReloadOutlined />}
+       />
+      </Popconfirm>
      </>
     );
    },
@@ -157,13 +180,27 @@ export default function User() {
     </Button>
    </Space>
 
-   <Table
-    bordered
-    size={"small"}
-    dataSource={data}
-    columns={columns}
-    rowKey={(record) => Math.random()}
-   />
+   <Tabs defaultActiveKey={"1"}>
+    <Tabs.TabPane tab="Member" key={"1"}>
+     <Table
+      bordered
+      size={"small"}
+      dataSource={_filter(data, (n: IUser) => n?.__v === 0)}
+      columns={columns}
+      rowKey={(record) => record._id}
+     />
+    </Tabs.TabPane>
+    <Tabs.TabPane tab="Đã xoá" key={"2"}>
+     <Table
+      bordered
+      size={"small"}
+      dataSource={_filter(data, (n: IUser) => n?.__v === 1)}
+      columns={columns}
+      rowKey={(record) => record._id}
+     />
+    </Tabs.TabPane>
+   </Tabs>
+
    <MailUser
     user={openSendMailModal.user}
     show={openSendMailModal.show}

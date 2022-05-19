@@ -6,6 +6,7 @@ export interface IUser {
  role: Role;
  avatar: string;
  isDeleted: boolean;
+ __v?: number | any;
 }
 export interface IEmail {
  _id: string;

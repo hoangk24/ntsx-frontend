@@ -32,6 +32,12 @@ type UpdatePassword = (
 type DeleteUser = (
  id: string
 ) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
+
+type DeleteAccount = (body: {
+ id: string;
+ isDeleted: boolean;
+}) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
+
 type ChangeRole = (
  body: ChangeRolePayload
 ) => Promise<AxiosResponse<{ data: IUser; message: string }>>;
@@ -64,6 +70,8 @@ export const getUserInfo: GetUserInfo = (id) =>
 
 export const deleteUser: DeleteUser = (params) =>
  axiosClient.delete(`${API_ENDPOINT.USER.DELETE}/${params}`);
+export const deleteAccount: DeleteAccount = (body) =>
+ axiosClient.post(API_ENDPOINT.USER.DELETE_ACCOUNT, body);
 
 export const changeRole: ChangeRole = (body) =>
  axiosClient.post(`${API_ENDPOINT.USER.CHANGE_ROLE}/${body.id}`, {

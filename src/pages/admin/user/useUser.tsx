@@ -13,6 +13,7 @@ import {
  changeRoleAction,
  createMailAction,
  createUserAction,
+ deleteAccountAction,
  deleteUserAction,
  getAllUserAction,
  getUserInfoAction,
@@ -38,6 +39,7 @@ interface IUserContext {
  activeMail: any;
  fetchUser: any;
  changeRole: any;
+ deleteAcccount: (data: { id: string; isDeleted: boolean }) => void;
 }
 const UserContext = createContext<IUserContext>({} as IUserContext);
 
@@ -63,6 +65,24 @@ export default function UserProvider({
    .finally(() => loading?.hide());
  };
 
+ const deleteAcccount = (data: {
+  id: string;
+  isDeleted: boolean;
+ }) => {
+  loading?.show();
+  dispatch(deleteAccountAction(data))
+   .then(unwrapResult)
+   .then((res: any) => {
+    fetchAllUser();
+   })
+   .catch((err) => {
+    loading?.hide();
+    message.error(err.message);
+   })
+   .finally(() => {
+    loading?.hide();
+   });
+ };
  const fetchUser = (id: string) => {
   loading?.show();
   dispatch(getUserInfoAction(id))
@@ -184,6 +204,7 @@ export default function UserProvider({
     data,
     addUser,
     deleteUser,
+    deleteAcccount,
     currentUser,
     fetchAllUser,
     resendMail,

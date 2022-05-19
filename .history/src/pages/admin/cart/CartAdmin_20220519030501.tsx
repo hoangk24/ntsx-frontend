@@ -135,7 +135,7 @@ export default function CartAdmin() {
          loading?.show();
          changeStatus({
           id: record._id,
-          status: CartStatus.CANCLE,
+          status: CartStatus.CONFIRM,
          }).finally(() => loading?.hide());
         }}>
         Huỷ

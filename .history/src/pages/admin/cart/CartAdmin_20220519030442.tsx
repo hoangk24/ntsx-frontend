@@ -114,13 +114,9 @@ export default function CartAdmin() {
       )}
       {record.status === CartStatus.SHIPPING && (
        <Button
-        onClick={() => {
-         loading?.show();
-         changeStatus({
-          id: record._id,
-          status: CartStatus.DONE,
-         }).finally(() => loading?.hide());
-        }}>
+        onClick={() =>
+         changeStatus({ id: record._id, status: CartStatus.DONE })
+        }>
         Thành công
        </Button>
       )}
@@ -132,11 +128,7 @@ export default function CartAdmin() {
       ].includes(record.status) && (
        <Button
         onClick={() => {
-         loading?.show();
-         changeStatus({
-          id: record._id,
-          status: CartStatus.CANCLE,
-         }).finally(() => loading?.hide());
+         changeStatus({ id: record._id, status: CartStatus.CANCLE });
         }}>
         Huỷ
        </Button>

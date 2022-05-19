@@ -49,7 +49,7 @@ interface ICartContext {
  removeCart: any;
  paidWithPaypal: any;
  paidWithoutPaypal: any;
- changeStatus: (data: ChangeStatusRequest) => Promise<void>;
+ changeStatus: (data: ChangeStatusRequest) => void;
  getAllCart: any;
  data: ICart[];
 }

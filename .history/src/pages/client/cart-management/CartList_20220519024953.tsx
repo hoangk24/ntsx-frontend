@@ -27,13 +27,14 @@ import {
 import { ColumnsType } from "antd/es/table";
 import CreateComment from "pages/client/product-detail/comment/CreateComment";
 import { useCart } from "hook/useCart";
-import { useLoading } from "hook/useLoading";
 
 function CartList({ mycart }: { mycart: ICart }) {
  const { Step } = Steps;
  const { step2, step3, step4, step1, step5 } = getStatus(
   mycart.status
  );
+ console.log(mycart.isCommented);
+
  const columns: ColumnsType<ICartItem> = [
   {
    title: "Hình ảnh",
@@ -68,8 +69,7 @@ function CartList({ mycart }: { mycart: ICart }) {
    key: "quantity",
   },
  ];
- const loading = useLoading();
- const { changeStatus, getMycart } = useCart();
+ const { changeStatus } = useCart();
  return (
   <Card className={"my-5"} bordered>
    <Form labelCol={{ span: 2 }} wrapperCol={{ span: 20, offset: 1 }}>
@@ -142,24 +142,7 @@ function CartList({ mycart }: { mycart: ICart }) {
       </Form.Item>
       {[CartStatus.CREATING].includes(mycart.status) && (
        <Form.Item label={"Thao tác"}>
-        <Button
-         onClick={() => {
-          loading?.show();
-          changeStatus({
-           id: mycart._id,
-           status: CartStatus.CANCLE,
-          })
-           .then(() => {
-            loading?.hide();
-           })
-           .catch(() => loading?.hide())
-           .finally(() => {
-            loading?.hide();
-            getMycart();
-           });
-         }}>
-         Huỷ
-        </Button>
+        <Button>Huỷ</Button>
        </Form.Item>
       )}
      </Form>

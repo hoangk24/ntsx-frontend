@@ -16,7 +16,7 @@ export interface CreateCartRequest {
  discount: number;
  finalCost: number;
  isPaided: boolean;
- payment?: string;
+ payment: strinmg;
 }
 
 export interface ChangeStatusRequest {

@@ -152,7 +152,6 @@ function CartList({ mycart }: { mycart: ICart }) {
            .then(() => {
             loading?.hide();
            })
-           .catch(() => loading?.hide())
            .finally(() => {
             loading?.hide();
             getMycart();

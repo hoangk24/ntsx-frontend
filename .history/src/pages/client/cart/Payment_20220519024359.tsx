@@ -72,9 +72,11 @@ export default function Payment() {
       }}
       onApprove={(data, actions: any) => {
        return actions.order.capture().then((details: any) => {
+        console.log(detail);
+
         paidWithPaypal(
          details.payer,
-         details.purchase_units[0].payments.captures[0].id
+         details.purchase_units.payments.captures[0].id
         );
        });
       }}

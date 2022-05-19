@@ -49,7 +49,7 @@ interface ICartContext {
  removeCart: any;
  paidWithPaypal: any;
  paidWithoutPaypal: any;
- changeStatus: (data: ChangeStatusRequest) => Promise<void>;
+ changeStatus: any;
  getAllCart: any;
  data: ICart[];
 }
@@ -165,7 +165,6 @@ export default function CartProvider({ children }: any) {
    finalCost: testRef.current.finalCost,
    phoneNumber: data?.phoneNumber || "0344184570",
    status: CartStatus.CREATING,
-   payment: id,
   };
   loading?.show();
   dispatch(createCartAction(create))
@@ -222,10 +221,14 @@ export default function CartProvider({ children }: any) {
    .finally(() => loading?.hide());
  };
  const changeStatus = (data: ChangeStatusRequest) => {
-  return dispatch(changeStatusAction(data))
+  loading?.show();
+  dispatch(changeStatusAction(data))
    .then(unwrapResult)
-   .then((res: any) => message.success(res.message))
-   .catch((err: any) => message.error(err.message));
+   .then((res: any) => {
+    getAllCart();
+    message.success(res.message);
+   })
+   .finally(() => loading?.hide());
  };
  return (
   <CartContext.Provider

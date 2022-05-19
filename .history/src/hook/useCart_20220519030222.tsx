@@ -49,7 +49,7 @@ interface ICartContext {
  removeCart: any;
  paidWithPaypal: any;
  paidWithoutPaypal: any;
- changeStatus: (data: ChangeStatusRequest) => Promise<void>;
+ changeStatus: (data: ChangeStatusRequest) => void;
  getAllCart: any;
  data: ICart[];
 }
@@ -222,9 +222,12 @@ export default function CartProvider({ children }: any) {
    .finally(() => loading?.hide());
  };
  const changeStatus = (data: ChangeStatusRequest) => {
-  return dispatch(changeStatusAction(data))
+  dispatch(changeStatusAction(data))
    .then(unwrapResult)
-   .then((res: any) => message.success(res.message))
+   .then((res: any) =>
+
+    message.success(res.message);
+   )
    .catch((err: any) => message.error(err.message));
  };
  return (

@@ -148,15 +148,7 @@ function CartList({ mycart }: { mycart: ICart }) {
           changeStatus({
            id: mycart._id,
            status: CartStatus.CANCLE,
-          })
-           .then(() => {
-            loading?.hide();
-           })
-           .catch(() => loading?.hide())
-           .finally(() => {
-            loading?.hide();
-            getMycart();
-           });
+          }).finally(() => getMycart());
          }}>
          Huỷ
         </Button>

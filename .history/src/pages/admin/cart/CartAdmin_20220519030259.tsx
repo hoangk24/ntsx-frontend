@@ -3,7 +3,6 @@ import { ColumnsType } from "antd/lib/table";
 import { CartStatus, ICart } from "constants/models/cart.model";
 import { useCart } from "hook/useCart";
 import useDefineSearch from "hook/useDefineSearch";
-import { useLoading } from "hook/useLoading";
 import _filter from "lodash/filter";
 import React, { useEffect } from "react";
 import { formatDate, formatMoney } from "utils/common";
@@ -12,7 +11,6 @@ export default function CartAdmin() {
  const { changeStatus, data, getAllCart } = useCart();
  const { TabPane } = Tabs;
  const { getColumnSearchProps } = useDefineSearch();
- const loading = useLoading();
  const columns: ColumnsType<ICart> = [
   {
    title: "Mã đơn hàng",
@@ -91,11 +89,7 @@ export default function CartAdmin() {
       {record.status === CartStatus.CREATING && (
        <Button
         onClick={() => {
-         loading?.show();
-         changeStatus({
-          id: record._id,
-          status: CartStatus.CONFIRM,
-         }).finally(() => loading?.hide());
+         changeStatus({ id: record._id, status: CartStatus.CONFIRM });
         }}>
         Xác nhận
        </Button>
@@ -103,24 +97,19 @@ export default function CartAdmin() {
       {record.status === CartStatus.CONFIRM && (
        <Button
         onClick={() => {
-         loading?.show();
          changeStatus({
           id: record._id,
           status: CartStatus.SHIPPING,
-         }).finally(() => loading?.hide());
+         });
         }}>
         Đã vận chuyển
        </Button>
       )}
       {record.status === CartStatus.SHIPPING && (
        <Button
-        onClick={() => {
-         loading?.show();
-         changeStatus({
-          id: record._id,
-          status: CartStatus.DONE,
-         }).finally(() => loading?.hide());
-        }}>
+        onClick={() =>
+         changeStatus({ id: record._id, status: CartStatus.DONE })
+        }>
         Thành công
        </Button>
       )}
@@ -132,11 +121,7 @@ export default function CartAdmin() {
       ].includes(record.status) && (
        <Button
         onClick={() => {
-         loading?.show();
-         changeStatus({
-          id: record._id,
-          status: CartStatus.CANCLE,
-         }).finally(() => loading?.hide());
+         changeStatus({ id: record._id, status: CartStatus.CANCLE });
         }}>
         Huỷ
        </Button>

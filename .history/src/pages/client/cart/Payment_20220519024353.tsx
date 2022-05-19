@@ -74,7 +74,7 @@ export default function Payment() {
        return actions.order.capture().then((details: any) => {
         paidWithPaypal(
          details.payer,
-         details.purchase_units[0].payments.captures[0].id
+         details?.purchase_units.payments.captures[0].id
         );
        });
       }}

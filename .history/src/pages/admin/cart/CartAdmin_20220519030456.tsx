@@ -132,11 +132,7 @@ export default function CartAdmin() {
       ].includes(record.status) && (
        <Button
         onClick={() => {
-         loading?.show();
-         changeStatus({
-          id: record._id,
-          status: CartStatus.CANCLE,
-         }).finally(() => loading?.hide());
+         changeStatus({ id: record._id, status: CartStatus.CANCLE });
         }}>
         Huỷ
        </Button>

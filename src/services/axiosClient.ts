@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, Modal } from "antd";
 import axios, { AxiosRequestConfig } from "axios";
 import qs from "query-string";
 import { BASE_URL } from "services/apiEnpoint";
@@ -32,13 +32,18 @@ axiosClient.interceptors.response.use(
     const access_token = await getNewAccessToken({
      refreshToken,
     } as any);
-    axios.defaults.headers.common["Authorization"] =
-     "Bearer " + access_token.data.data.token.token;
+    axios.defaults.headers.common[
+     "Authorization"
+    ] = `Bearer ${access_token.data.data.token.token}`;
     return axiosClient(originalRequest);
    } catch (error) {
-    localStorage.clear();
-    message.error("Hết hạn đăng nhập vui lòng đăng nhập lại!");
-    return (window.location.href = "/login");
+    Modal.error({
+     title: "Hết hạn đăng nhập vui lòng đăng nhập lại!",
+     onOk() {
+      localStorage.clear();
+      window.location.href = "/login";
+     },
+    });
    }
   }
 

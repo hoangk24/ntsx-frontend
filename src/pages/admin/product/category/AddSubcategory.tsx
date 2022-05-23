@@ -5,6 +5,7 @@ import { useNsx } from "hook/useNSX";
 import React, { useCallback, useState } from "react";
 import { removeAccents } from "utils/common";
 import { useCategory } from "hook/useCategory";
+import { createRule } from "pages/client/cart/Payment";
 type Props = {
  visible: boolean;
  onHide: any;
@@ -45,7 +46,9 @@ export default function AddSubcategory({
     form={form}
     labelCol={{ span: 8 }}
     wrapperCol={{ span: 16 }}>
-    <Form.Item label="Tên nhà sản xuất">
+    <Form.Item
+     label="Tên nhà sản xuất"
+     rules={[{ ...createRule("Tên nhà sản xuất") }]}>
      <Typography>{category?.name}</Typography>
     </Form.Item>
     <Form.Item label="Tên nhà sản xuất" name="name">

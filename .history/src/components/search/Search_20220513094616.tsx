@@ -1,7 +1,8 @@
-import { Input, Modal } from "antd";
+import { Input, Modal, Row } from "antd";
 import useSearch from "components/search/useSearch";
+import { IProduct } from "constants/models/product.model";
 import useEffectSkipFisrtRender from "hook/useEffectSkipFisrtRender";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Search.scss";
 interface Props {
  visible: boolean;

@@ -2,6 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
  addCategory,
  addSubcategory,
+ deleteCategory,
+ deleteNsx,
  getCategory,
  updateCategory,
 } from "services/category.service";
@@ -17,7 +19,31 @@ export const getCategoryAction = createAsyncThunk(
   }
  }
 );
-
+export const deleteCategoryAction = createAsyncThunk(
+ "category/deleteCategoryAction",
+ async (data: { id: string }, { rejectWithValue }) => {
+  try {
+   const res = await deleteCategory(data);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
+export const deleteNsxAction = createAsyncThunk(
+ "category/deleteNsxAction",
+ async (
+  data: { category: string; nsx: string },
+  { rejectWithValue }
+ ) => {
+  try {
+   const res = await deleteNsx(data);
+   return res.data;
+  } catch (error: any) {
+   return rejectWithValue(error?.response.data);
+  }
+ }
+);
 export const createCategoryAction = createAsyncThunk(
  "category/create-category",
  async (body: any, { rejectWithValue }) => {

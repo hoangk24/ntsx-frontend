@@ -1,14 +1,15 @@
 import { Button, Result } from "antd";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function PaymentSuccess() {
  const navigate = useNavigate();
+ const { id } = useParams();
  return (
   <Result
    status="success"
-   title="Successfully Purchases!"
-   subTitle="Order number: 2017182818828182881."
+   title="Đặt hàng thành công!"
+   subTitle={`Mã đơn hàng: ${id} `}
    extra={[
     <Button
      onClick={() => navigate("/")}

@@ -46,6 +46,8 @@ const API_ENDPOINT = {
   CREATE: "/cart/create-comment",
  },
  CATEGORY: {
+  DELETE: "/category",
+  DELETE_NSX: "/category/nsx",
   GET: "/category/get-category",
   CREATE: "/category/create-category",
   GET_PRODUCT: "/product/get-product-by-category",

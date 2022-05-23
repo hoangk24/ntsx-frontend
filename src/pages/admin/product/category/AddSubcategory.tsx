@@ -4,6 +4,7 @@ import { useResetFormOnCloseModal } from "hook/useResetFormModal";
 import { useNsx } from "hook/useNSX";
 import React, { useCallback, useState } from "react";
 import { removeAccents } from "utils/common";
+import { useCategory } from "hook/useCategory";
 type Props = {
  visible: boolean;
  onHide: any;
@@ -15,7 +16,7 @@ export default function AddSubcategory({
  category,
 }: Props) {
  const [form] = Form.useForm();
- const { addSubcategory } = useNsx();
+ const { addSubcategory } = useCategory();
  useResetFormOnCloseModal({ form, visible });
  const [name, setName] = useState("");
 

@@ -29,7 +29,8 @@ import EditCategory from "pages/admin/product/product/category/EditCategory";
 import EditSize from "pages/admin/product/product/size/EditSize";
 import React, { useState } from "react";
 import { formatDate, formatMoney } from "utils/common";
-
+import _debounce from "lodash/debounce";
+import InputNumberWait from "components/inputNumberDebounce/InputNumberWait";
 export default function Product() {
  const [openAddModal, setOpenAddModal] = useState(false);
  const { deleteProduct, products, fetchProduct, updateProduct } =
@@ -77,13 +78,10 @@ export default function Product() {
    dataIndex: "price",
    key: "price",
    render: (text, record) => (
-    <InputNumber
-     onChange={(value: number) =>
-      updateProduct(record._id, { price: value })
-     }
-     min={1}
-     defaultValue={text}
-     addonAfter="VNĐ"
+    <InputNumberWait
+     addonAfter="VND"
+     fn={(value: any) => updateProduct(record._id, { price: value })}
+     data={record.price}
     />
    ),
   },

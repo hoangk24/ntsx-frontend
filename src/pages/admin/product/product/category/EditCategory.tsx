@@ -10,6 +10,7 @@ import { useProduct } from "hook/useProduct";
 import React, { useEffect, useState } from "react";
 import _findIndex from "lodash/findIndex";
 import { createRule } from "pages/client/cart/Payment";
+import useStateRef from "react-usestateref";
 
 interface Props {
  visible: boolean;
@@ -26,10 +27,7 @@ export default function EditCategory({
  const { categories } = useAppSelector().category;
  const { Option } = Select;
  const changeCategory = (id: string) => {
-  const idx = _findIndex(
-   categories,
-   (n: ICategory) => n._id === product?.category._id
-  );
+  const idx = _findIndex(categories, (n: ICategory) => n._id === id);
   setNsx(categories[idx].subCategory);
  };
 
@@ -68,7 +66,9 @@ export default function EditCategory({
        ...createRule("Danh mục"),
       },
      ]}>
-     <Select defaultValue={product?.category?._id}>
+     <Select
+      onChange={(value) => changeCategory(value)}
+      defaultValue={product?.category?._id}>
       {categories?.map((it: ICategory) => (
        <Option key={it._id} value={it._id}>
         {it.name}

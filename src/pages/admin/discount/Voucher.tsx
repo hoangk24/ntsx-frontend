@@ -14,6 +14,7 @@ import {
  Typography,
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
+import InputNumberWait from "components/inputNumberDebounce/InputNumberWait";
 import { IVoucher } from "constants/models/voucher.model";
 import { useVoucher } from "hook/useVoucher";
 import moment from "moment";
@@ -73,14 +74,13 @@ export default function Voucher() {
    title: "Tỷ lệ giảm",
    dataIndex: "percent",
    render: (text, record) => (
-    <InputNumber
-     min={1}
+    <InputNumberWait
+     fn={(value: number) =>
+      updateVoucher(record._id as string, { percent: value })
+     }
      max={100}
-     defaultValue={record.percent}
      addonAfter="%"
-     onChange={(e) => {
-      updateVoucher(record._id as string, { percent: e });
-     }}
+     data={record.percent}
     />
    ),
   },

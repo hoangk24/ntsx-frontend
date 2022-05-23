@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import { useAppDispatch, useAppSelector } from "app/store";
 import { setLogOut } from "features/auth/auth.slice";
 import React, {
@@ -28,12 +28,12 @@ export default function SocketProvider({ children }: any) {
  useEffect(() => {
   if (isLogin) {
    socket.emit("joinRoom", user?._id);
+   socket.on("notify", (notify: string) => {
+    console.log(notify);
 
+    message.success(notify);
+   });
    socket.on("countUser", (count) => {
-    console.log(
-     "🚀 ~ file: useSocket.tsx ~ line 34 ~ socket.on ~ count",
-     count
-    );
     setUserOnline(count);
    });
 

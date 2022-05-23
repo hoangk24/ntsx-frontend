@@ -2,6 +2,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { Avatar, Button, InputNumber, Table, Tag } from "antd";
 import { ColumnType } from "antd/lib/table";
 import { useAppSelector } from "app/store";
+import InputNumberWait from "components/inputNumberDebounce/InputNumberWait";
 import { ICartItemPreview } from "constants/models/cart.model";
 import { useCart } from "hook/useCart";
 import useDefineSearch from "hook/useDefineSearch";
@@ -52,12 +53,12 @@ export default function CartList() {
    width: "10%",
    render: (text: string, record: ICartItemPreview) => {
     return record.maxSize !== 0 ? (
-     <InputNumber
-      min={1}
+     <InputNumberWait
+      addonAfter="Đôi"
       max={record.maxSize}
-      defaultValue={(record?.quantity as any) || 0}
-      onChange={(e: number) => {
-       updateQuantity(record.idProduct, record.size, e);
+      data={record?.quantity || 0}
+      fn={(value: number) => {
+       updateQuantity(record.idProduct, record.size, value);
       }}
      />
     ) : (

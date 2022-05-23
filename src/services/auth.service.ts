@@ -25,7 +25,7 @@ type LogOutRequest = (
  body: LogOutRequestPayload
 ) => Promise<AxiosResponse<{ data: any; message: string }>>;
 
-type NewAccessToken = (body: {
+type NewAccessToken = (params: {
  refreshToken: string;
 }) => Promise<
  AxiosResponse<{ data: { token: IToken }; message: string }>
@@ -37,8 +37,8 @@ export const logIn: LoginRequest = (body) =>
 export const register: RegisterRequest = (body) =>
  axiosClient.post(API_ENDPOINT.AUTH.REGISTER, body);
 
-export const getNewAccessToken: NewAccessToken = (body) =>
- axiosClient.post(API_ENDPOINT.AUTH.ACCESS_TOKEN, body);
+export const getNewAccessToken: NewAccessToken = (params) =>
+ axiosClient.get(API_ENDPOINT.AUTH.ACCESS_TOKEN, { params });
 
 export const logOut: LogOutRequest = (body) =>
  axiosClient.post(API_ENDPOINT.AUTH.LOGOUT, body);

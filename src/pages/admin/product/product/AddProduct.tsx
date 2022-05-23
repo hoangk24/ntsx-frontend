@@ -24,6 +24,7 @@ import { useProduct } from "hook/useProduct";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { ISizes } from "constants/models/product.model";
+import { createRule } from "pages/client/cart/Payment";
 type Props = {
  show: any;
  hide: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,6 +54,10 @@ export default function AddProduct(props: Props) {
    let formData = new FormData();
    if (fileList.length < 4) {
     message.error("Phải có đủ 4 ảnh");
+    return;
+   }
+   if (!value.size) {
+    message.error("Phải ít nhất 1 size");
     return;
    }
    fileList.forEach((item: UploadFile) => {
@@ -93,10 +98,16 @@ export default function AddProduct(props: Props) {
      form={form}
      labelCol={{ span: 5 }}
      wrapperCol={{ span: 15 }}>
-     <Form.Item label="Tên sản phẩm" name="name">
+     <Form.Item
+      label="Tên sản phẩm"
+      name="name"
+      rules={[{ ...createRule("Tên sản phẩm") }]}>
       <Input placeholder="Nhập tên sản phẩm" />
      </Form.Item>
-     <Form.Item label="Đơn giá" name="price">
+     <Form.Item
+      label="Đơn giá"
+      name="price"
+      rules={[{ ...createRule("Đơn giá") }]}>
       <InputNumber
        min={1}
        placeholder="Nhập đơn giá"
@@ -104,10 +115,16 @@ export default function AddProduct(props: Props) {
        addonAfter="VNĐ"
       />
      </Form.Item>
-     <Form.Item label="Mô tả" name="note">
+     <Form.Item
+      label="Mô tả"
+      name="note"
+      rules={[{ ...createRule("Mô tả") }]}>
       <Input.TextArea placeholder="Nhập mô tả sản phẩm" />
      </Form.Item>
-     <Form.Item label="Danh mục" name="category">
+     <Form.Item
+      label="Danh mục"
+      name="category"
+      rules={[{ ...createRule("Danh mục") }]}>
       <Select onChange={changeCate}>
        {categories?.map((item: ICategory, idx: number) => (
         <Option key={Math.random()} value={item._id}>
@@ -116,7 +133,10 @@ export default function AddProduct(props: Props) {
        ))}
       </Select>
      </Form.Item>
-     <Form.Item label="Nhà sản xuất" name="nsx">
+     <Form.Item
+      label="Nhà sản xuất"
+      name="nsx"
+      rules={[{ ...createRule("Nhà sản xuất") }]}>
       <Select>
        {cateSelected?.map((item: ISubCategory, idx: number) => (
         <Option key={idx + Math.random()} value={item._id}>

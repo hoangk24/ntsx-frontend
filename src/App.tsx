@@ -20,7 +20,7 @@ import PaymentSuccess from "pages/client/payment/PaymentSuccess";
 import ProductDetail from "pages/client/product-detail/ProductDetail";
 import Contact from "pages/contact/Contact";
 import Errors from "pages/error/Errors";
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 export default function App() {
@@ -28,13 +28,24 @@ export default function App() {
   <BrowserRouter>
    <Compose>
     <Routes>
+     //! ADMIN ROUTE
+     <Route path="admin" element={<AdminRoute />}>
+      <Route index element={<Dashboard />} />
+      <Route path="product" element={<Product />} />
+      <Route path="cart" element={<CartAdmin />} />
+      <Route path="discount" element={<DiscountAdmin />} />
+      <Route path="user" element={<UserWrapper />} />
+     </Route>
      //! CLIENT ROUTE
      <Route path="/" element={<ClientRoute type="public" />}>
       <Route index element={<Home />} />
       <Route path="cart">
        <Route path={""} element={<Cart />} />
       </Route>
-      <Route path="payment-success" element={<PaymentSuccess />} />
+      <Route
+       path="payment-success/:id"
+       element={<PaymentSuccess />}
+      />
       <Route path="product">
        <Route path="nsx/:path" element={<Nsx />} />
        <Route path="category/:path" element={<Category />} />
@@ -45,14 +56,6 @@ export default function App() {
       <Route path="cart">
        <Route path={"my-cart"} element={<CartManagement />} />
       </Route>
-     </Route>
-     //! ADMIN ROUTE
-     <Route path="admin" element={<AdminRoute />}>
-      <Route path="" element={<Dashboard />} />
-      <Route path="product" element={<Product />} />
-      <Route path="cart" element={<CartAdmin />} />
-      <Route path="discount" element={<DiscountAdmin />} />
-      <Route path="user" element={<UserWrapper />} />
      </Route>
      <Route path="login" element={<Login />} />
      <Route path="forgot-password" element={<FortgotPassword />} />

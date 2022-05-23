@@ -23,11 +23,35 @@ export default function useLogIn() {
  const navigate = useNavigate();
  const { carts } = useAppSelector().cart;
  const { addCart } = useCart();
- const fetchLogin = async (data: LoginRequestPayload) => {
+ const fetchLogin = (data: LoginRequestPayload) => {
   loading?.show();
   dispatch(loginAction(data))
    .then(unwrapResult)
-   .then(async (res: any) => await loginSuccess(res))
+   .then(async (res: any) => {
+    dispatch(setAuth(res?.data));
+    let copy = !_isEmpty(carts) ? _cloneDeep(carts) : [];
+    const { history } = res?.data?.user;
+    for (const his of history) {
+     const idx = _findIndex(
+      carts,
+      (n: ICartItem) =>
+       n.idProduct === his.idProduct && n.size === his.size
+     );
+     if (idx !== -1) {
+      copy[idx].quantity += his.quantity;
+     } else {
+      copy.push({ ...his, size: his.size });
+     }
+    }
+    dispatch(setCart(copy));
+    if (user && [Role.MASTER, Role.ADMIN].includes(user.role)) {
+     console.log(user.role);
+     navigate("/admin");
+    } else {
+     navigate("/");
+    }
+    message.success(res?.message);
+   })
    .catch((err) => {
     loading?.hide();
     message.error(err.message);
@@ -37,26 +61,5 @@ export default function useLogIn() {
    });
  };
 
- const loginSuccess = (res: any) => {
-  dispatch(setAuth(res?.data));
-  let copy = !_isEmpty(carts) ? _cloneDeep(carts) : [];
-  const history = res.data.user.history;
-  for (const his of history) {
-   const idx = _findIndex(
-    carts,
-    (n: ICartItem) =>
-     n.idProduct === his.idProduct && n.size === his.size
-   );
-   if (idx !== -1) {
-    copy[idx].quantity += his.quantity;
-   } else {
-    copy.push({ ...his, size: his.size });
-   }
-  }
-  dispatch(setCart(copy));
-  if (user?.role === Role.ADMIN) navigate("/admin");
-  else navigate("/");
-  message.success(res?.message);
- };
  return { fetchLogin };
 }

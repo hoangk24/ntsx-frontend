@@ -3,6 +3,13 @@ import { API_ENDPOINT } from "services/apiEnpoint";
 import { axiosClient, configUpload } from "services/axiosClient";
 
 type GetCategoryRequest = () => Promise<AxiosResponse<any>>;
+type DeleteCategory = (params: {
+ id: string;
+}) => Promise<AxiosResponse<any>>;
+type DeleteNsx = (params: {
+ nsx: string;
+ category: string;
+}) => Promise<AxiosResponse<any>>;
 type AddCategory = (body: any) => Promise<AxiosResponse<any>>;
 type UpdateCategory = (
  id: string,
@@ -24,3 +31,7 @@ export const updateCategory: UpdateCategory = (id, data) =>
  axiosClient.post(`${API_ENDPOINT.CATEGORY.UPDATE}/${id}`, data, {
   ...configUpload,
  });
+export const deleteCategory: DeleteCategory = (params) =>
+ axiosClient.delete(API_ENDPOINT.CATEGORY.DELETE, { params });
+export const deleteNsx: DeleteNsx = (params) =>
+ axiosClient.delete(API_ENDPOINT.CATEGORY.DELETE_NSX, { params });

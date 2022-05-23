@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import { formatDate, formatMoney } from "utils/common";
 import "./CartAdmin.scss";
 export default function CartAdmin() {
- const { changeStatus, data, getAllCart } = useCart();
+ const { changeStatusAdmin, data, getAllCart } = useCart();
  const { TabPane } = Tabs;
  const { getColumnSearchProps } = useDefineSearch();
  const loading = useLoading();
@@ -92,7 +92,7 @@ export default function CartAdmin() {
        <Button
         onClick={() => {
          loading?.show();
-         changeStatus({
+         changeStatusAdmin({
           id: record._id,
           status: CartStatus.CONFIRM,
          }).finally(() => loading?.hide());
@@ -104,7 +104,7 @@ export default function CartAdmin() {
        <Button
         onClick={() => {
          loading?.show();
-         changeStatus({
+         changeStatusAdmin({
           id: record._id,
           status: CartStatus.SHIPPING,
          }).finally(() => loading?.hide());
@@ -116,7 +116,7 @@ export default function CartAdmin() {
        <Button
         onClick={() => {
          loading?.show();
-         changeStatus({
+         changeStatusAdmin({
           id: record._id,
           status: CartStatus.DONE,
          }).finally(() => loading?.hide());
@@ -133,7 +133,7 @@ export default function CartAdmin() {
        <Button
         onClick={() => {
          loading?.show();
-         changeStatus({
+         changeStatusAdmin({
           id: record._id,
           status: CartStatus.CANCLE,
          }).finally(() => loading?.hide());

@@ -144,19 +144,10 @@ function CartList({ mycart }: { mycart: ICart }) {
        <Form.Item label={"Thao tác"}>
         <Button
          onClick={() => {
-          loading?.show();
           changeStatus({
            id: mycart._id,
            status: CartStatus.CANCLE,
-          })
-           .then(() => {
-            loading?.hide();
-           })
-           .catch(() => loading?.hide())
-           .finally(() => {
-            loading?.hide();
-            getMycart();
-           });
+          }).finally(() => getMycart());
          }}>
          Huỷ
         </Button>

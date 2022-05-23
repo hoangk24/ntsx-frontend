@@ -23,6 +23,7 @@ import {
  setSuccessPayment,
 } from "features/cart/cartSlice";
 import { useLoading } from "hook/useLoading";
+import { useSocket } from "hook/useSocket";
 import _cloneDeep from "lodash/cloneDeep";
 import _filter from "lodash/filter";
 import _findIndex from "lodash/findIndex";
@@ -49,9 +50,10 @@ interface ICartContext {
  removeCart: any;
  paidWithPaypal: any;
  paidWithoutPaypal: any;
- changeStatus: (data: ChangeStatusRequest) => Promise<void>;
+ changeStatus: any;
  getAllCart: any;
  data: ICart[];
+ changeStatusAdmin: any;
 }
 const CartContext = createContext<ICartContext>({} as ICartContext);
 export const useCart = () => useContext(CartContext);
@@ -64,7 +66,7 @@ export default function CartProvider({ children }: any) {
  const dispatch = useAppDispatch();
  const loading = useLoading();
  const [data, setData] = useState<ICart[] | []>([]);
-
+ const { socket } = useSocket();
  const navigate = useNavigate();
 
  useEffect(() => {
@@ -172,7 +174,7 @@ export default function CartProvider({ children }: any) {
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
-    navigate("/payment-success");
+    navigate(`/payment-success/${res.data._id}`);
     dispatch(setSuccessPayment());
    })
    .catch((err: any) => {
@@ -202,7 +204,7 @@ export default function CartProvider({ children }: any) {
    .then(unwrapResult)
    .then((res: any) => {
     message.success(res.message);
-    navigate("/payment-success");
+    navigate(`/payment-success/${res.data._id}`);
     dispatch(setSuccessPayment());
    })
    .catch((err: any) => {
@@ -222,15 +224,42 @@ export default function CartProvider({ children }: any) {
    .finally(() => loading?.hide());
  };
  const changeStatus = (data: ChangeStatusRequest) => {
-  return dispatch(changeStatusAction(data))
+  loading?.show();
+  dispatch(changeStatusAction(data))
    .then(unwrapResult)
-   .then((res: any) => message.success(res.message))
-   .catch((err: any) => message.error(err.message));
+   .then((res: any) => {
+    getMycart();
+    message.success(res.message);
+   })
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
+   .finally(() => loading?.hide());
+ };
+ const changeStatusAdmin = (data: ChangeStatusRequest) => {
+  loading?.show();
+  dispatch(changeStatusAction(data))
+   .then(unwrapResult)
+   .then((res: any) => {
+    message.success(res?.message);
+    socket.emit("adminChangeStatusCart", {
+     user: res.data.user,
+     cart: res.data._id,
+    });
+    getAllCart();
+   })
+   .catch((err: any) => {
+    loading?.hide();
+    message.error(err.message);
+   })
+   .finally(() => loading?.hide());
  };
  return (
   <CartContext.Provider
    value={{
     myCart,
+    changeStatusAdmin,
     getMycart,
     addCart,
     getPreviewCart,

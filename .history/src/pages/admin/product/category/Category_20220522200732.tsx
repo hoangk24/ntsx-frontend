@@ -1,5 +1,4 @@
 import {
- DeleteOutlined,
  EditOutlined,
  PlusOutlined,
  ReloadOutlined,
@@ -11,7 +10,6 @@ import {
  Form,
  Image,
  Input,
- Popconfirm,
  Space,
  Table,
  Tag,
@@ -33,19 +31,14 @@ import React, { useCallback, useState } from "react";
 import { removeAccents } from "utils/common";
 
 export default function Category() {
- const { deleteNSX, addSubcategory } = useCategory();
+ const { deleteNSX, addSubcategory } = useNsx();
  const { categories } = useAppSelector().category;
  const [openAddCategory, setOpenAddCategory] = useState(false);
  const [openAddSubCate, setOpenAddSubCate] = useState(false);
  const [category, setCategory] = useState<any>();
  const { beforeUpload, fileList, onChangeFileList, onRemove } =
   useUpload();
- const {
-  addCategory,
-  fetchCategory,
-  updateCategory,
-  deleteCategory,
- } = useCategory();
+ const { addCategory, fetchCategory, updateCategory } = useCategory();
  const [form] = Form.useForm();
  const column: ColumnsType<ICategory> = [
   {
@@ -92,15 +85,12 @@ export default function Category() {
    title: "NSX",
    dataIndex: "nsx",
    key: "nsx",
-   render: (text, record, idx: number) => {
+   render: (text: string, record: any, idx: number) => {
     return record.subCategory.map((it: ISubCategory) => (
      <Tag
-      key={it._id}
       closable
       color={"green"}
-      onClose={() =>
-       deleteNSX({ category: record._id, nsx: it._id })
-      }>
+      onClose={() => deleteNSX(record._id)}>
       {it.name}
      </Tag>
     ));
@@ -117,12 +107,6 @@ export default function Category() {
        setOpenAddSubCate(true);
       }}
      />
-
-     <Popconfirm
-      title="Bạn chắc chắn muốn xoá danh mục này này!"
-      onConfirm={() => deleteCategory(record._id)}>
-      <Button icon={<DeleteOutlined />} />
-     </Popconfirm>
     </Space>
    ),
   },

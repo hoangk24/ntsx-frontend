@@ -9,6 +9,7 @@ import {
 import { useCart } from "hook/useCart";
 import useProvince from "hook/useProvince";
 import React, { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export const createRule = (name: string) => ({
  required: true,
  message: `${name} không được để trống!`,
@@ -29,7 +30,8 @@ export default function Payment() {
  const { paidWithPaypal, getPreviewCart, paidWithoutPaypal } =
   useCart();
  const { TabPane } = Tabs;
- const { user } = useAppSelector().auth;
+ const { isLogin } = useAppSelector().auth;
+ const navigate = useNavigate();
  const onFinish = useCallback(() => {
   form.validateFields().then((value: any) => {
    const data = {
@@ -44,7 +46,26 @@ export default function Payment() {
  useEffect(() => {
   fetchCity();
  }, []);
-
+ if (!isLogin) {
+  return (
+   <Result
+    status="warning"
+    title="Bạn chưa đăng nhập"
+    subTitle="Hãy đăng nhập để tiến hành đặt hàng"
+    extra={[
+     <Button
+      onClick={() => navigate("/")}
+      type="primary"
+      key="console">
+      Tiếp tục mua hàng tôi
+     </Button>,
+     <Button onClick={() => navigate("/login")} key="buy">
+      Đăng nhập
+     </Button>,
+    ]}
+   />
+  );
+ }
  if (preview?.isDisabled)
   return (
    <Result
@@ -149,7 +170,6 @@ export default function Payment() {
       </Form.Item>
       <Form.Item label="Thanh toán">
        <Button onClick={() => onFinish()}>Đặt hàng</Button>
-       <Button>Lưu thành đơn hàng riêng</Button>
       </Form.Item>
      </Form>
     </TabPane>
